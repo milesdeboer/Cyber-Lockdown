@@ -5,15 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static int VALUE_SCALE = 100;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static int DATA_CENTERS_PER_PLAYER = 4;
+    
+    [SerializeField]
+    private int numPlayers = 2;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+    public int GetNumPlayers() {
+        return numPlayers;
     }
 }
