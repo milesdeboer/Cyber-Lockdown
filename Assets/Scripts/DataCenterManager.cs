@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DataCenterManager : MonoBehaviour
 {
@@ -17,8 +18,19 @@ public class DataCenterManager : MonoBehaviour
     [SerializeField]
     private GameObject dataCenterButton;
 
+    [SerializeField]
+    private GameObject email;
+    [SerializeField]
+    private GameObject emailSubWindow;
+
+    [SerializeField]
+    private GameObject traffic;
+    [SerializeField]
+    private GameObject trafficSubWindow;
+
     private List<DataCenter> dataCenters;
     private List<GameObject> dataCenterButtons;
+
 
     private int currentDataCenter = 0;
 
@@ -26,6 +38,8 @@ public class DataCenterManager : MonoBehaviour
         InitDataCenters();
         InitButtons();
         InitSelectionListeners();
+        InitEmail();
+        InitTraffic();
     }
 
     /**
@@ -166,6 +180,154 @@ public class DataCenterManager : MonoBehaviour
         selectionWindow.SetActive(true);
         currentDataCenter = 0;
         customizationWindow.SetActive(false);
+    }
+
+    /**
+     *  Initialize email objects and distributes malware amongst them
+     */
+    public void InitEmail() {
+        int index = 0;
+
+        // Generate random email order
+        System.Random random = new System.Random();
+        int order = random.Next(0, 6);
+
+        // Instantiate email objects
+        GameObject[] emails = {
+            Instantiate(email, new Vector2(207f, ((order < 2) ? 275f : (order % 2 == 0) ? 240f : 205f)), Quaternion.identity),
+            Instantiate(email, new Vector2(207f, ((order == 2 || order == 3) ? 275f : (order == 0 || order == 5) ? 240f : 205f)), Quaternion.identity),
+            Instantiate(email, new Vector2(207f, ((order > 3) ? 275f : (order % 2 == 1) ? 240f : 205f)), Quaternion.identity)
+        };
+        
+        // Place emails under the email section in game scene
+        foreach(GameObject emailObject in emails) {
+            emailObject.transform.SetParent(emailSubWindow.transform, false);
+            emailObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0.95f, 0.3f);
+        }
+
+        dataCenters[currentDataCenter].SetEmails(emails);
+
+        // Declare malicious email array
+        Attack[] malMail = new Attack[emails.Length];
+
+        // Iterate through all attacks at current data center
+        foreach (Attack attack in dataCenters[currentDataCenter].GetAttacks()) {
+            // Get the malware associated with the attack
+            Malware malware = attack.GetMalware();
+            // If the malware is phishing, add the attack to malicious email array
+            if (malware.GetMalwareType() == "phishing") {
+                malMail[index] = attack;
+                index++;
+                // If more phishing malware than available emails, then don't continue
+                if (index > emails.Length) break;
+            }
+        }
+        dataCenters[currentDataCenter].SetMalMail(malMail);
+        InitEmailListeners();
+    }
+
+    /**
+     *  Initializes the event listeners for the buttons of each email object
+     */
+    public void InitEmailListeners() {
+        // Iterate through all emails
+        foreach(GameObject email in dataCenters[currentDataCenter].GetEmails()) {
+            GameObject acceptButton = email.transform.GetChild(0).gameObject;
+            GameObject declineButton = email.transform.GetChild(1).gameObject;
+
+            // Add onClick listener to accept button
+            acceptButton.GetComponent<Button>().onClick.AddListener(delegate {
+                EmailClick(email, true);
+            });
+
+            // Add onClick listener to decline button
+            declineButton.GetComponent<Button>().onClick.AddListener(delegate {
+                EmailClick(email, false);
+            });
+        }
+    }
+
+    /**
+     *  onClick listener for the email accept and confirm buttons
+     *  @param {GameObject} self - The GameObject of the email entry
+     *  @param {bool} accepted - boolean determining which button was pressed (accepted or declined)
+     */
+    public void EmailClick(GameObject self, bool accepted) {
+        if (accepted) {
+            // if infected, inflict damage
+            // boost work
+        }
+        Destroy(self);
+        Debug.Log("Accepted: " + accepted);
+    }
+
+    
+    public void InitTraffic() {
+        int index = 0;
+
+        // Get random order for the traffic entries
+        System.Random random = new System.Random();
+        int order = random.Next(0, 6);
+
+        // Declare traffic objects
+        GameObject[] trafficObjects = {
+            Instantiate(traffic, new Vector2(207f, ((order < 2) ? 155f : (order % 2 == 0) ? 120f : 85f)), Quaternion.identity),
+            Instantiate(traffic, new Vector2(207f, ((order == 2 || order == 3) ? 155f : (order == 0 || order == 5) ? 120f : 85f)), Quaternion.identity),
+            Instantiate(traffic, new Vector2(207f, ((order > 3) ? 155f : (order % 2 == 1) ? 120f : 85f)), Quaternion.identity)
+        };
+
+        // Orient each traffic obejct to correct position
+        foreach(GameObject trafficObject in trafficObjects) {
+            trafficObject.transform.SetParent(trafficSubWindow.transform, false);
+            trafficObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0.95f, 0.3f);
+        }
+
+        dataCenters[currentDataCenter].SetTraffic(trafficObjects);
+
+        // Declare malicous traffic array
+        Attack[] malTraffic = new Attack[trafficObjects.Length];
+
+        // Iterate through all attacks at data center
+        foreach (Attack attack in dataCenters[currentDataCenter].GetAttacks()) {
+            // Get the malware associated with the attack
+            Malware malware = attack.GetMalware();
+            // !!! - add chance the malware isnt discovered
+            // If the malware is adware or botnet, add the attack to malicious traffic array
+            if (malware.GetMalwareType() == "adware" || malware.GetMalwareType() == "botnet") {
+                malTraffic[index] = attack;
+                index++;
+                // If more discovered target malware than available traffic, then don't continue
+                if (index > trafficObjects.Length) break;
+            }
+        }
+        dataCenters[currentDataCenter].SetMalTraffic(malTraffic);
+
+        // Initialize event listeners for the delete button on each traffic object
+        InitTrafficListeners();
+    }
+
+    /**
+     *  Initializes the event listeners for the buttons of each email object
+     */
+    public void InitTrafficListeners() {
+        // Iterate through all traffic options
+        foreach(GameObject traffic in dataCenters[currentDataCenter].GetTraffic()) {
+            GameObject deleteButton = traffic.transform.GetChild(0).gameObject;
+            // Add onClick listener to delete button
+            deleteButton.GetComponent<Button>().onClick.AddListener(delegate {
+                TrafficClick(traffic);
+            });
+        }
+    }
+
+    /**
+     *  onClick listener for the traffic delete button
+     *  @param {GameObject} self - The GameObject of the traffic entry
+     */
+    public void TrafficClick(GameObject self) {
+        Debug.Log("traffic has been deleted");
+        Destroy(self);
+        // !!! - reduce production rate and if infected
     }
 
     /**

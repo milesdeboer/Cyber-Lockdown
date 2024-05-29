@@ -5968,7 +5968,7 @@ Transform:
   m_GameObject: {fileID: 469622037}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.275, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0.275, y: 0.25, z: -0.1}
   m_LocalScale: {x: 0.4, y: 0.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8770,7 +8770,7 @@ Transform:
   m_GameObject: {fileID: 756403309}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.14, y: 0.175, z: 0}
+  m_LocalPosition: {x: -0.14, y: 0.175, z: -0.01}
   m_LocalScale: {x: 0.2, y: 0.025, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9477,7 +9477,7 @@ Transform:
   m_GameObject: {fileID: 821153697}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.275, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0.275, y: -0.25, z: -0.1}
   m_LocalScale: {x: 0.4, y: 0.45, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20904,7 +20904,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &2112866344
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -20990,6 +20990,10 @@ MonoBehaviour:
   selectionWindow: {fileID: 340474274}
   customizationWindow: {fileID: 1208689380}
   dataCenterButton: {fileID: 2807908706005189568, guid: 9f01cfe8396889848900574004784b56, type: 3}
+  email: {fileID: 6502103607480083389, guid: f46e4989a2e3b5d4dbf8efbe3d7aa2f3, type: 3}
+  emailSubWindow: {fileID: 469622037}
+  traffic: {fileID: 2360519405139971127, guid: 7e61f6f7a75d0184fa01b9acd4d4fdc1, type: 3}
+  trafficSubWindow: {fileID: 821153697}
 --- !u!1 &2145246238
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,10 +14,19 @@ public class DataCenter
     private int ids = 0;
     private int ips = 0;
 
-    private int firewall = 0;
+    private int firewall = 0;    
+
+    private List<Attack> attacks;
+
+    private GameObject[] emails;
+    private Attack[] malMail;
+
+    private GameObject[] traffic;
+    private Attack[] malTraffic;
 
     public DataCenter(int id) {
         this.id = id;
+        attacks = new List<Attack>();
     }
 
     public int GetEmailFilter() {
@@ -67,6 +76,40 @@ public class DataCenter
     }
     public void SetFirewall(int firewall) {
         this.firewall = firewall;
+    }
+
+    public List<Attack> GetAttacks() {
+        return attacks;
+    }
+
+    public GameObject[] GetEmails() {
+        return emails;
+    }
+    public void SetEmails(GameObject[] emails) {
+        this.emails = emails;
+    }
+
+    public Attack[] GetMalMail() {
+        return malMail;
+    }
+
+    public void SetMalMail(Attack[] malMail) {
+        this.malMail = malMail;
+    }
+
+    public GameObject[] GetTraffic() {
+        return traffic;
+    }
+    public void SetTraffic(GameObject[] traffic) {
+        this.traffic = traffic;
+    }
+
+    public Attack[] GetMalTraffic() {
+        return malTraffic;
+    }
+
+    public void SetMalTraffic(Attack[] malTraffic) {
+        this.malTraffic = malTraffic;
     }
 
     /**
