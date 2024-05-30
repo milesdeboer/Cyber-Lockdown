@@ -10,8 +10,18 @@ public class Goal
     private int workDone = 0;
     private int workRequired;
 
+    private List<string> unlockable;
+
     public Goal(int workRequired) {
         this.workRequired = workRequired;
+        parents = new List<Goal>();
+        children = new List<Goal>();
+    }
+    public Goal(int workRequired, List<string> unlockable) {
+        this.workRequired = workRequired;
+        this.unlockable = unlockable;
+        parents = new List<Goal>();
+        children = new List<Goal>();
     }
 
     public List<Goal> GetParents() {
@@ -47,5 +57,13 @@ public class Goal
 
     public bool IsDone() {
         return workDone >= workRequired;
+    }
+
+    public List<string> GetUnlockable() {
+        return unlockable;
+    }
+
+    public void AddUnlockable(string unlockable) {
+        this.unlockable.Add(unlockable);
     }
 }
