@@ -338,4 +338,8 @@ public class DataCenterManager : MonoBehaviour
     public DataCenter GetDataCenter(int i) {
         return dataCenters[i];
     }
+    
+    public List<DataCenter> GetDataCenters() {
+        return dataCenters;
+    }
 }

@@ -6,6 +6,8 @@ public class DataCenter
 {
     private int id = -1;
 
+    private Player owner;
+
     private int emailFilter = 0;
     private int dlp = 0;
     private int hiddenStructure = 0;
@@ -14,7 +16,7 @@ public class DataCenter
     private int ids = 0;
     private int ips = 0;
 
-    private int firewall = 0;    
+    private double firewall = 0;    
 
     private List<Attack> attacks;
 
@@ -27,6 +29,14 @@ public class DataCenter
     public DataCenter(int id) {
         this.id = id;
         attacks = new List<Attack>();
+    }
+
+    public Player GetOwner() {
+        return owner;
+    }
+
+    public void SetOwner(Player owner) {
+        this.owner = owner;
     }
 
     public int GetEmailFilter() {
@@ -71,10 +81,10 @@ public class DataCenter
         this.ips = ips;
     }
 
-    public int GetFirewall() {
+    public double GetFirewall() {
         return firewall;
     }
-    public void SetFirewall(int firewall) {
+    public void SetFirewall(double firewall) {
         this.firewall = firewall;
     }
 
@@ -117,5 +127,9 @@ public class DataCenter
      */
     public int GetId() {
         return id;
+    }
+
+    public DataCenterWrapper Wrap() {
+        return new DataCenterWrapper(this);
     }
 }
