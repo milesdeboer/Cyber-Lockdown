@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static int VALUE_SCALE = 100;
     public static int DATA_CENTERS_PER_PLAYER = 3;
+    public static int MALWARE_PER_PLAYER = 8;
 
     public static bool READABLE_SAVE = true;
     
@@ -23,14 +26,26 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private DataCenterManager dataCenterManager;
+    [SerializeField]
+    private MalwareController malwareManager;
+    [SerializeField]
+    private AttackManager attackManager;
+
+    [SerializeField]
+    private GameObject turnNumberObject;
 
 
     public void Start() {
-        players = Enumerable.Range(0, 2).ToArray();
+        players = Enumerable.Range(0, numPlayers).ToArray();
         playerObjects = new List<Player>();
         foreach(int i in players) {
             playerObjects.Add(new Player(i));
         }
+        Load();
+        dataCenterManager.Load();
+        malwareManager.Load();
+        attackManager.Load();
+        turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
     }
 
     /**
@@ -67,6 +82,8 @@ public class GameManager : MonoBehaviour
     }
 
     public void Save() {
+        turnNumber++;
+        turnPlayer = ((turnNumber + 1) % numPlayers);
         GameDAO dao = new GameDAO();
         dao.Save(this);
     }
@@ -74,5 +91,9 @@ public class GameManager : MonoBehaviour
     public void Load() {
         GameDAO dao = new GameDAO();
         dao.Load(this);
+    }
+
+    public void EndTurn() {
+        SceneManager.LoadScene("PlayerScene");
     }
 }
