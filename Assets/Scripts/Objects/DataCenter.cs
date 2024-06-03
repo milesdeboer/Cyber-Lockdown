@@ -6,7 +6,7 @@ public class DataCenter
 {
     private int id = -1;
 
-    private Player owner;
+    private int owner;// change to id
 
     private int emailFilter = 0;
     private int dlp = 0;
@@ -18,24 +18,24 @@ public class DataCenter
 
     private double firewall = 0;    
 
-    private List<Attack> attacks;
+    private List<int> attacks;// change to IDs
 
     private GameObject[] emails;
-    private Attack[] malMail;
+    private int[] malMail;//!!! change to int[]
 
     private GameObject[] traffic;
-    private Attack[] malTraffic;
+    private int[] malTraffic;//!!! change to int[] - See Notes @ 2024-05-31
 
     public DataCenter(int id) {
         this.id = id;
-        attacks = new List<Attack>();
+        attacks = new List<int>();
     }
 
-    public Player GetOwner() {
+    public int GetOwner() {
         return owner;
     }
 
-    public void SetOwner(Player owner) {
+    public void SetOwner(int owner) {
         this.owner = owner;
     }
 
@@ -88,8 +88,12 @@ public class DataCenter
         this.firewall = firewall;
     }
 
-    public List<Attack> GetAttacks() {
+    public List<int> GetAttacks() {
         return attacks;
+    }
+
+    public void SetAttacks(List<int> attacks) {
+        this.attacks = attacks;
     }
 
     public GameObject[] GetEmails() {
@@ -99,11 +103,11 @@ public class DataCenter
         this.emails = emails;
     }
 
-    public Attack[] GetMalMail() {
+    public int[] GetMalMail() {
         return malMail;
     }
 
-    public void SetMalMail(Attack[] malMail) {
+    public void SetMalMail(int[] malMail) {
         this.malMail = malMail;
     }
 
@@ -114,11 +118,11 @@ public class DataCenter
         this.traffic = traffic;
     }
 
-    public Attack[] GetMalTraffic() {
+    public int[] GetMalTraffic() {
         return malTraffic;
     }
 
-    public void SetMalTraffic(Attack[] malTraffic) {
+    public void SetMalTraffic(int[] malTraffic) {
         this.malTraffic = malTraffic;
     }
 

@@ -20,7 +20,7 @@ public class DataCenterWrapper
 
     public DataCenterWrapper(DataCenter dataCenter) {
         did = dataCenter.GetId();
-        owner = (dataCenter.GetOwner() == null) ? -1 : dataCenter.GetOwner().GetId();
+        owner = dataCenter.GetOwner();
 
         emailFilter = dataCenter.GetEmailFilter();
         dlp = dataCenter.GetDLP();
@@ -31,6 +31,22 @@ public class DataCenterWrapper
 
         firewall = dataCenter.GetFirewall();
 
-        attacks = dataCenter.GetAttacks().Select(a => a.GetId()).ToArray();
+        attacks = dataCenter.GetAttacks().ToArray();
     }   
+
+    public DataCenter Unwrap() {
+        DataCenter output = new DataCenter(did);
+
+        output.SetOwner(owner);
+        output.SetEmailFilter(emailFilter);
+        output.SetDLP(dlp);
+        output.SetHiddenStructure(structure);
+        output.SetEncryption(encryption);
+        output.SetIDS(ids);
+        output.SetIPS(ips);
+        output.SetFirewall(firewall);
+        output.SetAttacks(attacks.ToList());
+
+        return output;
+    }
 }

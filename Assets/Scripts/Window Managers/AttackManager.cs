@@ -14,6 +14,9 @@ public class AttackManager : MonoBehaviour
     private MalwareController malwareController;
 
     [SerializeField]
+    private DataCenterManager dataCenterManager;
+
+    [SerializeField]
     private GameObject selectionWindow;
     [SerializeField]
     private GameObject customizationWindow;
@@ -30,8 +33,10 @@ public class AttackManager : MonoBehaviour
 
     private int activeAttack = 0;
     
+    private bool initialized = false;
+
     public void Start() {
-        InitAttacks();
+        if (!initialized) InitAttacks();
         InitDataCenters();
         AssignListeners();
 
@@ -40,12 +45,25 @@ public class AttackManager : MonoBehaviour
     /**
      *  Initializes the Attack Objects 
      */
-    private void InitAttacks() {
+    public void InitAttacks() {
         attacks = new List<Attack>();
         for(int i = 0; i < 8; i++) {
             attacks.Add(new Attack(i));
         }
         Debug.Log("Attacks Initialized");
+        initialized = true;
+    }
+
+    public List<Attack> GetAttacks() {
+        return attacks;
+    }
+
+    public void SetAttacks(List<Attack> attacks) {
+        this.attacks = attacks;
+    }
+
+    public bool IsInitialized() {
+        return initialized;
     }
 
     /**
@@ -71,8 +89,8 @@ public class AttackManager : MonoBehaviour
      *  @param {int} i - The index of the button pressed.
      */
     public void MalwareClick(int i) {
-        attacks[activeAttack].SetMalware(malwareController.GetMalware(i));
-        Debug.Log("Switching Malware of Attack " + (activeAttack+1) + " to " + attacks[activeAttack].GetMalware().GetId() + ".");
+        attacks[activeAttack].SetMalware(malwareController.GetMalware(i).GetId());
+        Debug.Log("Switching Malware of Attack " + (activeAttack+1) + " to " + attacks[activeAttack].GetMalware() + ".");
     }
 
     /**
@@ -158,7 +176,7 @@ public class AttackManager : MonoBehaviour
      */
     public void DataCenterClick(int i) {
         Debug.Log("attack " + activeAttack + "/" + attacks.Count);
-        attacks[activeAttack].SetTarget(i);
+        attacks[activeAttack].SetTarget(dataCenterManager.GetDataCenters()[i].GetId());
         Debug.Log("Setting Target of Attack " + activeAttack + " to " + i + ".");
     }
 
@@ -173,5 +191,15 @@ public class AttackManager : MonoBehaviour
         selectionWindow.SetActive(true);
         activeAttack = 0;
         customizationWindow.SetActive(false);
+    }
+
+    public void Save() {
+        AttackDAO dao = new AttackDAO();
+        dao.Save(this, gameManager.GetTurnPlayer());
+    }
+
+    public void Load() {
+        AttackDAO dao = new AttackDAO();
+        dao.Load(this);
     }
 }

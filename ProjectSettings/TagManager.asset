@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Window
   - MalwareAttribute
+  - DataCenterAttribute
   layers:
   - Default
   - TransparentFX

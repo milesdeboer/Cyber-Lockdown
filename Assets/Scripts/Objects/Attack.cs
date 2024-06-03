@@ -6,9 +6,10 @@ public class Attack
 {
     private int id = -1;
 
-    private int target = -1;
+    private int owner;// to id
+    private int target;// to id
 
-    private Malware malware;
+    private int malware;// to id
     private string objective;
     private string delivery;
     private int exploit;
@@ -23,6 +24,13 @@ public class Attack
      */
     public int GetId() {
         return id;
+    }
+
+    public int GetOwner() {
+        return owner;
+    }
+    public void SetOwner(int owner) {
+        this.owner = owner;
     }
 
     /**
@@ -45,7 +53,7 @@ public class Attack
      *  Returns the Malware associated with the attack.
      *  @returns {Malware} - The Malware associated with the attack.
      */
-    public Malware GetMalware() {
+    public int GetMalware() {
         return malware;
     }
 
@@ -53,7 +61,7 @@ public class Attack
      *  Sets the Malware associated with the attack.
      *  @param {Malware} - The Malware associated with the attack.
      */
-    public void SetMalware(Malware malware) {
+    public void SetMalware(int malware) {
         this.malware = malware;
     }
 
@@ -105,5 +113,9 @@ public class Attack
      */
     public void SetExploit(int exploit) {
         this.exploit = exploit;
+    }
+
+    public AttackWrapper Wrap(){
+        return new AttackWrapper(this);
     }
 }

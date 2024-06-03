@@ -40,24 +40,39 @@ public class GameManager : MonoBehaviour
     public int GetNumPlayers() {
         return numPlayers;
     }
+    public void SetNumPlayers(int numPlayers) {
+        this.numPlayers = numPlayers;
+    }
 
     public int GetTurnPlayer() {
         return turnPlayer;
     }
+    public void SetTurnPlayer(int turnPlayer) {
+        this.turnPlayer = turnPlayer;
+    }
 
     public int[] GetPlayers() {
         return players;
+    }
+    public void SetPlayers(int[] players) {
+        this.players = players;
     }
 
     public int GetTurnNumber() {
         return turnNumber;
     }
 
-    public void Save() {
-        GameDAO gameDAO = new GameDAO();
-        gameDAO.Save(this);
+    public void SetTurnNumber(int turnNumber) {
+        this.turnNumber = turnNumber;
+    }
 
-        DataCenterDAO dataDAO = new DataCenterDAO();
-        dataDAO.Save(dataCenterManager);
+    public void Save() {
+        GameDAO dao = new GameDAO();
+        dao.Save(this);
+    }
+
+    public void Load() {
+        GameDAO dao = new GameDAO();
+        dao.Load(this);
     }
 }

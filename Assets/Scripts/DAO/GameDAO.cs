@@ -24,4 +24,17 @@ public class GameDAO
         File.WriteAllText(Application.persistentDataPath + "/gamesave.json", json);
         Debug.Log("Save Location: " + Application.persistentDataPath + "/gamesave.json");
     }
+
+    public void Load(GameManager manager) {
+        Debug.Log("Loading Game");
+        if (File.Exists(Application.persistentDataPath + "/gamesave.json")) {
+            string json = File.ReadAllText(Application.persistentDataPath + "/gamesave.json");
+            GameDAO temp = JsonUtility.FromJson<GameDAO>(json);
+
+            manager.SetNumPlayers(temp.numPlayers);
+            manager.SetTurnPlayer(temp.turnPlayer);
+            manager.SetTurnNumber(temp.turnNum);
+            manager.SetPlayers(temp.players);
+        }
+    }
 }

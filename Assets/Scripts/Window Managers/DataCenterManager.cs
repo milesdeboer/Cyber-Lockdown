@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,6 +10,10 @@ public class DataCenterManager : MonoBehaviour
 {
     [SerializeField] 
     private GameManager gameManager;
+    [SerializeField]
+    private MalwareController malwareManager;
+    [SerializeField]
+    private AttackManager attackManager;
 
     [SerializeField]
     private GameObject selectionWindow;
@@ -121,8 +126,16 @@ public class DataCenterManager : MonoBehaviour
     public void SelectionClick(int i) {
         customizationWindow.SetActive(true);
         currentDataCenter = i;
+        ResetSetup();
         selectionWindow.SetActive(false);
         Debug.Log("Switching to Data Center " + i);
+    }
+
+    public void ResetSetup() {
+        GameObject[] sliders = GameObject.FindGameObjectsWithTag("DataCenterAttribute");
+        Slider slider = sliders[0].GetComponent<Slider>();
+        if (slider != null) 
+            slider.value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
     }
 
     /**
@@ -210,10 +223,14 @@ public class DataCenterManager : MonoBehaviour
         // Declare malicious email array
         Attack[] malMail = new Attack[emails.Length];
 
+        if (!attackManager.IsInitialized()) attackManager.InitAttacks();
+
+        Attack[] attacks = attackManager.GetAttacks().Where(attack => dataCenters[currentDataCenter].GetAttacks().Any(a => a == attack.GetId())).ToArray();
+
         // Iterate through all attacks at current data center
-        foreach (Attack attack in dataCenters[currentDataCenter].GetAttacks()) {
+        foreach (Attack attack in attacks) {
             // Get the malware associated with the attack
-            Malware malware = attack.GetMalware();
+            Malware malware = malwareManager.GetMalware(attack.GetMalware());
             // If the malware is phishing, add the attack to malicious email array
             if (malware.GetMalwareType() == "phishing") {
                 malMail[index] = attack;
@@ -222,7 +239,8 @@ public class DataCenterManager : MonoBehaviour
                 if (index > emails.Length) break;
             }
         }
-        dataCenters[currentDataCenter].SetMalMail(malMail);
+
+        dataCenters[currentDataCenter].SetMalMail(malMail.Select(attack => (attack == null) ? -1 : attack.GetId()).ToArray());
         InitEmailListeners();
     }
 
@@ -287,10 +305,14 @@ public class DataCenterManager : MonoBehaviour
         // Declare malicous traffic array
         Attack[] malTraffic = new Attack[trafficObjects.Length];
 
+        if (!attackManager.IsInitialized()) attackManager.InitAttacks();
+
+        Attack[] attacks = attackManager.GetAttacks().Where(attack => dataCenters[currentDataCenter].GetAttacks().Any(a => a == attack.GetId())).ToArray();
+
         // Iterate through all attacks at data center
-        foreach (Attack attack in dataCenters[currentDataCenter].GetAttacks()) {
+        foreach (Attack attack in attacks) {
             // Get the malware associated with the attack
-            Malware malware = attack.GetMalware();
+            Malware malware = malwareManager.GetMalware(attack.GetMalware());
             // !!! - add chance the malware isnt discovered
             // If the malware is adware or botnet, add the attack to malicious traffic array
             if (malware.GetMalwareType() == "adware" || malware.GetMalwareType() == "botnet") {
@@ -300,7 +322,7 @@ public class DataCenterManager : MonoBehaviour
                 if (index > trafficObjects.Length) break;
             }
         }
-        dataCenters[currentDataCenter].SetMalTraffic(malTraffic);
+        dataCenters[currentDataCenter].SetMalTraffic(malTraffic.Select(attack => (attack == null) ? -1 : attack.GetId()).ToArray());
 
         // Initialize event listeners for the delete button on each traffic object
         InitTrafficListeners();
@@ -341,5 +363,19 @@ public class DataCenterManager : MonoBehaviour
     
     public List<DataCenter> GetDataCenters() {
         return dataCenters;
+    }
+
+    public void SetDataCenters(List<DataCenter> dataCenters) {
+        this.dataCenters = dataCenters;
+    }
+
+    public void Save() {
+        DataCenterDAO dao = new DataCenterDAO();
+        dao.Save(this);
+    }
+
+    public void Load() {
+        DataCenterDAO dao = new DataCenterDAO();
+        dao.Load(this);
     }
 }
