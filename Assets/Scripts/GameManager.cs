@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static int VALUE_SCALE = 100;
     public static int DATA_CENTERS_PER_PLAYER = 3;
     public static int MALWARE_PER_PLAYER = 8;
+    public static int ATTACKS_PER_PLAYER = 8;
 
     public static bool READABLE_SAVE = true;
     

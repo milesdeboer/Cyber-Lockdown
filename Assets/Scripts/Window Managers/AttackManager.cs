@@ -27,7 +27,7 @@ public class AttackManager : MonoBehaviour
     [SerializeField]
     private GameObject dataCenterButton;
 
-    private List<Attack> attacks;
+    private Dictionary<int, Attack> attacks;
 
     private List<GameObject> dataCenters;
 
@@ -36,7 +36,7 @@ public class AttackManager : MonoBehaviour
     private bool initialized = false;
 
     public void Start() {
-        if (!initialized) InitAttacks();
+        if (attacks == null) InitAttacks();
         InitDataCenters();
         AssignListeners();
 
@@ -46,19 +46,20 @@ public class AttackManager : MonoBehaviour
      *  Initializes the Attack Objects 
      */
     public void InitAttacks() {
-        attacks = new List<Attack>();
-        for(int i = 0; i < 8; i++) {
-            attacks.Add(new Attack(i));
+        attacks = new Dictionary<int, Attack>();
+        for(int i = 0; i < gameManager.GetNumPlayers(); i++) {
+            for (int j = 0; j < GameManager.ATTACKS_PER_PLAYER; j++)
+            attacks.Add(i * 100 + j, new Attack(i * 100 + j));
         }
         Debug.Log("Attacks Initialized");
         initialized = true;
     }
 
-    public List<Attack> GetAttacks() {
+    public Dictionary<int, Attack> GetAttacks() {
         return attacks;
     }
 
-    public void SetAttacks(List<Attack> attacks) {
+    public void SetAttacks(Dictionary<int, Attack> attacks) {
         this.attacks = attacks;
     }
 
@@ -73,7 +74,7 @@ public class AttackManager : MonoBehaviour
     public void OnClick(int i) {
         // Set the customization window to active and set active attack
         customizationWindow.SetActive(true);
-        activeAttack = i;
+        activeAttack = gameManager.GetTurnPlayer() * 100 + i;
 
         Debug.Log("Opening attack " + activeAttack + ".");
 
@@ -175,7 +176,7 @@ public class AttackManager : MonoBehaviour
      *  @param {int} i - The index of the data center button.
      */
     public void DataCenterClick(int i) {
-        Debug.Log("attack " + activeAttack + "/" + attacks.Count);
+        Debug.Log("attack " + activeAttack);
         attacks[activeAttack].SetTarget(dataCenterManager.GetDataCenters()[i].GetId());
         Debug.Log("Setting Target of Attack " + activeAttack + " to " + i + ".");
     }

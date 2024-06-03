@@ -10,7 +10,7 @@ public class AttackDAO
     public AttackWrapper[] attacks;
 
     public void Save(AttackManager manager, int pid) {
-        attacks = manager.GetAttacks().Select(a => a.Wrap()).ToArray();
+        attacks = manager.GetAttacks().Select(a => a.Value.Wrap()).ToArray();
 
         string json = JsonUtility.ToJson(this, GameManager.READABLE_SAVE);
         File.WriteAllText(Application.persistentDataPath + "/attacksave.json", json);
@@ -24,9 +24,10 @@ public class AttackDAO
             string json = File.ReadAllText(Application.persistentDataPath + "/attacksave.json");
             AttackDAO temp = JsonUtility.FromJson<AttackDAO>(json);
 
-            List<Attack> attacks_ = new List<Attack>();
+            Dictionary<int, Attack> attacks_ = new Dictionary<int, Attack>();
             foreach(AttackWrapper wrapper in temp.attacks) {
-                attacks_.Add(wrapper.Unwrap());
+                Attack attack = wrapper.Unwrap();
+                attacks_.Add(attack.GetId(), attack);
             }
 
             manager.SetAttacks(attacks_);

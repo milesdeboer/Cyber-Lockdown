@@ -228,7 +228,13 @@ public class DataCenterManager : MonoBehaviour
 
         if (!attackManager.IsInitialized()) attackManager.InitAttacks();
 
-        Attack[] attacks = attackManager.GetAttacks().Where(attack => dataCenters[currentDataCenter].GetAttacks().Any(a => a == attack.GetId())).ToArray();
+        Attack[] attacks = attackManager
+            .GetAttacks()
+            .Where(attack => dataCenters[currentDataCenter]
+                .GetAttacks()
+                .Any(a => a == attack.Value.GetId()))
+            .Select(attack => attack.Value)
+            .ToArray();
 
         // Iterate through all attacks at current data center
         foreach (Attack attack in attacks) {
@@ -310,7 +316,13 @@ public class DataCenterManager : MonoBehaviour
 
         if (!attackManager.IsInitialized()) attackManager.InitAttacks();
 
-        Attack[] attacks = attackManager.GetAttacks().Where(attack => dataCenters[currentDataCenter].GetAttacks().Any(a => a == attack.GetId())).ToArray();
+        Attack[] attacks = attackManager
+            .GetAttacks()
+            .Where(attack => dataCenters[currentDataCenter]
+                .GetAttacks()
+                .Any(a => a == attack.Value.GetId()))
+            .Select(attack => attack.Value)
+            .ToArray();
 
         // Iterate through all attacks at data center
         foreach (Attack attack in attacks) {
