@@ -39,8 +39,10 @@ public class DataCenterManager : MonoBehaviour
 
     private int currentDataCenter = 0;
 
+    private bool initialized = false;
+
     public void Start() {
-        InitDataCenters();
+        if (!initialized) InitDataCenters();
         InitButtons();
         InitSelectionListeners();
         InitEmail();
@@ -55,6 +57,7 @@ public class DataCenterManager : MonoBehaviour
         for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers(); i++) {
             dataCenters.Add(new DataCenter(i));
         }
+        initialized = true;
     }
 
     /**
@@ -367,6 +370,7 @@ public class DataCenterManager : MonoBehaviour
 
     public void SetDataCenters(List<DataCenter> dataCenters) {
         this.dataCenters = dataCenters;
+        initialized = true;
     }
 
     public void Save() {
