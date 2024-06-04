@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     private int turnNumber = 1;
 
+    private List<Color> colors;
+
     private int[] players;
 
     private List<Player> playerObjects;
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
         malwareManager.Load();
         attackManager.Load();
         turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
+        InitColors();
     }
 
     /**
@@ -80,6 +83,17 @@ public class GameManager : MonoBehaviour
 
     public void SetTurnNumber(int turnNumber) {
         this.turnNumber = turnNumber;
+    }
+
+    public List<Color> GetColors() {
+        return colors;
+    }
+
+    private void InitColors() {
+        colors = new List<Color>();
+        for(int i = 0; i < numPlayers; i++) {
+            colors.Add(Color.HSVToRGB((float) i / (numPlayers+1), 0.75f, 0.75f));
+        }
     }
 
     public void Save() {

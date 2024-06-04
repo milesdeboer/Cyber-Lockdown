@@ -6,7 +6,7 @@ public class DataCenter
 {
     private int id = -1;
 
-    private int owner;// change to id
+    private int owner = -1;// change to id
 
     private int emailFilter = 0;
     private int dlp = 0;

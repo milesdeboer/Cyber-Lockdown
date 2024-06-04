@@ -151,6 +151,8 @@ public class AttackManager : MonoBehaviour
             dataCenter.transform.SetParent(dataCenterSubWindow.transform, false);
             dataCenter.GetComponent<RectTransform>().localPosition.Set(coords.x, coords.y, 0);
 
+            
+
             // Add to list of buttons
             dataCenters.Add(dataCenter);
         }

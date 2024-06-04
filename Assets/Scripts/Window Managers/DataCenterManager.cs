@@ -56,6 +56,7 @@ public class DataCenterManager : MonoBehaviour
         dataCenters = new List<DataCenter>();
         for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers(); i++) {
             dataCenters.Add(new DataCenter(i));
+            if (i % GameManager.DATA_CENTERS_PER_PLAYER == 0) dataCenters[i].SetOwner(i / GameManager.DATA_CENTERS_PER_PLAYER);
         }
         initialized = true;
     }
@@ -99,6 +100,9 @@ public class DataCenterManager : MonoBehaviour
             dataCenter.transform.SetParent(selectionWindow.transform, false);
             dataCenter.GetComponent<RectTransform>().localPosition.Set(coords.x, coords.y, 0);
             dataCenter.GetComponent<RectTransform>().sizeDelta = new Vector2(15f, 20f);
+
+            // Set Color of button based on owner
+            dataCenter.GetComponent<Image>().color = (dataCenters[i].GetOwner() == -1) ? new Color(1.0f, 1.0f, 1.0f) : (gameManager.GetColors()[dataCenters[i].GetOwner()]);
 
             // Add to list of buttons.
             dataCenterButtons.Add(dataCenter);
