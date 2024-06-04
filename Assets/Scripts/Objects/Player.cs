@@ -6,12 +6,14 @@ public class Player
 {
     private int id = 0;
     private int money = 0;
-    private int overallResources = 100;
-    private int availableResources = 100;
+    private int overallResources;
+    private int availableResources;
 
 
     public Player(int id) {
         this.id = id;
+        overallResources = 100;
+        availableResources = 100;
     }
 
     public int GetId() {

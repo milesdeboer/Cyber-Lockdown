@@ -11,7 +11,8 @@ public class PlayerManager : MonoBehaviour
 
     public void Start() {
         players = new Dictionary<int, Player>();
-        InitPlayers();
+        if (players.Count < 1) InitPlayers();
+        Load();
     }
 
     public void InitPlayers() {

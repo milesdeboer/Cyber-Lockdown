@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     private MalwareController malwareManager;
     [SerializeField]
     private AttackManager attackManager;
+    [SerializeField]
+    private PlayerManager playerManager;
 
     [SerializeField]
     private GameObject turnNumberObject;
@@ -40,11 +42,8 @@ public class GameManager : MonoBehaviour
 
     public void Start() {
         players = Enumerable.Range(0, numPlayers).ToArray();
-        playerObjects = new List<Player>();
-        foreach(int i in players) {
-            playerObjects.Add(new Player(i));
-        }
         Load();
+        playerManager.Load();
         dataCenterManager.Load();
         malwareManager.Load();
         attackManager.Load();

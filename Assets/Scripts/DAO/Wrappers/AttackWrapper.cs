@@ -13,6 +13,10 @@ public class AttackWrapper
     public string delivery;
     public int exploit;
 
+    public int currentResources = 0;
+    public int requiredResources = 100;
+    public int resourceRate = 0;
+
     public AttackWrapper(Attack attack) {
         aid = attack.GetId();
         owner = attack.GetOwner();
@@ -21,6 +25,9 @@ public class AttackWrapper
         objective = attack.GetObjective();
         delivery = attack.GetDelivery();
         exploit = attack.GetExploit();
+        currentResources = attack.GetCurrentResources();
+        requiredResources = attack.GetRequiredResources();
+        resourceRate = attack.GetResourceRate();
     }
 
     public Attack Unwrap() {
@@ -32,6 +39,9 @@ public class AttackWrapper
         attack.SetObjective(objective);
         attack.SetDelivery(delivery);
         attack.SetExploit(exploit);
+        attack.SetCurrentResources(currentResources);
+        attack.SetRequiredResources(requiredResources);
+        attack.SetResourceRate(resourceRate);
 
         return attack;
     }

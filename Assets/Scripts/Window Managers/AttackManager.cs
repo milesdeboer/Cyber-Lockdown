@@ -1,15 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using TMPro;
 
 public class AttackManager : MonoBehaviour
 {
 
     [SerializeField]
     private GameManager gameManager;
+    [SerializeField]
+    private PlayerManager playerManager;
+
     [SerializeField]
     private MalwareController malwareController;
 
@@ -27,6 +32,9 @@ public class AttackManager : MonoBehaviour
     [SerializeField]
     private GameObject dataCenterButton;
 
+    [SerializeField]
+    private GameObject resourceDisplay;
+
     private Dictionary<int, Attack> attacks;
 
     private List<GameObject> dataCenters;
@@ -39,7 +47,7 @@ public class AttackManager : MonoBehaviour
         if (attacks == null) InitAttacks();
         InitDataCenters();
         AssignListeners();
-
+        resourceDisplay.GetComponent<TextMeshProUGUI>().SetText("0");
     }
 
     /**
@@ -183,8 +191,32 @@ public class AttackManager : MonoBehaviour
         Debug.Log("Setting Target of Attack " + activeAttack + " to " + i + ".");
     }
 
+    public void ResourceClick(int change) {
+        Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
+        if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
+            !(player.GetAvailableResources() - change < 0) &&
+            !(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) == 0 && change < 0)) {
+
+            player.SetAvailableResources(player.GetAvailableResources() - change);
+            resourceDisplay.GetComponent<TextMeshProUGUI>().SetText((Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) + change).ToString());
+
+            attacks[activeAttack].SetResourceRate(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text));
+
+            Debug.Log("Available: " + player.GetAvailableResources());
+        } else {
+            Debug.Log("Invalid Resources");
+        }
+    }
+
     private void Reset() {
-        ///!!!
+        resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetResourceRate().ToString());
+    }
+
+    public void Work() {
+        attacks
+            .Where(a => a.Value.GetOwner() == gameManager.GetTurnPlayer())
+            .ToList()
+            .ForEach(a => a.Value.SetCurrentResources(a.Value.GetCurrentResources() + a.Value.GetResourceRate()));
     }
 
     /**

@@ -14,13 +14,14 @@ public class PlayerDAO
 
         string json = JsonUtility.ToJson(this, GameManager.READABLE_SAVE);
         File.WriteAllText(Application.persistentDataPath + "/playersave.json", json);
+        Debug.Log("json out: " + json);
     }
 
     public void Load(PlayerManager manager) {
         if(File.Exists(Application.persistentDataPath + "/playersave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/playersave.json");
             PlayerDAO temp = JsonUtility.FromJson<PlayerDAO>(json);
-
+            Debug.Log("json in: " + json);
             Dictionary<int, Player> players_ = new Dictionary<int, Player>();
             foreach(PlayerWrapper wrapper in temp.players) {
                 Player p = wrapper.Unwrap();

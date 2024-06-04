@@ -14,6 +14,10 @@ public class Attack
     private string delivery;
     private int exploit;
 
+    private int currentResources = 0;
+    private int requiredResources = 100;
+    private int resourceRate = 0;
+
     public Attack(int id) {
         this.id = id;
     }
@@ -104,6 +108,31 @@ public class Attack
      */
     public int GetExploit() {
         return exploit;
+    }
+
+    public int GetCurrentResources() {
+        return currentResources;
+    }
+    public void SetCurrentResources(int currentResources) {
+        this.currentResources = currentResources;
+    }
+
+    public int GetRequiredResources() {
+        return requiredResources;
+    }
+    public void SetRequiredResources(int requiredResources) {
+        this.requiredResources = requiredResources;
+    }
+
+    public int GetResourceRate() {
+        return resourceRate;
+    }
+    public void SetResourceRate(int resourceRate) {
+        this.resourceRate = resourceRate;
+    }
+
+    public bool IsComplete() {
+        return currentResources > requiredResources;
     }
 
     /**

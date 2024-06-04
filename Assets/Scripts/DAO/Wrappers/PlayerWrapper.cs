@@ -15,6 +15,7 @@ public class PlayerWrapper
         money = player.GetMoney();
         overallResources = player.GetOverallResources();
         availableResources = player.GetAvailableResources();
+        Debug.Log("Player: [" + pid + ", " + availableResources);
     }
 
     public Player Unwrap() {
@@ -22,6 +23,8 @@ public class PlayerWrapper
         player.SetMoney(money);
         player.SetOverallResources(overallResources);
         player.SetAvailableResources(availableResources);
+
+        Debug.Log("Resources: " + pid + "-" + player.GetAvailableResources() + "/" + player.GetOverallResources());
 
         return player;
     }
