@@ -132,7 +132,15 @@ public class Attack
     }
 
     public bool IsComplete() {
-        return currentResources > requiredResources;
+        return currentResources >= requiredResources;
+    }
+
+    public void Reset() {
+        objective = "";
+        malware = 0;
+        delivery = "";
+        currentResources = 0;
+        exploit = 0;
     }
 
     /**

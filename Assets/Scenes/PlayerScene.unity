@@ -3090,6 +3090,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 307162847}
   playerManager: {fileID: 307162849}
+  conflictManager: {fileID: 307162850}
   malwareController: {fileID: 901058782}
   dataCenterManager: {fileID: 2112866346}
   selectionWindow: {fileID: 201984916}
@@ -4428,6 +4429,7 @@ GameObject:
   - component: {fileID: 307162848}
   - component: {fileID: 307162847}
   - component: {fileID: 307162849}
+  - component: {fileID: 307162850}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4481,6 +4483,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 307162847}
+--- !u!114 &307162850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 307162846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28a40d2171695e544ab35f7660060e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  malwareController: {fileID: 901058782}
+  playerManager: {fileID: 307162849}
 --- !u!1 &328722068
 GameObject:
   m_ObjectHideFlags: 0

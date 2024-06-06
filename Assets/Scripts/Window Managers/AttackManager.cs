@@ -14,6 +14,8 @@ public class AttackManager : MonoBehaviour
     private GameManager gameManager;
     [SerializeField]
     private PlayerManager playerManager;
+    [SerializeField]
+    private ConflictManager conflictManager;
 
     [SerializeField]
     private MalwareController malwareController;
@@ -98,7 +100,7 @@ public class AttackManager : MonoBehaviour
      *  @param {int} i - The index of the button pressed.
      */
     public void MalwareClick(int i) {
-        attacks[activeAttack].SetMalware(malwareController.GetMalware(i).GetId());
+        attacks[activeAttack].SetMalware(malwareController.GetMalware((gameManager.GetTurnPlayer() + 1) * 100 + i).GetId());
         Debug.Log("Switching Malware of Attack " + (activeAttack+1) + " to " + attacks[activeAttack].GetMalware() + ".");
     }
 
@@ -216,7 +218,13 @@ public class AttackManager : MonoBehaviour
         attacks
             .Where(a => a.Value.GetOwner() == gameManager.GetTurnPlayer())
             .ToList()
-            .ForEach(a => a.Value.SetCurrentResources(a.Value.GetCurrentResources() + a.Value.GetResourceRate()));
+            .ForEach(a => {
+                a.Value.SetCurrentResources(a.Value.GetCurrentResources() + a.Value.GetResourceRate());
+                if (a.Value.IsComplete()) {
+                    conflictManager.Interact(a.Value, dataCenterManager.GetDataCenter(a.Value.GetTarget()));
+                    a.Value.Reset();
+                }
+            });
     }
 
     /**

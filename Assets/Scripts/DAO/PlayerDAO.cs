@@ -17,7 +17,7 @@ public class PlayerDAO
         Debug.Log("json out: " + json);
     }
 
-    public void Load(PlayerManager manager) {
+    public bool Load(PlayerManager manager) {
         if(File.Exists(Application.persistentDataPath + "/playersave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/playersave.json");
             PlayerDAO temp = JsonUtility.FromJson<PlayerDAO>(json);
@@ -28,6 +28,10 @@ public class PlayerDAO
                 players_.Add(p.GetId(), p);
             }
             manager.SetPlayers(players_);
+
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -11,13 +11,16 @@ public class PlayerManager : MonoBehaviour
 
     public void Start() {
         players = new Dictionary<int, Player>();
-        if (players.Count < 1) InitPlayers();
         Load();
+        
     }
 
     public void InitPlayers() {
+        players = new Dictionary<int, Player>();
         for(int i = 0; i < gameManager.GetNumPlayers(); i++) {
-            players.Add(i, new Player(i));
+            Player player = new Player(i);
+            players.Add(i, player);
+            player.SetMoney(100);
         }
     }
 
@@ -40,6 +43,6 @@ public class PlayerManager : MonoBehaviour
 
     public void Load() {
         PlayerDAO dao = new PlayerDAO();
-        dao.Load(this);
+        if (!dao.Load(this)) InitPlayers();
     }
 }
