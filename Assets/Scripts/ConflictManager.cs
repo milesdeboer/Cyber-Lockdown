@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ConflictManager : MonoBehaviour
@@ -9,6 +10,8 @@ public class ConflictManager : MonoBehaviour
     private MalwareController malwareController;
     [SerializeField]
     private PlayerManager playerManager;
+    [SerializeField]
+    private DataCenterManager dataCenterManager;
 
     float[] weights = {1f, 0.2f, -0.8f, -0.1f};
     public void Interact(Attack attack, DataCenter dataCenter) {
@@ -17,14 +20,10 @@ public class ConflictManager : MonoBehaviour
         int[] values = malwareController.GetMalware()[attack.GetMalware()].GetAttributes();
         float chance = 0f;
 
-
-
         for (int i = 0; i < values.Length; i++)
             chance += values[i] * weights[i];
 
         chance = Math.Clamp(chance / 1.2f, 0.05f, 0.95f);
-
-        Debug.Log("Chance: " + chance);
 
         Player p0 = playerManager.GetPlayer(attack.GetOwner());
         Player p1 = playerManager.GetPlayer(dataCenter.GetOwner());
@@ -38,10 +37,28 @@ public class ConflictManager : MonoBehaviour
 
         if (chance > result) {
             Debug.Log("Attack " + attack.GetId() + " Successful :)");
-            switch(attack.GetObjective()) {
-                case "money":
-                    p0.SetMoney(p0.GetMoney() + values[3] + 1);
-                    p1.SetMoney(p1.GetMoney() - values[3] - 1);
+
+            p0.SetMoney(p0.GetMoney() + values[3] + 1);//!!!
+            p1.SetMoney(p1.GetMoney() - values[3] - 1);
+
+            switch(malwareController.GetMalware(attack.GetMalware()).GetMalwareType()) {
+                case "worm":
+                    DataCenter[] dataCenters =  dataCenterManager
+                                                    .GetDataCenters()
+                                                    .Where(d => (d.GetOwner() == dataCenter.GetOwner()))
+                                                    .ToArray();
+                    int idx = random.Next(0, dataCenters.Length);
+                    Debug.Log("Spreading Worm.");
+                    Interact(attack, dataCenters[idx]);
+                    break;
+                case "ransomware":
+
+                    break;
+                case "botnet":
+
+                    break;
+                case "adware":
+
                     break;
                 default:
                     break;
@@ -49,5 +66,9 @@ public class ConflictManager : MonoBehaviour
         } else {
             Debug.Log("Attack " + attack.GetId() + " Failed :(");
         }
+    }
+
+    private void WormAttack() {
+
     }
 }

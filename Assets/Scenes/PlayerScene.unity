@@ -981,7 +981,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Trojan
+          m_StringArgument: trojan
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &51075044
@@ -1114,7 +1114,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Rootkit
+          m_StringArgument: rootkit
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &55460538
@@ -2262,7 +2262,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: BotNet
+          m_StringArgument: botnet
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &178653954
@@ -4499,6 +4499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   malwareController: {fileID: 901058782}
   playerManager: {fileID: 307162849}
+  dataCenterManager: {fileID: 2112866346}
 --- !u!1 &328722068
 GameObject:
   m_ObjectHideFlags: 0
@@ -6478,7 +6479,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Adware
+          m_StringArgument: adware
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &395582939
@@ -15203,7 +15204,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Virus
+          m_StringArgument: virus
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1112355836
@@ -18966,7 +18967,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Ransomware
+          m_StringArgument: ransomware
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1354614680
@@ -23774,7 +23775,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Worm
+          m_StringArgument: worm
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1718123675
@@ -23790,7 +23791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
