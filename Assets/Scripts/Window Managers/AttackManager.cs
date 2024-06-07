@@ -57,9 +57,12 @@ public class AttackManager : MonoBehaviour
      */
     public void InitAttacks() {
         attacks = new Dictionary<int, Attack>();
-        for(int i = 0; i < gameManager.GetNumPlayers(); i++) {
-            for (int j = 0; j < GameManager.ATTACKS_PER_PLAYER; j++)
-            attacks.Add(i * 100 + j, new Attack(i * 100 + j));
+        for(int i = 1; i <= gameManager.GetNumPlayers(); i++) {
+            for (int j = 1; j <= GameManager.ATTACKS_PER_PLAYER; j++) {
+                Attack a = new Attack(i * 100 + j);
+                attacks.Add(i * 100 + j, a);
+                a.SetOwner(i-1);
+            }
         }
         Debug.Log("Attacks Initialized");
         initialized = true;
@@ -84,7 +87,7 @@ public class AttackManager : MonoBehaviour
     public void OnClick(int i) {
         // Set the customization window to active and set active attack
         customizationWindow.SetActive(true);
-        activeAttack = gameManager.GetTurnPlayer() * 100 + i;
+        activeAttack = (gameManager.GetTurnPlayer()+1) * 100 + i + 1;
 
         Debug.Log("Opening attack " + activeAttack + ".");
 
@@ -208,6 +211,7 @@ public class AttackManager : MonoBehaviour
         } else {
             Debug.Log("Invalid Resources");
         }
+        playerManager.UpdateDisplay();
     }
 
     private void Reset() {

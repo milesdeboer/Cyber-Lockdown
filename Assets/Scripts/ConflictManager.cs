@@ -37,6 +37,7 @@ public class ConflictManager : MonoBehaviour
         float result = (float) random.NextDouble();
 
         if (chance > result) {
+            Debug.Log("Attack " + attack.GetId() + " Successful :)");
             switch(attack.GetObjective()) {
                 case "money":
                     p0.SetMoney(p0.GetMoney() + values[3] + 1);
@@ -45,6 +46,8 @@ public class ConflictManager : MonoBehaviour
                 default:
                     break;
             }
+        } else {
+            Debug.Log("Attack " + attack.GetId() + " Failed :(");
         }
     }
 }

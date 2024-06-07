@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
     private Dictionary<int, Player> players;
+
+    [SerializeField]
+    private GameObject resources;
+    [SerializeField]
+    private GameObject money;
 
     [SerializeField]
     private GameManager gameManager;
@@ -12,7 +18,6 @@ public class PlayerManager : MonoBehaviour
     public void Start() {
         players = new Dictionary<int, Player>();
         Load();
-        
     }
 
     public void InitPlayers() {
@@ -44,5 +49,11 @@ public class PlayerManager : MonoBehaviour
     public void Load() {
         PlayerDAO dao = new PlayerDAO();
         if (!dao.Load(this)) InitPlayers();
+        UpdateDisplay();
+    }
+
+    public void UpdateDisplay() {
+        money.GetComponent<TextMeshProUGUI>().SetText("Money: " + GetPlayer(gameManager.GetTurnPlayer()).GetMoney());
+        resources.GetComponent<TextMeshProUGUI>().SetText("Resources: " + GetPlayer(gameManager.GetTurnPlayer()).GetAvailableResources());
     }
 }
