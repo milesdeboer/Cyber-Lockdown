@@ -38,8 +38,10 @@ public class ConflictManager : MonoBehaviour
         if (chance > result) {
             Debug.Log("Attack " + attack.GetId() + " Successful :)");
 
-            p0.SetMoney(p0.GetMoney() + values[3] + 1);//!!!
-            p1.SetMoney(p1.GetMoney() - values[3] - 1);
+            int amount = Math.Min(Math.Max(values[3] * p1.GetMoney() / 200, values[3] / 2), p1.GetMoney());
+
+            p0.SetMoney(p0.GetMoney() + amount);//!!!
+            p1.SetMoney(p1.GetMoney() - amount);
 
             switch(malwareController.GetMalware(attack.GetMalware()).GetMalwareType()) {
                 case "worm":
