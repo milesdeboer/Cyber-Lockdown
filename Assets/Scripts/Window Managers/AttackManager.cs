@@ -46,7 +46,7 @@ public class AttackManager : MonoBehaviour
     private bool initialized = false;
 
     public void Start() {
-        if (attacks == null) InitAttacks();
+        if (attacks == null) Load();
         InitDataCenters();
         AssignListeners();
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText("0");
@@ -55,7 +55,7 @@ public class AttackManager : MonoBehaviour
     /**
      *  Initializes the Attack Objects 
      */
-    public void InitAttacks() {
+    public void InitAttacks_() {
         attacks = new Dictionary<int, Attack>();
         for(int i = 1; i <= gameManager.GetNumPlayers(); i++) {
             for (int j = 1; j <= GameManager.ATTACKS_PER_PLAYER; j++) {
@@ -70,6 +70,10 @@ public class AttackManager : MonoBehaviour
 
     public Dictionary<int, Attack> GetAttacks() {
         return attacks;
+    }
+
+    public Attack GetAttack(int aid) {
+        return attacks[aid];
     }
 
     public void SetAttacks(Dictionary<int, Attack> attacks) {
@@ -103,7 +107,7 @@ public class AttackManager : MonoBehaviour
      *  @param {int} i - The index of the button pressed.
      */
     public void MalwareClick(int i) {
-        attacks[activeAttack].SetMalware(malwareController.GetMalware((gameManager.GetTurnPlayer() + 1) * 100 + i).GetId());
+        attacks[activeAttack].SetMalware((gameManager.GetTurnPlayer() + 1) * 100 + i);
         Debug.Log("Switching Malware of Attack " + (activeAttack+1) + " to " + attacks[activeAttack].GetMalware() + ".");
     }
 
@@ -225,8 +229,10 @@ public class AttackManager : MonoBehaviour
             .ForEach(a => {
                 a.Value.SetCurrentResources(a.Value.GetCurrentResources() + a.Value.GetResourceRate());
                 if (a.Value.IsComplete()) {
-                    conflictManager.Interact(a.Value, dataCenterManager.GetDataCenter(a.Value.GetTarget()));
-                    a.Value.Reset();
+                    conflictManager.Process(a.Value, dataCenterManager.GetDataCenter(a.Value.GetTarget()));
+                    Player p = playerManager.GetPlayer(a.Value.GetOwner());
+                    p.SetAvailableResources(p.GetAvailableResources() + a.Value.GetResourceRate());
+                    a.Value.SetResourceRate(0);
                 }
             });
     }
@@ -247,6 +253,6 @@ public class AttackManager : MonoBehaviour
 
     public void Load() {
         AttackDAO dao = new AttackDAO();
-        dao.Load(this);
+        if (!dao.Load(this)) InitAttacks_();
     }
 }

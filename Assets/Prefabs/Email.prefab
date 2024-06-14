@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 5115166597209989316}
   m_Layer: 10
   m_Name: Email
-  m_TagString: Untagged
+  m_TagString: Email
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

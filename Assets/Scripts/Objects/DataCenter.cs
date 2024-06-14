@@ -1,12 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DataCenter
 {
+    public static int BASE_DATA_CENTER_MONEY = 100;
+    public static int BASE_DATA_CENTER_RESOURCES = 50;
+
     private int id = -1;
 
     private int owner = -1;// change to id
+
+    private int active = 0;
 
     private int emailFilter = 0;
     private int dlp = 0;
@@ -18,7 +24,15 @@ public class DataCenter
 
     private double firewall = 0;    
 
-    private List<int> attacks;// change to IDs
+    private HashSet<int> attacks;
+    private HashSet<int> phishes;
+
+    private int money = BASE_DATA_CENTER_MONEY;
+    private int resources = BASE_DATA_CENTER_RESOURCES;
+
+    private Dictionary<int, int> exploits;
+
+    private HashSet<DateTime> record;
 
     private GameObject[] emails;
     private int[] malMail;//!!! change to int[]
@@ -28,7 +42,10 @@ public class DataCenter
 
     public DataCenter(int id) {
         this.id = id;
-        attacks = new List<int>();
+        attacks = new HashSet<int>();
+        phishes = new HashSet<int>();
+        exploits = new Dictionary<int, int>();
+        record = new HashSet<DateTime>();
     }
 
     public int GetOwner() {
@@ -37,6 +54,21 @@ public class DataCenter
 
     public void SetOwner(int owner) {
         this.owner = owner;
+    }
+
+    public int GetMoney() {
+        return money;
+    }
+
+    public void SetMoney(int money) {
+        this.money = money;
+    }
+
+    public int GetResources() {
+        return resources;
+    }
+    public void SetResources(int resources) {
+        this.resources = resources;
     }
 
     public int GetEmailFilter() {
@@ -88,12 +120,27 @@ public class DataCenter
         this.firewall = firewall;
     }
 
-    public List<int> GetAttacks() {
+    public HashSet<int> GetAttacks() {
         return attacks;
     }
 
-    public void SetAttacks(List<int> attacks) {
+    public void AddAttack(int attack) {
+        attacks.Add(attack);
+    }
+
+    public void SetAttacks(HashSet<int> attacks) {
         this.attacks = attacks;
+    }
+
+    public HashSet<int> GetPhishes() {
+        return phishes;
+    }
+
+    public void AddPhish(int phish) {
+        phishes.Add(phish);
+    }
+    public void SetPhishes(HashSet<int> phishes) {
+        this.phishes = phishes;
     }
 
     public GameObject[] GetEmails() {
@@ -105,6 +152,33 @@ public class DataCenter
 
     public int[] GetMalMail() {
         return malMail;
+    }
+
+    public Dictionary<int, int> GetExploits() {
+        return exploits;
+    }
+    public void SetExploits(Dictionary<int, int> exploits) {
+        this.exploits = exploits;
+    }
+
+    public void AddExploit(int pid, int amount) {
+        if (exploits.ContainsKey(pid)) exploits[pid] = Math.Max(exploits[pid], amount);
+        else exploits.Add(pid, amount);
+    }
+
+    public int GetExploit(int pid) {
+
+        return exploits.ContainsKey(pid) ? exploits[pid] : 0;
+    }
+    public void AddRecord(DateTime dt) {
+        record.Add(dt);
+    }
+
+    public HashSet<DateTime> GetRecord() {
+        return record;
+    }
+    public void SetRecord(HashSet<DateTime> record) {
+        this.record = record;
     }
 
     public void SetMalMail(int[] malMail) {
@@ -124,6 +198,22 @@ public class DataCenter
 
     public void SetMalTraffic(int[] malTraffic) {
         this.malTraffic = malTraffic;
+    }
+
+    public bool IsActive() {
+        return active == 0;
+    }
+
+    public int GetActive() {
+        return active;
+    }
+
+    public void SetActive(int active) {
+        this.active = active;
+    }
+
+    public int GetMoneyProduction() {
+        return IsActive() ? money : 0;
     }
 
     /**

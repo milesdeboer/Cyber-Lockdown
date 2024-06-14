@@ -19,7 +19,7 @@ public class AttackDAO
         Debug.Log("Save Location: " + Application.persistentDataPath + "/attacksave.json");
     }
 
-    public void Load(AttackManager manager) {
+    public bool Load(AttackManager manager) {
         if(File.Exists(Application.persistentDataPath + "/attacksave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/attacksave.json");
             AttackDAO temp = JsonUtility.FromJson<AttackDAO>(json);
@@ -31,6 +31,8 @@ public class AttackDAO
             }
 
             manager.SetAttacks(attacks_);
-        }
+
+            return true;
+        } else return false;
     }
 }

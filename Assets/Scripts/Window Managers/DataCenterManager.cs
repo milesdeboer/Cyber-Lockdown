@@ -8,12 +8,19 @@ using TMPro;
 
 public class DataCenterManager : MonoBehaviour
 {
+    public static int BASE_DATA_CENTER_MONEY = 20;
+    public static int BASE_DATA_CENTER_RESOURCES = 20;
+
     [SerializeField] 
     private GameManager gameManager;
+    [SerializeField]
+    private ConflictManager conflictManager;
     [SerializeField]
     private MalwareController malwareManager;
     [SerializeField]
     private AttackManager attackManager;
+    [SerializeField]
+    private PlayerManager playerManager;
 
     [SerializeField]
     private GameObject selectionWindow;
@@ -39,10 +46,7 @@ public class DataCenterManager : MonoBehaviour
 
     private int currentDataCenter = 0;
 
-    private bool initialized = false;
-
     public void Start() {
-        if (!initialized) InitDataCenters();
         InitButtons();
         InitSelectionListeners();
         InitEmail();
@@ -59,7 +63,6 @@ public class DataCenterManager : MonoBehaviour
             // Temperary
             dataCenters[i].SetOwner(i / GameManager.DATA_CENTERS_PER_PLAYER);
         }
-        initialized = true;
     }
 
     /**
@@ -140,10 +143,13 @@ public class DataCenterManager : MonoBehaviour
     }
 
     public void ResetSetup() {
+        Debug.Log("Starting Setup");
         GameObject[] sliders = GameObject.FindGameObjectsWithTag("DataCenterAttribute");
         Slider slider = sliders[0].GetComponent<Slider>();
         if (slider != null) 
             slider.value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
+
+        InitEmail();
     }
 
     /**
@@ -152,7 +158,7 @@ public class DataCenterManager : MonoBehaviour
      */
     public void AttributeClick(string attribute) {
         switch(attribute) {
-            case "emailFilter":
+            case "emailFiltering":
                 // Increase the Email Filtering level of the current data center by one
                 dataCenters[currentDataCenter].SetEmailFilter(dataCenters[currentDataCenter].GetEmailFilter()+1);
                 break;
@@ -178,12 +184,7 @@ public class DataCenterManager : MonoBehaviour
                 break;
             default:
                 // Set all attributes of current data center to -1 if incorrect attribute passed
-                dataCenters[currentDataCenter].SetEmailFilter(-1);
-                dataCenters[currentDataCenter].SetDLP(-1);
-                dataCenters[currentDataCenter].SetHiddenStructure(-1);
-                dataCenters[currentDataCenter].SetEncryption(-1);
-                dataCenters[currentDataCenter].SetIDS(-1);
-                dataCenters[currentDataCenter].SetIPS(-1);
+                Debug.Log("Invalid Attribute: " + attribute);
                 break;
         }
         Debug.Log("Increased " + attribute + " of data center " + currentDataCenter + " by one.");
@@ -207,7 +208,9 @@ public class DataCenterManager : MonoBehaviour
      *  Initialize email objects and distributes malware amongst them
      */
     public void InitEmail() {
-        int index = 0;
+        // Destroy existing emails
+        GameObject[] emails_ = GameObject.FindGameObjectsWithTag("Email");
+        foreach(GameObject email in emails_) Destroy(email);
 
         // Generate random email order
         System.Random random = new System.Random();
@@ -231,30 +234,22 @@ public class DataCenterManager : MonoBehaviour
         // Declare malicious email array
         Attack[] malMail = new Attack[emails.Length];
 
-        if (!attackManager.IsInitialized()) attackManager.InitAttacks();
+        if (!attackManager.IsInitialized()) attackManager.Load();
 
-        Attack[] attacks = attackManager
+        int i = 0;
+        attackManager
             .GetAttacks()
             .Where(attack => dataCenters[currentDataCenter]
-                .GetAttacks()
+                .GetPhishes()
                 .Any(a => a == attack.Value.GetId()))
-            .Select(attack => attack.Value)
-            .ToArray();
+            .Select(a => a.Value)
+            .Take(emails.Length)
+            .ToList()
+            .ForEach(a => {
+                emails[i].name = a.GetId().ToString();
+                i++;
+            });
 
-        // Iterate through all attacks at current data center
-        foreach (Attack attack in attacks) {
-            // Get the malware associated with the attack
-            Malware malware = malwareManager.GetMalware(attack.GetMalware());
-            // If the malware is phishing, add the attack to malicious email array
-            if (malware.GetMalwareType() == "phishing") {
-                malMail[index] = attack;
-                index++;
-                // If more phishing malware than available emails, then don't continue
-                if (index > emails.Length) break;
-            }
-        }
-
-        dataCenters[currentDataCenter].SetMalMail(malMail.Select(attack => (attack == null) ? -1 : attack.GetId()).ToArray());
         InitEmailListeners();
     }
 
@@ -286,11 +281,15 @@ public class DataCenterManager : MonoBehaviour
      */
     public void EmailClick(GameObject self, bool accepted) {
         if (accepted) {
-            // if infected, inflict damage
-            // boost work
+            int aid;
+            if (Int32.TryParse(self.name, out aid)) {
+                Attack phish = attackManager.GetAttack(aid);
+                conflictManager.Infect(phish, dataCenters[currentDataCenter]);
+                playerManager.UpdateDisplay();
+                dataCenters[currentDataCenter].GetPhishes().Remove(phish.GetId());
+            }
         }
         Destroy(self);
-        Debug.Log("Accepted: " + accepted);
     }
 
     
@@ -319,7 +318,7 @@ public class DataCenterManager : MonoBehaviour
         // Declare malicous traffic array
         Attack[] malTraffic = new Attack[trafficObjects.Length];
 
-        if (!attackManager.IsInitialized()) attackManager.InitAttacks();
+        if (!attackManager.IsInitialized()) attackManager.Load();
 
         Attack[] attacks = attackManager
             .GetAttacks()
@@ -387,7 +386,19 @@ public class DataCenterManager : MonoBehaviour
 
     public void SetDataCenters(List<DataCenter> dataCenters) {
         this.dataCenters = dataCenters;
-        initialized = true;
+    }
+
+    public void Work() {
+        Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
+
+        dataCenters
+            .Where(d => d.GetOwner() == player.GetId())
+            .ToList()
+            .ForEach(d => {
+                if (d.IsActive())
+                    player.SetMoney(player.GetMoney() + d.GetMoney());
+                d.SetActive(Math.Max(d.GetActive()-1, 0));
+            });
     }
 
     public void Save() {
@@ -397,6 +408,6 @@ public class DataCenterManager : MonoBehaviour
 
     public void Load() {
         DataCenterDAO dao = new DataCenterDAO();
-        dao.Load(this);
+        if (!dao.Load(this)) InitDataCenters();
     }
 }

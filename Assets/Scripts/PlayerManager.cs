@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
         for(int i = 0; i < gameManager.GetNumPlayers(); i++) {
             Player player = new Player(i);
             players.Add(i, player);
-            player.SetMoney(100);
+            player.SetMoney(10000);
         }
     }
 

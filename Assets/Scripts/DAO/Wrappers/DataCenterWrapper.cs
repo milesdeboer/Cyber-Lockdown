@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,13 @@ public class DataCenterWrapper
     public double firewall;
 
     public int[] attacks;
+    public int[] phishes;
+
+    public int active;
+    public int money;
+    public int resources;
+    public List<int> exploits = new List<int>();
+    public List<string> record = new List<string>();
 
     public DataCenterWrapper(DataCenter dataCenter) {
         did = dataCenter.GetId();
@@ -31,7 +39,21 @@ public class DataCenterWrapper
 
         firewall = dataCenter.GetFirewall();
 
-        attacks = dataCenter.GetAttacks().ToArray();
+        attacks = new int[dataCenter.GetAttacks().Count];
+        dataCenter.GetAttacks().CopyTo(attacks);
+        phishes = new int[dataCenter.GetPhishes().Count];
+        dataCenter.GetPhishes().CopyTo(phishes);
+
+        active = dataCenter.GetActive();
+        money = dataCenter.GetMoney();
+        resources = dataCenter.GetResources();
+
+        foreach(KeyValuePair<int, int> pair in dataCenter.GetExploits()) {
+            exploits.Add(pair.Key);
+            exploits.Add(pair.Value);
+        }
+        foreach(DateTime time in dataCenter.GetRecord())
+            record.Add(time.ToString());
     }   
 
     public DataCenter Unwrap() {
@@ -45,7 +67,22 @@ public class DataCenterWrapper
         output.SetIDS(ids);
         output.SetIPS(ips);
         output.SetFirewall(firewall);
-        output.SetAttacks(attacks.ToList());
+        output.SetAttacks(new HashSet<int>(phishes.ToList()));
+        output.SetPhishes(new HashSet<int>(phishes.ToList()));
+
+        output.SetActive(active);
+        output.SetMoney(money);
+        output.SetResources(resources);
+
+        Dictionary<int, int> exploits_ = new Dictionary<int, int>();
+        for (int i = 0; i < exploits.Count; i+=2)
+            exploits_.Add(exploits[i], exploits[i+1]);
+        output.SetExploits(exploits_);
+
+        HashSet<DateTime> record_ = new HashSet<DateTime>();
+        foreach(string time in record)
+            record_.Add(DateTime.Parse(time));
+        output.SetRecord(record_);
 
         return output;
     }

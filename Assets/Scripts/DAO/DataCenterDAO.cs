@@ -19,7 +19,7 @@ public class DataCenterDAO
         Debug.Log("Save Location: " + Application.persistentDataPath + "/datacentersave.json");
     }
 
-    public void Load(DataCenterManager manager) {
+    public bool Load(DataCenterManager manager) {
         if (File.Exists(Application.persistentDataPath + "/datacentersave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/datacentersave.json");
             DataCenterDAO temp = JsonUtility.FromJson<DataCenterDAO>(json);
@@ -30,6 +30,8 @@ public class DataCenterDAO
             }
 
             manager.SetDataCenters(dataCenters_);
-        }
+
+            return true;
+        } else return false;
     }
 }
