@@ -8,6 +8,7 @@ TagManager:
   - MalwareAttribute
   - DataCenterAttribute
   - Email
+  - Notification
   layers:
   - Default
   - TransparentFX

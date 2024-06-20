@@ -35,6 +35,8 @@ public class GameManager : MonoBehaviour
     private AttackManager attackManager;
     [SerializeField]
     private PlayerManager playerManager;
+    [SerializeField]
+    private NotificationManager notificationManager;
 
     [SerializeField]
     private GameObject turnNumberObject;
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
         dataCenterManager.Load();
         malwareManager.Load();
         attackManager.Load();
+        notificationManager.Load();
         turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
         InitColors();
     }

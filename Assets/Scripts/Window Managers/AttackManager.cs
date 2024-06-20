@@ -209,7 +209,7 @@ public class AttackManager : MonoBehaviour
             player.SetAvailableResources(player.GetAvailableResources() - change);
             resourceDisplay.GetComponent<TextMeshProUGUI>().SetText((Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) + change).ToString());
 
-            attacks[activeAttack].SetResourceRate(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text));
+            attacks[activeAttack].SetWorkRate(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text));
 
             Debug.Log("Available: " + player.GetAvailableResources());
         } else {
@@ -219,7 +219,7 @@ public class AttackManager : MonoBehaviour
     }
 
     private void Reset() {
-        resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetResourceRate().ToString());
+        resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRate().ToString());
     }
 
     public void Work() {
@@ -227,12 +227,12 @@ public class AttackManager : MonoBehaviour
             .Where(a => a.Value.GetOwner() == gameManager.GetTurnPlayer())
             .ToList()
             .ForEach(a => {
-                a.Value.SetCurrentResources(a.Value.GetCurrentResources() + a.Value.GetResourceRate());
+                a.Value.SetWorkResources(a.Value.GetWorkResources() + a.Value.GetWorkRate());
                 if (a.Value.IsComplete()) {
                     conflictManager.Process(a.Value, dataCenterManager.GetDataCenter(a.Value.GetTarget()));
                     Player p = playerManager.GetPlayer(a.Value.GetOwner());
-                    p.SetAvailableResources(p.GetAvailableResources() + a.Value.GetResourceRate());
-                    a.Value.SetResourceRate(0);
+                    p.SetAvailableResources(p.GetAvailableResources() + a.Value.GetWorkRate());
+                    a.Value.SetWorkRate(0);
                 }
             });
     }

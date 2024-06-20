@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataCenter
+public class DataCenter : Workable
 {
     public static int BASE_DATA_CENTER_MONEY = 100;
     public static int BASE_DATA_CENTER_RESOURCES = 50;
@@ -35,10 +35,15 @@ public class DataCenter
     private HashSet<DateTime> record;
 
     private GameObject[] emails;
-    private int[] malMail;//!!! change to int[]
+    private int[] malMail;
 
     private GameObject[] traffic;
-    private int[] malTraffic;//!!! change to int[] - See Notes @ 2024-05-31
+    private int[] malTraffic;
+
+    private int workResources;
+    private int workRequirement;
+    private int workRate;
+    private string workTarget;
 
     public DataCenter(int id) {
         this.id = id;
@@ -204,6 +209,10 @@ public class DataCenter
         return active == 0;
     }
 
+    public bool IsComplete() {
+        return workResources >= workRequirement && workRequirement > 0;
+    }
+
     public int GetActive() {
         return active;
     }
@@ -214,6 +223,77 @@ public class DataCenter
 
     public int GetMoneyProduction() {
         return IsActive() ? money : 0;
+    }
+
+    public int GetWorkResources() {
+        return workResources;
+    }
+    public void SetWorkResources(int resources) {
+        this.workResources = resources;
+    }
+    public void AddWorkResources(int resources) {
+        this.workResources += resources;
+    }
+
+    public int GetWorkRequirement() {
+        return workRequirement;
+    }
+    public void SetWorkRequirement(int requirement) {
+        this.workRequirement = requirement;
+    }
+
+    public string GetWorkTarget() {
+        return workTarget;
+    }
+    public void SetWorkTarget(string target) {
+        this.workTarget = target;
+    }
+
+    public void AddTarget(string target) {
+        workTarget += "/" + target;
+    }
+
+    public int GetWorkRate() {
+        return workRate;
+    }
+    public void SetWorkRate(int rate) {
+        this.workRate = rate;
+    }
+    public void AddWorkRate(int rate) {
+        this.workRate += rate;
+    }
+
+    public void IncrementAttribute(string attr) {
+        Debug.Log("Incrementing " + attr);
+        switch(attr) {
+            case "emailFiltering":
+                // Increase the Email Filtering level of the current data center by one
+                emailFilter++;
+                break;
+            case "dlp":
+                // Increase the Data Loss Prevention level of the current data center by one
+                dlp++;
+                break;
+            case "hiddenStructure":
+                // Increase the Hidden Structure level of the current data center by one
+                hiddenStructure++;
+                break;
+            case "encryption":
+                // Increase the Encryption level of the current data center by one
+                encryption++;
+                break;
+            case "ids":
+                // Increase the Intrusion Detection System level of the current data center by one
+                ids++;
+                break;
+            case "ips":
+                // Increase the Intrusion Prevention System level of the current data center by one
+                ips++;
+                break;
+            default:
+                Debug.Log("Invalid Attribute: " + attr);
+                return;
+        }
     }
 
     /**

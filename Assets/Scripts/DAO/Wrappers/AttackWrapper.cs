@@ -25,9 +25,9 @@ public class AttackWrapper
         objective = attack.GetObjective();
         delivery = attack.GetDelivery();
         exploit = attack.GetExploit();
-        currentResources = attack.GetCurrentResources();
-        requiredResources = attack.GetRequiredResources();
-        resourceRate = attack.GetResourceRate();
+        currentResources = attack.GetWorkResources();
+        requiredResources = attack.GetWorkRequirement();
+        resourceRate = attack.GetWorkRate();
     }
 
     public Attack Unwrap() {
@@ -39,9 +39,9 @@ public class AttackWrapper
         attack.SetObjective(objective);
         attack.SetDelivery(delivery);
         attack.SetExploit(exploit);
-        attack.SetCurrentResources(currentResources);
-        attack.SetRequiredResources(requiredResources);
-        attack.SetResourceRate(resourceRate);
+        attack.SetWorkResources(currentResources);
+        attack.SetWorkRequirement(requiredResources);
+        attack.SetWorkRate(resourceRate);
 
         return attack;
     }

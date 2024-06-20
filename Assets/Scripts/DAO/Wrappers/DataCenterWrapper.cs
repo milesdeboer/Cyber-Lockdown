@@ -26,6 +26,11 @@ public class DataCenterWrapper
     public List<int> exploits = new List<int>();
     public List<string> record = new List<string>();
 
+    public string target;
+    public int workResources;
+    public int workRequirement;
+    public int workRate;
+
     public DataCenterWrapper(DataCenter dataCenter) {
         did = dataCenter.GetId();
         owner = dataCenter.GetOwner();
@@ -54,6 +59,11 @@ public class DataCenterWrapper
         }
         foreach(DateTime time in dataCenter.GetRecord())
             record.Add(time.ToString());
+
+        target = dataCenter.GetWorkTarget();
+        workResources = dataCenter.GetWorkResources();
+        workRequirement = dataCenter.GetWorkRequirement();
+        workRate = dataCenter.GetWorkRate();
     }   
 
     public DataCenter Unwrap() {
@@ -83,6 +93,11 @@ public class DataCenterWrapper
         foreach(string time in record)
             record_.Add(DateTime.Parse(time));
         output.SetRecord(record_);
+
+        output.SetWorkTarget(target);
+        output.SetWorkResources(workResources);
+        output.SetWorkRequirement(workRequirement);
+        output.SetWorkRate(workRate);
 
         return output;
     }

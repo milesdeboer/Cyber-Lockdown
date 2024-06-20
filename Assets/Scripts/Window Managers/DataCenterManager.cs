@@ -40,6 +40,9 @@ public class DataCenterManager : MonoBehaviour
     [SerializeField]
     private GameObject trafficSubWindow;
 
+    [SerializeField]
+    private GameObject resourceDisplay;
+
     private List<DataCenter> dataCenters;
     private List<GameObject> dataCenterButtons;
 
@@ -148,7 +151,7 @@ public class DataCenterManager : MonoBehaviour
         Slider slider = sliders[0].GetComponent<Slider>();
         if (slider != null) 
             slider.value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
-
+        resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(dataCenters[currentDataCenter].GetWorkRate().ToString());
         InitEmail();
     }
 
@@ -157,36 +160,8 @@ public class DataCenterManager : MonoBehaviour
      *  @param {string} attribute - The name of the attribute being changed.
      */
     public void AttributeClick(string attribute) {
-        switch(attribute) {
-            case "emailFiltering":
-                // Increase the Email Filtering level of the current data center by one
-                dataCenters[currentDataCenter].SetEmailFilter(dataCenters[currentDataCenter].GetEmailFilter()+1);
-                break;
-            case "dlp":
-                // Increase the Data Loss Prevention level of the current data center by one
-                dataCenters[currentDataCenter].SetDLP(dataCenters[currentDataCenter].GetDLP()+1);
-                break;
-            case "hiddenStructure":
-                // Increase the Hidden Structure level of the current data center by one
-                dataCenters[currentDataCenter].SetHiddenStructure(dataCenters[currentDataCenter].GetHiddenStructure()+1);
-                break;
-            case "encryption":
-                // Increase the Encryption level of the current data center by one
-                dataCenters[currentDataCenter].SetEncryption(dataCenters[currentDataCenter].GetEncryption()+1);
-                break;
-            case "ids":
-                // Increase the Intrusion Detection System level of the current data center by one
-                dataCenters[currentDataCenter].SetIDS(dataCenters[currentDataCenter].GetIDS()+1);
-                break;
-            case "ips":
-                // Increase the Intrusion Prevention System level of the current data center by one
-                dataCenters[currentDataCenter].SetIPS(dataCenters[currentDataCenter].GetIPS()+1);
-                break;
-            default:
-                // Set all attributes of current data center to -1 if incorrect attribute passed
-                Debug.Log("Invalid Attribute: " + attribute);
-                break;
-        }
+        dataCenters[currentDataCenter].AddTarget(attribute);
+        dataCenters[currentDataCenter].SetWorkRequirement(dataCenters[currentDataCenter].GetWorkRequirement() + 20);
         Debug.Log("Increased " + attribute + " of data center " + currentDataCenter + " by one.");
     }
 
@@ -388,6 +363,24 @@ public class DataCenterManager : MonoBehaviour
         this.dataCenters = dataCenters;
     }
 
+    public void ResourceClick(int change) {
+        Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
+        if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
+            !(player.GetAvailableResources() - change < 0) &&
+            !(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) == 0 && change < 0)) {
+
+            player.SetAvailableResources(player.GetAvailableResources() - change);
+            resourceDisplay.GetComponent<TextMeshProUGUI>().SetText((Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) + change).ToString());
+
+            dataCenters[currentDataCenter].SetWorkRate(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text));
+
+            Debug.Log("Available: " + player.GetAvailableResources());
+        } else {
+            Debug.Log("Invalid Resources");
+        }
+        playerManager.UpdateDisplay();
+    }
+
     public void Work() {
         Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
 
@@ -395,8 +388,20 @@ public class DataCenterManager : MonoBehaviour
             .Where(d => d.GetOwner() == player.GetId())
             .ToList()
             .ForEach(d => {
-                if (d.IsActive())
+                if (d.IsActive()) {
+                    d.AddWorkResources(d.GetWorkRate());
+                    if (d.IsComplete()) {
+                        d.GetWorkTarget().Split("/").Skip(1).ToList()
+                            .ForEach(t => d.IncrementAttribute(t.ToString()));
+                        player.SetAvailableResources(player.GetAvailableResources() + d.GetWorkRate());
+                        d.SetWorkTarget("");
+                        d.SetWorkResources(0);
+                        d.SetWorkRequirement(0);
+                        d.SetWorkRate(0);
+                        Debug.Log("Work on Data Center is Complete");
+                    }
                     player.SetMoney(player.GetMoney() + d.GetMoney());
+                }
                 d.SetActive(Math.Max(d.GetActive()-1, 0));
             });
     }

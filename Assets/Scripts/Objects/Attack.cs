@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Attack
+public class Attack : Workable
 {
     private int id = -1;
 
@@ -14,9 +14,10 @@ public class Attack
     private string delivery;
     private int exploit;
 
-    private int currentResources = 0;
-    private int requiredResources = 100;
-    private int resourceRate = 0;
+    private int workResources = 0;
+    private int workRequirement = 100;
+    private int workRate = 0;
+    private string workTarget = "self";
 
     public Attack(int id) {
         this.id = id;
@@ -110,36 +111,46 @@ public class Attack
         return exploit;
     }
 
-    public int GetCurrentResources() {
-        return currentResources;
+    public int GetWorkResources() {
+        return workResources;
     }
-    public void SetCurrentResources(int currentResources) {
-        this.currentResources = currentResources;
+    public void SetWorkResources(int currentResources) {
+        this.workResources = currentResources;
     }
-
-    public int GetRequiredResources() {
-        return requiredResources;
-    }
-    public void SetRequiredResources(int requiredResources) {
-        this.requiredResources = requiredResources;
+    public void AddWorkResources(int workResources) {
+        this.workResources += workResources;
     }
 
-    public int GetResourceRate() {
-        return resourceRate;
+    public int GetWorkRequirement() {
+        return workRequirement;
     }
-    public void SetResourceRate(int resourceRate) {
-        this.resourceRate = resourceRate;
+    public void SetWorkRequirement(int requiredResources) {
+        this.workRequirement = requiredResources;
+    }
+
+    public int GetWorkRate() {
+        return workRate;
+    }
+    public void SetWorkRate(int resourceRate) {
+        this.workRate = resourceRate;
+    }
+
+    public string GetWorkTarget() {
+        return workTarget;
+    }
+    public void SetWorkTarget(string workTarget) {
+        this.workTarget = workTarget;
     }
 
     public bool IsComplete() {
-        return currentResources >= requiredResources;
+        return workResources >= workRequirement;
     }
 
     public void Reset() {
         objective = "";
         malware = 0;
         delivery = "";
-        currentResources = 0;
+        workResources = 0;
         exploit = 0;
     }
 
