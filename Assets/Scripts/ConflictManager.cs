@@ -9,6 +9,8 @@ public class ConflictManager : MonoBehaviour
     [SerializeField]
     private MalwareController malwareController;
     [SerializeField]
+    private AttackManager attackManager;
+    [SerializeField]
     private PlayerManager playerManager;
     [SerializeField]
     private DataCenterManager dataCenterManager;
@@ -148,9 +150,34 @@ public class ConflictManager : MonoBehaviour
                 //requires goals
                 break;
 
-            case "sabotage":
-                // look through all of the owner's attacks/malware/datacenter and pick one at random if work is being done and set work done to 0
-                // workable interface - work target (self)
+            case "sabotage"://implement intrusion. keep goin until intrusion is 0
+                // customize notification to stage what was sabotaged
+                List<Workable> works = new List<Workable>();
+
+                works.AddRange(malwareController.GetMalware().Values
+                    .Where(w => w.GetOwner() == dc.GetOwner())
+                    .Where(w => w.GetWorkResources() > 0)
+                    .ToList());
+                works.AddRange(attackManager.GetAttacks().Values
+                    .Where(w => w.GetOwner() == dc.GetOwner())
+                    .Where(w => w.GetWorkResources() > 0)
+                    .ToList());
+                works.AddRange(dataCenterManager.GetDataCenters()
+                    .Where(w => w.GetOwner() == dc.GetOwner())
+                    .Where(w => w.GetWorkResources() > 0)
+                    .ToList());
+
+                System.Random rand = new System.Random();
+                int i = rand.Next(0, works.Count);
+
+                works[i].SetWorkResources(0);
+
+                title1 = "You sabotaged another Player's Project :D";
+                body1 = "Attack " + a.GetId() + " was successful and you have set the resources spent on another player's projects to zero.";
+                title2 = "ON eof your project was sabotaged :()";
+                body2 = "Another player has Sabotaged one of your projects.";
+                notify = true;
+
                 break;
             
             case "disable":
