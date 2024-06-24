@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8825051118828398395}
   - component: {fileID: 3058103519526097237}
   m_Layer: 10
-  m_Name: Email Address
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,15 +27,15 @@ RectTransform:
   m_GameObject: {fileID: 5558694847129561915}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 4, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1319920473774003926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8, y: -50.8}
-  m_SizeDelta: {x: 90, y: 50}
+  m_AnchoredPosition: {x: -4.5, y: 6}
+  m_SizeDelta: {x: 140, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8825051118828398395
 CanvasRenderer:
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.2
-  m_fontSizeBase: 7.2
+  m_fontSize: 5
+  m_fontSizeBase: 5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -162,15 +162,15 @@ RectTransform:
   m_GameObject: {fileID: 5700360871026244816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1319920473774003926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: -22}
-  m_SizeDelta: {x: 10, y: 40}
+  m_AnchoredPosition: {x: 37.4, y: -5.1}
+  m_SizeDelta: {x: 35, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6389306680841809898
 CanvasRenderer:
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 5115166597209989316}
   m_Layer: 10
   m_Name: Email
-  m_TagString: Email
+  m_TagString: Notification
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,19 +281,19 @@ RectTransform:
   m_GameObject: {fileID: 6502103607480083389}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.1}
-  m_LocalScale: {x: 0.95, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 64000360218426405}
   - {fileID: 8653327176644534885}
   - {fileID: 3231338544067653713}
   - {fileID: 7731731981913601600}
+  - {fileID: 64000360218426405}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 207, y: 275}
-  m_SizeDelta: {x: 110, y: 100}
+  m_SizeDelta: {x: 80, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4751331830757630888
 CanvasRenderer:
@@ -345,7 +345,7 @@ GameObject:
   - component: {fileID: 3823726305448955665}
   - component: {fileID: 6076160251710777842}
   m_Layer: 10
-  m_Name: Email Text
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,15 +360,15 @@ RectTransform:
   m_GameObject: {fileID: 8283800454716280325}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 4, z: 1}
+  m_LocalScale: {x: 1, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1319920473774003926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -8, y: -82.2}
-  m_SizeDelta: {x: 90, y: 50}
+  m_AnchoredPosition: {x: -4.51, y: -2.2}
+  m_SizeDelta: {x: 70, y: 10.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3823726305448955665
 CanvasRenderer:
@@ -425,8 +425,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 7.2
-  m_fontSizeBase: 7.2
+  m_fontSize: 1
+  m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -495,15 +495,15 @@ RectTransform:
   m_GameObject: {fileID: 8677646822744490121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1319920473774003926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 22}
-  m_SizeDelta: {x: 10, y: 40}
+  m_AnchoredPosition: {x: 37.4, y: 4.52}
+  m_SizeDelta: {x: 35, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &81720830188483532
 CanvasRenderer:

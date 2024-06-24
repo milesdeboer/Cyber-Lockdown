@@ -137,6 +137,10 @@ public class DataCenter : Workable
         this.attacks = attacks;
     }
 
+    public void RemoveAttack(int attack) {
+        attacks.Remove(attack);
+    }
+
     public HashSet<int> GetPhishes() {
         return phishes;
     }
@@ -174,6 +178,10 @@ public class DataCenter : Workable
     public int GetExploit(int pid) {
 
         return exploits.ContainsKey(pid) ? exploits[pid] : 0;
+    }
+
+    public void RemoveExploit(int pid) {
+        if (exploits.ContainsKey(pid)) exploits.Remove(pid);
     }
     public void AddRecord(DateTime dt) {
         record.Add(dt);

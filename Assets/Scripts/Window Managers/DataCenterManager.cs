@@ -21,6 +21,8 @@ public class DataCenterManager : MonoBehaviour
     private AttackManager attackManager;
     [SerializeField]
     private PlayerManager playerManager;
+    [SerializeField]
+    private NotificationManager notificationManager;
 
     [SerializeField]
     private GameObject selectionWindow;
@@ -52,7 +54,7 @@ public class DataCenterManager : MonoBehaviour
     public void Start() {
         InitButtons();
         InitSelectionListeners();
-        InitEmail();
+        //InitEmail();
         InitTraffic();
     }
 
@@ -147,12 +149,14 @@ public class DataCenterManager : MonoBehaviour
 
     public void ResetSetup() {
         Debug.Log("Starting Setup");
-        GameObject[] sliders = GameObject.FindGameObjectsWithTag("DataCenterAttribute");
+        GameObject[] sliders = GameObject.FindGameObjectsWithTag("DataCenterAttribute").Where(g => g.GetComponent<Slider>() != null).ToArray();
         Slider slider = sliders[0].GetComponent<Slider>();
         if (slider != null) 
             slider.value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(dataCenters[currentDataCenter].GetWorkRate().ToString());
-        InitEmail();
+        InitTraffic();
+        //InitEmail();
+        UpdateAttributes();
     }
 
     /**
@@ -163,6 +167,72 @@ public class DataCenterManager : MonoBehaviour
         dataCenters[currentDataCenter].AddTarget(attribute);
         dataCenters[currentDataCenter].SetWorkRequirement(dataCenters[currentDataCenter].GetWorkRequirement() + 20);
         Debug.Log("Increased " + attribute + " of data center " + currentDataCenter + " by one.");
+        UpdateAttributes();
+    }
+
+    public void CancelWorkClick(string attribute) {
+        string work = dataCenters[currentDataCenter].GetWorkTarget();
+        List<string> targets = work.Split("/").Skip(1).ToList();
+        targets.Remove(attribute);
+        dataCenters[currentDataCenter].SetWorkTarget(string.Join("/", targets));
+        UpdateAttributes();
+    }
+
+    public void UpdateAttributes() {
+        Dictionary<string, int> attrIdx= new Dictionary<string, int>(){
+            {"emailFiltering", 0},
+            {"dlp", 1},
+            {"hiddenStructure", 2},
+            {"encryption", 3},
+            {"ids", 4},
+            {"ips", 5},
+            {"money", 6},
+            {"production", 7}
+        };
+        GameObject[] attributes = GameObject.FindGameObjectsWithTag("DataCenterAttribute");
+
+        List<string> targets = dataCenters[currentDataCenter].GetWorkTarget().Split("/").Skip(1).ToList();
+        int[] levels = new int[8];
+        dataCenters[currentDataCenter]
+            .GetWorkTarget()
+            .Split("/")
+            .Skip(1)
+            .ToList()
+            .ForEach(t => {
+                levels[attrIdx[t]]++;
+            });
+
+        foreach(GameObject g in attributes) {
+            string aLevel = "";
+            switch(g.name) {
+                case "Email Filtering":
+                    aLevel = dataCenters[currentDataCenter].GetEmailFilter().ToString() + ((levels[0] > 0) ? ("+" + levels[0].ToString()) : "");
+                    break;
+                case "Data Loss Prevention":
+                    aLevel = dataCenters[currentDataCenter].GetDLP().ToString() + ((levels[1] > 0) ? "+" + levels[1].ToString() : "");
+                    break;
+                case "Hide Structure":
+                    aLevel = dataCenters[currentDataCenter].GetHiddenStructure().ToString() + ((levels[2] > 0) ? "+" + levels[2].ToString() : "");
+                    break;
+                case "Encryption":
+                    aLevel = dataCenters[currentDataCenter].GetEncryption().ToString() + ((levels[3] > 0) ? "+" + levels[3].ToString() : "");
+                    break;
+                case "IDS":
+                    aLevel = dataCenters[currentDataCenter].GetIDS().ToString() + ((levels[4] > 0) ? "+" + levels[4].ToString() : "");
+                    break;
+                case "IPS":
+                    aLevel = dataCenters[currentDataCenter].GetIPS().ToString() + ((levels[5] > 0) ? "+" + levels[5].ToString() : "");
+                    break;
+                case "Money":
+
+                    break;
+                case "Production":
+
+                    break;
+                default:break;
+            }
+            if (aLevel != "") g.transform.GetChild(2).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText(aLevel.ToString());
+        }
     }
 
     public void FirewallChange(float value) {
@@ -269,7 +339,8 @@ public class DataCenterManager : MonoBehaviour
 
     
     public void InitTraffic() {
-        int index = 0;
+        GameObject[] traffic_ = GameObject.FindGameObjectsWithTag("Traffic");
+        foreach(GameObject traffic in traffic_) Destroy(traffic);
 
         // Get random order for the traffic entries
         System.Random random = new System.Random();
@@ -288,52 +359,46 @@ public class DataCenterManager : MonoBehaviour
             trafficObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0.95f, 0.3f);
         }
 
-        dataCenters[currentDataCenter].SetTraffic(trafficObjects);
-
-        // Declare malicous traffic array
-        Attack[] malTraffic = new Attack[trafficObjects.Length];
-
-        if (!attackManager.IsInitialized()) attackManager.Load();
-
-        Attack[] attacks = attackManager
+        //TODO !!! - add chance of undetected malware
+        int i = 0;
+        attackManager
             .GetAttacks()
-            .Where(attack => dataCenters[currentDataCenter]
+            .Select(a => a.Value)
+            .Where(a => dataCenters[currentDataCenter]
                 .GetAttacks()
-                .Any(a => a == attack.Value.GetId()))
-            .Select(attack => attack.Value)
-            .ToArray();
-
-        // Iterate through all attacks at data center
-        foreach (Attack attack in attacks) {
-            // Get the malware associated with the attack
-            Malware malware = malwareManager.GetMalware(attack.GetMalware());
-            // !!! - add chance the malware isnt discovered
-            // If the malware is adware or botnet, add the attack to malicious traffic array
-            if (malware.GetMalwareType() == "adware" || malware.GetMalwareType() == "botnet") {
-                malTraffic[index] = attack;
-                index++;
-                // If more discovered target malware than available traffic, then don't continue
-                if (index > trafficObjects.Length) break;
-            }
-        }
-        dataCenters[currentDataCenter].SetMalTraffic(malTraffic.Select(attack => (attack == null) ? -1 : attack.GetId()).ToArray());
-
+                .Any(attack => attack == a.GetId()))
+            .Where(a => 
+                (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware") ||
+                (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "botnet"))
+            .Select(a => a.GetId())
+            .ToList()
+            .Concat(dataCenters[currentDataCenter]
+                .GetExploits()
+                .Select(e => e.Key)
+                .ToList())
+            .Take(trafficObjects.Length)
+            .ToList()
+            .ForEach(a => {
+                trafficObjects[i].name  = a.ToString();
+                i++;
+            });
         // Initialize event listeners for the delete button on each traffic object
-        InitTrafficListeners();
+        InitTrafficListeners(trafficObjects);
     }
 
     /**
      *  Initializes the event listeners for the buttons of each email object
      */
-    public void InitTrafficListeners() {
+    public void InitTrafficListeners(GameObject[] traffic) {
         // Iterate through all traffic options
-        foreach(GameObject traffic in dataCenters[currentDataCenter].GetTraffic()) {
-            GameObject deleteButton = traffic.transform.GetChild(0).gameObject;
-            // Add onClick listener to delete button
-            deleteButton.GetComponent<Button>().onClick.AddListener(delegate {
-                TrafficClick(traffic);
+        traffic
+            .ToList()
+            .ForEach(t => {
+                GameObject deleteButton = t.transform.GetChild(0).gameObject;
+                deleteButton.GetComponent<Button>().onClick.AddListener(delegate {
+                    TrafficClick(t);
+                });
             });
-        }
     }
 
     /**
@@ -341,9 +406,26 @@ public class DataCenterManager : MonoBehaviour
      *  @param {GameObject} self - The GameObject of the traffic entry
      */
     public void TrafficClick(GameObject self) {
-        Debug.Log("traffic has been deleted");
+        int aid;
+        if (Int32.TryParse(self.name, out aid)) {
+            if (aid < 100) {
+                dataCenters[currentDataCenter].RemoveExploit(aid);
+                notificationManager.AddNotification(
+                    ("Successfully removed backdoor from Data Center " + currentDataCenter.ToString()),
+                    ("Your system was infected with a backdoor belonging to Player" + (aid+1)),
+                    gameManager.GetTurnPlayer()
+                );
+            } else {
+                dataCenters[currentDataCenter].RemoveAttack(aid);
+                notificationManager.AddNotification(
+                    ("Successfully removed malware from Data Center " + currentDataCenter.ToString()),
+                    ("Your system was infected with a " + malwareManager.GetMalware(attackManager.GetAttack(aid).GetMalware()).GetMalwareType()),
+                    gameManager.GetTurnPlayer()
+                );
+            }
+        }
+        // Decrease production rate
         Destroy(self);
-        // !!! - reduce production rate and if infected
     }
 
     /**

@@ -16,7 +16,13 @@ public class Notification
         this.body = body;
         this.owner = owner;
         counts[owner] = (counts.ContainsKey(owner)) ? counts[owner] + 1 : 1;
-        nid = 1000 * owner + counts[owner];
+        nid = 1000 * (owner+1) + counts[owner];
+    }
+
+    public Notification(int owner) {
+        this.owner = owner;
+        counts[owner] = (counts.ContainsKey(owner)) ? counts[owner] + 1 : 1;
+        nid = 1000 * (owner+1) + counts[owner];
     }
 
     public int GetId() {
