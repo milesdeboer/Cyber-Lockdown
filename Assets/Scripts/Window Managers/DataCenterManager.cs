@@ -164,10 +164,61 @@ public class DataCenterManager : MonoBehaviour
      *  @param {string} attribute - The name of the attribute being changed.
      */
     public void AttributeClick(string attribute) {
-        dataCenters[currentDataCenter].AddTarget(attribute);
-        dataCenters[currentDataCenter].SetWorkRequirement(dataCenters[currentDataCenter].GetWorkRequirement() + 20);
-        Debug.Log("Increased " + attribute + " of data center " + currentDataCenter + " by one.");
-        UpdateAttributes();
+        int[] levels = new int[8];
+
+        Dictionary<string, int> attrIdx= new Dictionary<string, int>(){
+            {"emailFiltering", 0},
+            {"dlp", 1},
+            {"hiddenStructure", 2},
+            {"encryption", 3},
+            {"ids", 4},
+            {"ips", 5},
+            {"money", 6},
+            {"production", 7}
+        };
+        dataCenters[currentDataCenter]
+            .GetWorkTarget()
+            .Split("/")
+            .Skip(1)
+            .ToList()
+            .ForEach(t => {
+                levels[attrIdx[t]]++;
+            });
+
+        switch(attribute) {
+            case "emailFiltering":
+                levels[0] += dataCenters[currentDataCenter].GetEmailFilter();
+                break;
+            case "dlp":
+                levels[1] += dataCenters[currentDataCenter].GetDLP();
+                break;
+            case "hiddenStructure":
+                levels[2] += dataCenters[currentDataCenter].GetHiddenStructure();
+                break;
+            case "encryption":
+                levels[3] += dataCenters[currentDataCenter].GetEncryption();
+                break;
+            case "ids":
+                levels[4] += dataCenters[currentDataCenter].GetIDS();
+                break;
+            case "ips":
+                levels[5] += dataCenters[currentDataCenter].GetIPS();
+                break;
+            case "money":
+                levels[6] += dataCenters[currentDataCenter].GetMoney();
+                break;
+            case "resources":
+                levels[7] += dataCenters[currentDataCenter].GetResources();
+                break;
+            default: break;
+        }
+
+        if (levels[attrIdx[attribute]] < 5) {
+            dataCenters[currentDataCenter].AddTarget(attribute);
+            dataCenters[currentDataCenter].SetWorkRequirement(dataCenters[currentDataCenter].GetWorkRequirement() + 20);
+            Debug.Log("Increased " + attribute + " of data center " + currentDataCenter + " by one.");
+            UpdateAttributes();
+        } 
     }
 
     public void CancelWorkClick(string attribute) {
@@ -190,7 +241,6 @@ public class DataCenterManager : MonoBehaviour
             {"production", 7}
         };
         GameObject[] attributes = GameObject.FindGameObjectsWithTag("DataCenterAttribute");
-
         List<string> targets = dataCenters[currentDataCenter].GetWorkTarget().Split("/").Skip(1).ToList();
         int[] levels = new int[8];
         dataCenters[currentDataCenter]
@@ -206,27 +256,27 @@ public class DataCenterManager : MonoBehaviour
             string aLevel = "";
             switch(g.name) {
                 case "Email Filtering":
-                    aLevel = dataCenters[currentDataCenter].GetEmailFilter().ToString() + ((levels[0] > 0) ? ("+" + levels[0].ToString()) : "");
+                    aLevel = dataCenters[currentDataCenter].GetEmailFilter().ToString() + ((levels[0] > 0) ? ("→" + (dataCenters[currentDataCenter].GetEmailFilter() + levels[0]).ToString()) : "");
                     break;
                 case "Data Loss Prevention":
-                    aLevel = dataCenters[currentDataCenter].GetDLP().ToString() + ((levels[1] > 0) ? "+" + levels[1].ToString() : "");
+                    aLevel = dataCenters[currentDataCenter].GetDLP().ToString() + ((levels[1] > 0) ? "→" + (dataCenters[currentDataCenter].GetDLP() + levels[1].ToString()) : "");
                     break;
                 case "Hide Structure":
-                    aLevel = dataCenters[currentDataCenter].GetHiddenStructure().ToString() + ((levels[2] > 0) ? "+" + levels[2].ToString() : "");
+                    aLevel = dataCenters[currentDataCenter].GetHiddenStructure().ToString() + ((levels[2] > 0) ? "→" + (dataCenters[currentDataCenter].GetHiddenStructure() + levels[2]).ToString() : "");
                     break;
                 case "Encryption":
-                    aLevel = dataCenters[currentDataCenter].GetEncryption().ToString() + ((levels[3] > 0) ? "+" + levels[3].ToString() : "");
+                    aLevel = dataCenters[currentDataCenter].GetEncryption().ToString() + ((levels[3] > 0) ? "→" + (dataCenters[currentDataCenter].GetEncryption() + levels[3]).ToString() : "");
                     break;
                 case "IDS":
-                    aLevel = dataCenters[currentDataCenter].GetIDS().ToString() + ((levels[4] > 0) ? "+" + levels[4].ToString() : "");
+                    aLevel = dataCenters[currentDataCenter].GetIDS().ToString() + ((levels[4] > 0) ? "→" + (dataCenters[currentDataCenter].GetIDS() + levels[4]).ToString() : "");
                     break;
                 case "IPS":
-                    aLevel = dataCenters[currentDataCenter].GetIPS().ToString() + ((levels[5] > 0) ? "+" + levels[5].ToString() : "");
+                    aLevel = dataCenters[currentDataCenter].GetIPS().ToString() + ((levels[5] > 0) ? "→" + (dataCenters[currentDataCenter].GetIPS() + levels[5]).ToString() : "");
                     break;
                 case "Money":
 
                     break;
-                case "Production":
+                case "Resources":
 
                     break;
                 default:break;

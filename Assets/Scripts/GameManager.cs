@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject turnNumberObject;
 
+    public Color selectionColor;
+
 
     public void Start() {
         players = Enumerable.Range(0, numPlayers).ToArray();

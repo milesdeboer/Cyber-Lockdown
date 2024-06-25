@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4273051559198114146}
   m_Layer: 10
   m_Name: Data Center
-  m_TagString: Untagged
+  m_TagString: DataCenterButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

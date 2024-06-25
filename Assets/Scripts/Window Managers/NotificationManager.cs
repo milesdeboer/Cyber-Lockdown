@@ -50,16 +50,22 @@ public class NotificationManager : MonoBehaviour
 
     public void ClearClick() {
         notifications
-            .Where(n => n.GetOwner() == gameManager.GetTurnPlayer())
+            .Where(n => n.GetOwner() == gameManager.GetTurnPlayer() &&
+                !(n is Email))
             .ToList()
             .ForEach(n => notifications.Remove(n));
+        UpdateDisplay();
     }
 
     public void CreateEmails() {
+        Debug.Log("CREATING EMAILS");
+        notifications.ToList().ForEach(n => {
+            if (n is Email)
+                notifications.Remove(n);
+        });
         dataCenterManager
             .GetDataCenters()
             .Where(dc => dc.GetOwner() == gameManager.GetTurnPlayer())
-            //.Where(dc => dc.GetPhishes().Count > 0)
             .ToList()
             .ForEach(dc => AddNotification(new Email(dc.GetOwner(), dc.GetId(), (dc.GetPhishes().Count > 0) ? dc.GetPhishes().Single() : -1)));
     }
@@ -87,6 +93,7 @@ public class NotificationManager : MonoBehaviour
                     });
                     if (((Email) n).GetAttack() != -1) nObject.name = ((Email) n).GetAttack().ToString();
                 }
+                Debug.Log("Notification ID: " + n.GetId());
                 i++;
             });
     }

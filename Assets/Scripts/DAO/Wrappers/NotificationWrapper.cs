@@ -26,12 +26,19 @@ public class NotificationWrapper
     }
 
     public Notification Unwrap() {
-        Notification notification = new Notification(title, body, owner);
-        notification.SetId(nid);
-        if (notification is Email) {
+        Notification notification;
+        if (dataCenter > -1) {
+            notification = new Email(owner, dataCenter, attack);
+            notification.SetTitle(title);
+            notification.SetBody(body);
             ((Email) notification).SetDataCenter(dataCenter);
             ((Email) notification).SetAttack(attack);
+
+        } else {
+            notification = new Notification(title, body, owner);
         }
+        notification.SetId(nid);
+        
         return notification;
     }
 }

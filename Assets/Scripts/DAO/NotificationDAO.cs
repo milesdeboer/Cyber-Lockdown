@@ -22,6 +22,7 @@ public class NotificationDAO
             NotificationDAO temp = JsonUtility.FromJson<NotificationDAO>(json);
 
             manager.SetNotifications(temp.notifications.ToList().Select(n => n.Unwrap()).ToList());
+            Debug.Log(manager.GetNotifications().Count);
             return true;
         } else return false;
     }

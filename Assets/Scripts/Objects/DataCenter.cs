@@ -43,7 +43,7 @@ public class DataCenter : Workable
     private int workResources;
     private int workRequirement;
     private int workRate;
-    private string workTarget;
+    private string workTarget = "";
 
     public DataCenter(int id) {
         this.id = id;

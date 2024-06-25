@@ -10,6 +10,8 @@ TagManager:
   - Email
   - Notification
   - Traffic
+  - MalwareType
+  - DataCenterButton
   layers:
   - Default
   - TransparentFX
