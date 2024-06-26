@@ -1156,6 +1156,7 @@ GameObject:
   m_Component:
   - component: {fileID: 76162642}
   - component: {fileID: 76162643}
+  - component: {fileID: 76162644}
   m_Layer: 10
   m_Name: Firewall
   m_TagString: DataCenterAttribute
@@ -1248,6 +1249,29 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &76162644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 76162641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Firewall
+  flavor: A firewall is a security system that monitors and controls incoming and
+    outgoing network traffic based on predefined rules. It acts as a barrier between
+    trusted and untrusted networks, preventing unauthorized access and cyber threats.
+    Firewalls filter traffic by inspecting packets and enforcing access policies,
+    helping to safeguard networks from malicious activities and ensuring compliance
+    with security standards.
+  effect: Decreases the chance of an attack against this data center succeeding,
+    but decreases the resources produced by this data center.
 --- !u!1 &86393657
 GameObject:
   m_ObjectHideFlags: 0
@@ -5103,7 +5127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &340474275
 Transform:
   m_ObjectHideFlags: 0
@@ -7575,6 +7599,7 @@ GameObject:
   - component: {fileID: 470013032}
   - component: {fileID: 470013031}
   - component: {fileID: 470013030}
+  - component: {fileID: 470013033}
   m_Layer: 10
   m_Name: Hide Structure
   m_TagString: DataCenterAttribute
@@ -7698,6 +7723,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470013028}
   m_CullTransparentMesh: 1
+--- !u!114 &470013033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 470013028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Hide Network Structure
+  flavor: Network obfuscation is a security measure that hides the structure of a
+    network to reduce the risk of reconnaissance attacks. It involves techniques
+    like IP address masking, traffic encryption, and topology camouflaging to make
+    it difficult for attackers to map the network. By concealing network details,
+    obfuscation helps protect sensitive information and reduces the likelihood of
+    successful cyberattacks. Effective obfuscation complicates attackers' efforts
+    to gather intelligence and exploit vulnerabilities.
+  effect: 'Decreases the likelihood of a reconnaissance attack succeeding '
 --- !u!1 &477024378
 GameObject:
   m_ObjectHideFlags: 0
@@ -7844,6 +7892,7 @@ GameObject:
   - component: {fileID: 479133049}
   - component: {fileID: 479133048}
   - component: {fileID: 479133047}
+  - component: {fileID: 479133050}
   m_Layer: 10
   m_Name: IPS
   m_TagString: DataCenterAttribute
@@ -7967,6 +8016,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479133045}
   m_CullTransparentMesh: 1
+--- !u!114 &479133050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479133045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Intrusion Prevension System
+  flavor: 'An Intrusion Prevention System (IPS) is a security solution that actively
+    monitors network traffic to detect and block malicious activities in real-time.
+    Unlike IDS, which only alerts, IPS can automatically take action to prevent identified
+    threats from reaching their targets. It inspects packets, filters network traffic,
+    and applies predefined rules or policies to proactively block suspicious or malicious
+    activities, such as malware infections, denial-of-service attacks, or unauthorized
+    access attempts. By enforcing security policies at the network perimeter or within
+    the network, IPS helps mitigate the impact of cyberattacks, enhancing overall
+    network security and protecting sensitive data. '
+  effect: Chance to block malware from infecting this data center.
 --- !u!1 &486505773
 GameObject:
   m_ObjectHideFlags: 0
@@ -8247,6 +8321,7 @@ GameObject:
   - component: {fileID: 497906276}
   - component: {fileID: 497906275}
   - component: {fileID: 497906274}
+  - component: {fileID: 497906277}
   m_Layer: 10
   m_Name: Data Loss Prevention
   m_TagString: DataCenterAttribute
@@ -8370,6 +8445,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 497906272}
   m_CullTransparentMesh: 1
+--- !u!114 &497906277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497906272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Data Loss Prevention (DLP)
+  flavor: Data Loss Prevention (DLP) is a security strategy that helps reduce the
+    impact of attacks by preventing sensitive data from being accessed, shared, or
+    transferred improperly. DLP tools monitor and control data movement across the
+    network, ensuring compliance with security policies. By detecting and blocking
+    unauthorized activities, DLP protects confidential information, minimizes the
+    risk of data breaches, and mitigates the potential damage from cyberattacks.
+  effect: Decreases the effect of most attacks.
 --- !u!1 &503167437
 GameObject:
   m_ObjectHideFlags: 0
@@ -14472,7 +14569,7 @@ RectTransform:
   m_Father: {fileID: 1426603037}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14733,6 +14830,7 @@ GameObject:
   - component: {fileID: 934849556}
   - component: {fileID: 934849555}
   - component: {fileID: 934849554}
+  - component: {fileID: 934849557}
   m_Layer: 10
   m_Name: Email Filtering
   m_TagString: DataCenterAttribute
@@ -14856,6 +14954,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934849552}
   m_CullTransparentMesh: 1
+--- !u!114 &934849557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934849552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Email Filtering
+  flavor: Email filtering is a security measure that blocks malicious emails containing
+    malware and phishing attacks. It analyzes incoming emails for suspicious attachments,
+    links, and content patterns. By filtering harmful emails before they reach the
+    inbox, it helps prevent malware spread, protects sensitive information, and reduces
+    cyberattack risks. Effective filtering uses techniques like signature-based detection,
+    heuristic analysis, and machine learning to counter evolving threats.
+  effect: Decreases the chance that a phishing attack will make it into your inbox.
 --- !u!1 &937482182
 GameObject:
   m_ObjectHideFlags: 0
@@ -18480,7 +18600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1208689381
 Transform:
   m_ObjectHideFlags: 0
@@ -21199,7 +21319,7 @@ RectTransform:
   m_Father: {fileID: 979920308}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -29775,6 +29895,7 @@ GameObject:
   - component: {fileID: 1904271391}
   - component: {fileID: 1904271390}
   - component: {fileID: 1904271389}
+  - component: {fileID: 1904271392}
   m_Layer: 10
   m_Name: IDS
   m_TagString: DataCenterAttribute
@@ -29898,6 +30019,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904271387}
   m_CullTransparentMesh: 1
+--- !u!114 &1904271392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904271387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Intrusion Detection System
+  flavor: 'An Intrusion Detection System (IDS) is a security tool that monitors network
+    or system activities for malicious activities or policy violations and generates
+    alerts to notify security personnel. It analyzes traffic patterns, log files,
+    and behaviors to identify potential threats, such as unauthorized access attempts,
+    malware outbreaks, or suspicious activities. By detecting and alerting on anomalies
+    in real-time, IDS helps organizations respond promptly to cyber threats, minimizing
+    their impact and enhancing overall security posture. '
+  effect: Chance to notify the player when an attack has been made on this data center.
 --- !u!1 &1904346563
 GameObject:
   m_ObjectHideFlags: 0
@@ -33418,7 +33562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &2112866344
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33526,6 +33670,7 @@ GameObject:
   - component: {fileID: 2121831428}
   - component: {fileID: 2121831427}
   - component: {fileID: 2121831426}
+  - component: {fileID: 2121831429}
   m_Layer: 10
   m_Name: Encryption
   m_TagString: DataCenterAttribute
@@ -33649,6 +33794,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121831424}
   m_CullTransparentMesh: 1
+--- !u!114 &2121831429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121831424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1039218772}
+  title: Encryption
+  flavor: 'Encryption is a security technique that converts readable data into encoded
+    form, which can only be decrypted with a corresponding decryption key. It safeguards
+    sensitive information during storage, transmission, and processing, making it
+    unreadable to unauthorized users. By encrypting data, organizations protect confidentiality,
+    integrity, and privacy, reducing the impact of attacks such as unauthorized access
+    and data breaches. '
+  effect: Decreases the chance of success for attacks with the objective to disable
+    your data center.
 --- !u!1 &2125866528
 GameObject:
   m_ObjectHideFlags: 0
