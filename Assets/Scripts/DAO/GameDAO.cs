@@ -12,29 +12,33 @@ public class GameDAO
     public int turnNum;
     public int[] players;
 
-    public void Save(GameManager manager) {
-        numPlayers = manager.GetNumPlayers();
-        turnPlayer = manager.GetTurnPlayer();
-        turnNum = manager.GetTurnNumber();
-        players = manager.GetPlayers();
+    public bool Save() {
+        numPlayers = GameManager.GetNumPlayers();
+        turnPlayer = GameManager.GetTurnPlayer();
+        turnNum = GameManager.GetTurnNumber();
 
         string json = JsonUtility.ToJson(this, GameManager.READABLE_SAVE);
-        Debug.Log("JSON: " + json);
-
         File.WriteAllText(Application.persistentDataPath + "/gamesave.json", json);
-        Debug.Log("Save Location: " + Application.persistentDataPath + "/gamesave.json");
+
+        return true;
     }
 
-    public void Load(GameManager manager) {
-        Debug.Log("Loading Game");
+    public bool Load() {
         if (File.Exists(Application.persistentDataPath + "/gamesave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/gamesave.json");
             GameDAO temp = JsonUtility.FromJson<GameDAO>(json);
 
-            manager.SetNumPlayers(temp.numPlayers);
-            manager.SetTurnPlayer(temp.turnPlayer);
-            manager.SetTurnNumber(temp.turnNum);
-            manager.SetPlayers(temp.players);
-        }
+            GameManager.SetNumPlayers(temp.numPlayers);
+            GameManager.SetTurnPlayer(temp.turnPlayer);
+            GameManager.SetTurnNumber(temp.turnNum);
+            return true;
+        } else return false;
+    }
+
+    public bool Erase() {
+        if(File.Exists(Application.persistentDataPath + "/gamesave.json")) {
+            File.Delete(Application.persistentDataPath + "/gamesave.json");
+            return true;
+        } else return false;
     }
 }

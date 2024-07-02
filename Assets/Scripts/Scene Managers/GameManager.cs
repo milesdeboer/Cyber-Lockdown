@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, ISavable
 {
     public static int VALUE_SCALE = 100;
     public static int DATA_CENTERS_PER_PLAYER = 3;
@@ -13,17 +13,14 @@ public class GameManager : MonoBehaviour
     public static int ATTACKS_PER_PLAYER = 8;
 
     public static bool READABLE_SAVE = true;
-    
-    [SerializeField]
-    private int numPlayers = 2;
 
-    private int turnPlayer = 0;
+    private static int numPlayers = 2;
 
-    private int turnNumber = 1;
+    private static int turnPlayer = 0;
+
+    private static int turnNumber = 1;
 
     private List<Color> colors;
-
-    private int[] players;
 
     private List<Player> playerObjects;
 
@@ -45,9 +42,8 @@ public class GameManager : MonoBehaviour
 
 
     public void Start() {
-        players = Enumerable.Range(0, numPlayers).ToArray();
         Load();
-        playerManager.Load();
+        if (turnNumber > 1) playerManager.Load();
         dataCenterManager.Load();
         malwareManager.Load();
         attackManager.Load();
@@ -60,33 +56,26 @@ public class GameManager : MonoBehaviour
      *  Returns the number of players in the game.
      *  @returns {int} - The number of players in the game.
      */
-    public int GetNumPlayers() {
+    public static int GetNumPlayers() {
         return numPlayers;
     }
-    public void SetNumPlayers(int numPlayers) {
-        this.numPlayers = numPlayers;
+    public static void SetNumPlayers(int newNumPlayers) {
+        numPlayers = newNumPlayers;
     }
 
-    public int GetTurnPlayer() {
+    public static int GetTurnPlayer() {
         return turnPlayer;
     }
-    public void SetTurnPlayer(int turnPlayer) {
-        this.turnPlayer = turnPlayer;
+    public static void SetTurnPlayer(int player) {
+        turnPlayer = player;
     }
 
-    public int[] GetPlayers() {
-        return players;
-    }
-    public void SetPlayers(int[] players) {
-        this.players = players;
-    }
-
-    public int GetTurnNumber() {
+    public static int GetTurnNumber() {
         return turnNumber;
     }
 
-    public void SetTurnNumber(int turnNumber) {
-        this.turnNumber = turnNumber;
+    public static void SetTurnNumber(int newTurnNumber) {
+        turnNumber = newTurnNumber;
     }
 
     public List<Color> GetColors() {
@@ -102,17 +91,33 @@ public class GameManager : MonoBehaviour
 
     public void Save() {
         turnNumber++;
-        turnPlayer = ((turnNumber + 1) % numPlayers);
+        turnPlayer = ((turnNumber-1) % numPlayers);
         GameDAO dao = new GameDAO();
-        dao.Save(this);
+        dao.Save();
     }
 
     public void Load() {
         GameDAO dao = new GameDAO();
-        dao.Load(this);
+        dao.Load();
     }
 
     public void EndTurn() {
-        SceneManager.LoadScene("PlayerScene");
+        malwareManager.Work();
+        attackManager.Work();
+        dataCenterManager.Work();
+        Save();
+        playerManager.Save();
+        dataCenterManager.Save();
+        malwareManager.Save();
+        attackManager.Save();
+        notificationManager.Save();
+        SceneManager.LoadScene("BetweenScene");
+    }
+
+    public void MainMenu() {
+        SceneManager.LoadScene("TitleScene");
+    }
+    public void ExitGame() {
+        Application.Quit();
     }
 }

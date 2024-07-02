@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
-public class AttackManager : MonoBehaviour
+public class AttackManager : MonoBehaviour, ISavable
 {
 
     [SerializeField]
@@ -57,7 +57,7 @@ public class AttackManager : MonoBehaviour
      */
     public void InitAttacks_() {
         attacks = new Dictionary<int, Attack>();
-        for(int i = 1; i <= gameManager.GetNumPlayers(); i++) {
+        for(int i = 1; i <= GameManager.GetNumPlayers(); i++) {
             for (int j = 1; j <= GameManager.ATTACKS_PER_PLAYER; j++) {
                 Attack a = new Attack(i * 100 + j);
                 attacks.Add(i * 100 + j, a);
@@ -91,7 +91,7 @@ public class AttackManager : MonoBehaviour
     public void OnClick(int i) {
         // Set the customization window to active and set active attack
         customizationWindow.SetActive(true);
-        activeAttack = (gameManager.GetTurnPlayer()+1) * 100 + i + 1;
+        activeAttack = (GameManager.GetTurnPlayer()+1) * 100 + i + 1;
 
         Debug.Log("Opening attack " + activeAttack + ".");
 
@@ -107,7 +107,7 @@ public class AttackManager : MonoBehaviour
      *  @param {int} i - The index of the button pressed.
      */
     public void MalwareClick(int i) {
-        attacks[activeAttack].SetMalware((gameManager.GetTurnPlayer() + 1) * 100 + i);
+        attacks[activeAttack].SetMalware((GameManager.GetTurnPlayer() + 1) * 100 + i);
         Debug.Log("Switching Malware of Attack " + (activeAttack+1) + " to " + attacks[activeAttack].GetMalware() + ".");
     }
 
@@ -154,10 +154,10 @@ public class AttackManager : MonoBehaviour
         float angleOffset = (float) Math.PI / 4f;
 
         // Iterate through the number of data centers there should be based on number of players and data centers per player.
-        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers(); i++) {
+        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers(); i++) {
             // Calculate coordinates for the current button on the circle.
             Vector2 coords = new Vector2();
-            double theta = (-2f * Math.PI * i / (GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers())) + angleOffset;
+            double theta = (-2f * Math.PI * i / (GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers())) + angleOffset;
             coords.x = rx * (float) Math.Cos(theta) + cx;
             coords.y = ry * (float) Math.Sin(theta) + cy;
             
@@ -211,7 +211,7 @@ public class AttackManager : MonoBehaviour
     }
 
     public void ResourceClick(int change) {
-        Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
+        Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
         if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
             !(player.GetAvailableResources() - change < 0) &&
             !(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) == 0 && change < 0)) {
@@ -234,13 +234,13 @@ public class AttackManager : MonoBehaviour
 
     public void Work() {
         attacks
-            .Where(a => a.Value.GetOwner() == gameManager.GetTurnPlayer())
+            .Where(a => a.Value.GetOwner() == GameManager.GetTurnPlayer())
             .ToList()
             .ForEach(a => {
                 a.Value.SetWorkResources(a.Value.GetWorkResources() + a.Value.GetWorkRate());
                 if (a.Value.IsComplete()) {
                     conflictManager.Process(a.Value, dataCenterManager.GetDataCenter(a.Value.GetTarget()));
-                    Player p = playerManager.GetPlayer(a.Value.GetOwner());
+                    Player p = PlayerManager.GetPlayer(a.Value.GetOwner());
                     p.SetAvailableResources(p.GetAvailableResources() + a.Value.GetWorkRate());
                     a.Value.SetWorkRate(0);
                 }
@@ -258,7 +258,7 @@ public class AttackManager : MonoBehaviour
 
     public void Save() {
         AttackDAO dao = new AttackDAO();
-        dao.Save(this, gameManager.GetTurnPlayer());
+        dao.Save(this);
     }
 
     public void Load() {

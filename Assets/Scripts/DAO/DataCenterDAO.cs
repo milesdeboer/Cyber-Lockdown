@@ -5,21 +5,22 @@ using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
-public class DataCenterDAO
+public class DataCenterDAO : IDAO
 {
     public DataCenterWrapper[] dataCenters;
 
-    public void Save(DataCenterManager manager) {
+    public bool Save(ISavable savable) {
+        DataCenterManager manager = (DataCenterManager) savable;
         dataCenters = manager.GetDataCenters().Select(dc => dc.Wrap()).ToArray();
 
         string json = JsonUtility.ToJson(this, GameManager.READABLE_SAVE);
         File.WriteAllText(Application.persistentDataPath + "/datacentersave.json", json);
         
-        Debug.Log("json: " + json);
-        Debug.Log("Save Location: " + Application.persistentDataPath + "/datacentersave.json");
+        return true;
     }
 
-    public bool Load(DataCenterManager manager) {
+    public bool Load(ISavable savable) {
+        DataCenterManager manager = (DataCenterManager) savable;
         if (File.Exists(Application.persistentDataPath + "/datacentersave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/datacentersave.json");
             DataCenterDAO temp = JsonUtility.FromJson<DataCenterDAO>(json);
@@ -31,6 +32,13 @@ public class DataCenterDAO
 
             manager.SetDataCenters(dataCenters_);
 
+            return true;
+        } else return false;
+    }
+
+    public bool Erase() {
+        if(File.Exists(Application.persistentDataPath + "/datacentersave.json")) {
+            File.Delete(Application.persistentDataPath + "/datacentersave.json");
             return true;
         } else return false;
     }

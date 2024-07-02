@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NotificationManager : MonoBehaviour
+public class NotificationManager : MonoBehaviour, ISavable
 {
     [SerializeField]
     private GameManager gameManager;
@@ -50,7 +50,7 @@ public class NotificationManager : MonoBehaviour
 
     public void ClearClick() {
         notifications
-            .Where(n => n.GetOwner() == gameManager.GetTurnPlayer() &&
+            .Where(n => n.GetOwner() == GameManager.GetTurnPlayer() &&
                 !(n is Email))
             .ToList()
             .ForEach(n => notifications.Remove(n));
@@ -65,7 +65,7 @@ public class NotificationManager : MonoBehaviour
         });
         dataCenterManager
             .GetDataCenters()
-            .Where(dc => dc.GetOwner() == gameManager.GetTurnPlayer())
+            .Where(dc => dc.GetOwner() == GameManager.GetTurnPlayer())
             .ToList()
             .ForEach(dc => AddNotification(new Email(dc.GetOwner(), dc.GetId(), (dc.GetPhishes().Count > 0) ? dc.GetPhishes().Single() : -1)));
     }
@@ -73,7 +73,7 @@ public class NotificationManager : MonoBehaviour
     public void UpdateDisplay() {
         GameObject.FindGameObjectsWithTag("Notification").ToList().ForEach(o => Destroy(o));
         int i = 0;
-        int p = gameManager.GetTurnPlayer();
+        int p = GameManager.GetTurnPlayer();
         notifications
             .Where(n => n.GetOwner() == p)
             .Take(4)

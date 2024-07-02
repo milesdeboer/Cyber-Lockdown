@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GoalManager : MonoBehaviour
+public class GoalManager : MonoBehaviour, ISavable
 {
     private Goal startGoal;
     private Goal endGoal;

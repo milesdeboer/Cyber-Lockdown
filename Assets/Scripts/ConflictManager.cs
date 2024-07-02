@@ -131,8 +131,8 @@ public class ConflictManager : MonoBehaviour
         int[] attr = m.GetAttributes();
         attr[3] -= (int) (attr[3] * 0.15f * dc.GetDLP());
 
-        Player attacker = playerManager.GetPlayer(a.GetOwner());
-        Player defender = playerManager.GetPlayer(dc.GetOwner());
+        Player attacker = PlayerManager.GetPlayer(a.GetOwner());
+        Player defender = PlayerManager.GetPlayer(dc.GetOwner());
 
         switch(a.GetObjective()) {
             case "money":

@@ -10,12 +10,14 @@ public class PlayerWrapper
     public int overallResources;
     public int availableResources;
 
+    public string name;
+
     public PlayerWrapper(Player player) {
         pid = player.GetId();
         money = player.GetMoney();
         overallResources = player.GetOverallResources();
         availableResources = player.GetAvailableResources();
-        Debug.Log("Player: [" + pid + ", " + availableResources);
+        name = player.GetName();
     }
 
     public Player Unwrap() {
@@ -23,8 +25,7 @@ public class PlayerWrapper
         player.SetMoney(money);
         player.SetOverallResources(overallResources);
         player.SetAvailableResources(availableResources);
-
-        Debug.Log("Resources: " + pid + "-" + player.GetAvailableResources() + "/" + player.GetOverallResources());
+        player.SetName(name);
 
         return player;
     }

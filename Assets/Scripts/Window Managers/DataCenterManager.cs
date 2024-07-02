@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class DataCenterManager : MonoBehaviour
+public class DataCenterManager : MonoBehaviour, ISavable
 {
     public static int BASE_DATA_CENTER_MONEY = 20;
     public static int BASE_DATA_CENTER_RESOURCES = 20;
@@ -63,7 +63,7 @@ public class DataCenterManager : MonoBehaviour
      */
     public void InitDataCenters() {
         dataCenters = new List<DataCenter>();
-        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers(); i++) {
+        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers(); i++) {
             dataCenters.Add(new DataCenter(i));
             // Temperary
             dataCenters[i].SetOwner(i / GameManager.DATA_CENTERS_PER_PLAYER);
@@ -95,10 +95,10 @@ public class DataCenterManager : MonoBehaviour
         float angleOffset = (float) Math.PI / 4f;
 
         // Iterate through the number of data centers there should be based on number of players and data centers per player.
-        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers(); i++) {
+        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers(); i++) {
             // Calculate coordinates for the current button on the circle.
             Vector2 coords = new Vector2();
-            double theta = (-2f * Math.PI * i / (GameManager.DATA_CENTERS_PER_PLAYER * gameManager.GetNumPlayers())) + angleOffset;
+            double theta = (-2f * Math.PI * i / (GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers())) + angleOffset;
             coords.x = rx * (float) Math.Cos(theta) + cx;
             coords.y = ry * (float) Math.Sin(theta) + cy;
 
@@ -463,14 +463,14 @@ public class DataCenterManager : MonoBehaviour
                 notificationManager.AddNotification(
                     ("Successfully removed backdoor from Data Center " + currentDataCenter.ToString()),
                     ("Your system was infected with a backdoor belonging to Player" + (aid+1)),
-                    gameManager.GetTurnPlayer()
+                    GameManager.GetTurnPlayer()
                 );
             } else {
                 dataCenters[currentDataCenter].RemoveAttack(aid);
                 notificationManager.AddNotification(
                     ("Successfully removed malware from Data Center " + currentDataCenter.ToString()),
                     ("Your system was infected with a " + malwareManager.GetMalware(attackManager.GetAttack(aid).GetMalware()).GetMalwareType()),
-                    gameManager.GetTurnPlayer()
+                    GameManager.GetTurnPlayer()
                 );
             }
         }
@@ -496,7 +496,7 @@ public class DataCenterManager : MonoBehaviour
     }
 
     public void ResourceClick(int change) {
-        Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
+        Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
         if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
             !(player.GetAvailableResources() - change < 0) &&
             !(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) == 0 && change < 0)) {
@@ -514,7 +514,7 @@ public class DataCenterManager : MonoBehaviour
     }
 
     public void Work() {
-        Player player = playerManager.GetPlayer(gameManager.GetTurnPlayer());
+        Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
 
         dataCenters
             .Where(d => d.GetOwner() == player.GetId())

@@ -5,21 +5,21 @@ using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
-public class AttackDAO 
+public class AttackDAO : IDAO
 {
     public AttackWrapper[] attacks;
 
-    public void Save(AttackManager manager, int pid) {
+    public bool Save(ISavable savable) {
+        AttackManager manager = (AttackManager) savable;
         attacks = manager.GetAttacks().Select(a => a.Value.Wrap()).ToArray();
 
         string json = JsonUtility.ToJson(this, GameManager.READABLE_SAVE);
         File.WriteAllText(Application.persistentDataPath + "/attacksave.json", json);
-
-        Debug.Log("json: " + json);
-        Debug.Log("Save Location: " + Application.persistentDataPath + "/attacksave.json");
+        return true;
     }
 
-    public bool Load(AttackManager manager) {
+    public bool Load(ISavable savable) {
+        AttackManager manager = (AttackManager) savable;
         if(File.Exists(Application.persistentDataPath + "/attacksave.json")) {
             string json = File.ReadAllText(Application.persistentDataPath + "/attacksave.json");
             AttackDAO temp = JsonUtility.FromJson<AttackDAO>(json);
@@ -32,6 +32,13 @@ public class AttackDAO
 
             manager.SetAttacks(attacks_);
 
+            return true;
+        } else return false;
+    }
+
+    public bool Erase() {
+        if(File.Exists(Application.persistentDataPath + "/attacksave.json")) {
+            File.Delete(Application.persistentDataPath + "/attacksave.json");
             return true;
         } else return false;
     }

@@ -9,6 +9,8 @@ public class Player
     private int overallResources;
     private int availableResources;
 
+    private string name;
+
 
     public Player(int id) {
         this.id = id;
@@ -42,6 +44,13 @@ public class Player
 
     public void SetAvailableResources(int availableResources) {
         this.availableResources = availableResources;
+    }
+
+    public string GetName() {
+        return name;
+    }
+    public void SetName(string name) {
+        this.name = name;
     }
 
     public PlayerWrapper Wrap() {

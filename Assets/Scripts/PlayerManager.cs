@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, ISavable
 {
-    private Dictionary<int, Player> players;
+    private static Dictionary<int, Player> players;
 
     [SerializeField]
     private GameObject resources;
@@ -15,30 +15,25 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
 
-    public void Start() {
+    public static void InitPlayers() {
         players = new Dictionary<int, Player>();
-        Load();
-    }
-
-    public void InitPlayers() {
-        players = new Dictionary<int, Player>();
-        for(int i = 0; i < gameManager.GetNumPlayers(); i++) {
+        for(int i = 0; i < GameManager.GetNumPlayers(); i++) {
             Player player = new Player(i);
             players.Add(i, player);
             player.SetMoney(10000);
         }
     }
 
-    public Dictionary<int, Player> GetPlayers() {
+    public static Dictionary<int, Player> GetPlayers() {
         return players;
     }
 
-    public Player GetPlayer(int id) {
+    public static Player GetPlayer(int id) {
         return players[id];
     }
 
-    public void SetPlayers(Dictionary<int, Player> players) {
-        this.players = players;
+    public static void SetPlayers(Dictionary<int, Player> newPlayers) {
+        players = newPlayers;
     }
 
     public void Save() {
@@ -48,12 +43,16 @@ public class PlayerManager : MonoBehaviour
 
     public void Load() {
         PlayerDAO dao = new PlayerDAO();
-        if (!dao.Load(this)) InitPlayers();
+        dao.Load(this);
         UpdateDisplay();
     }
 
+    public void Clear() {
+        players = new Dictionary<int, Player>();
+    }
+
     public void UpdateDisplay() {
-        money.GetComponent<TextMeshProUGUI>().SetText("Money: " + GetPlayer(gameManager.GetTurnPlayer()).GetMoney());
-        resources.GetComponent<TextMeshProUGUI>().SetText("Resources: " + GetPlayer(gameManager.GetTurnPlayer()).GetAvailableResources());
+        money.GetComponent<TextMeshProUGUI>().SetText("Money: " + GetPlayer(GameManager.GetTurnPlayer()).GetMoney());
+        resources.GetComponent<TextMeshProUGUI>().SetText("Resources: " + GetPlayer(GameManager.GetTurnPlayer()).GetAvailableResources());
     }
 }
