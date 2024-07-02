@@ -12,28 +12,32 @@ public class MouseOverTool : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObject infoSlide;
     [SerializeField]
     private Canvas canvas;
+
+    [SerializeField]
+    private Vector2 location;
+
     [SerializeField]
     private string title;
 
     [SerializeField]
-    [TextArea(15, 10)]
+    [TextArea(15, 5)]
     private string flavor;
+
     [SerializeField]
-    [TextArea(15, 10)]
+    [TextArea(15, 5)]
     private string effect;
 
     private GameObject instantiatedObject;
 
     public void OnPointerEnter(PointerEventData eventData) {
-        Thread.Sleep(100);
         Vector2 coords = Input.mousePosition;
         coords.x += 10 * infoSlide.GetComponent<RectTransform>().sizeDelta.x / 2;
         coords.y -= 10 * infoSlide.GetComponent<RectTransform>().sizeDelta.y / 2;
 
-        instantiatedObject = Instantiate(infoSlide, coords, Quaternion.identity);
+        instantiatedObject = Instantiate(infoSlide, location, Quaternion.identity);
         instantiatedObject.GetComponent<Transform>().localScale = new Vector2(10, 10);
 
-        instantiatedObject.transform.SetParent(canvas.transform, true);
+        instantiatedObject.transform.SetParent(canvas.transform, false);
 
         instantiatedObject.transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().SetText(title);
         instantiatedObject.transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>().SetText(flavor);
@@ -41,7 +45,6 @@ public class MouseOverTool : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     }
 
     public void OnPointerExit(PointerEventData eventData) {
-        Thread.Sleep(1000);
         if (instantiatedObject != null) Destroy(instantiatedObject);
     }
 }

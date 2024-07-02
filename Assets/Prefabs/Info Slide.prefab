@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7885319187982767282}
   - component: {fileID: 8922684435251240389}
   - component: {fileID: 3584819540575414688}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Info Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 43971914935505463}
   - component: {fileID: 1841230985983723842}
   - component: {fileID: 8411657765237805089}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Flavor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 1925713367186409004}
   - component: {fileID: 527515508451906788}
   - component: {fileID: 591911593255627833}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 1148292080310987033}
   - component: {fileID: 842260300314027244}
   - component: {fileID: 3157359126430959975}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: EffectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ GameObject:
   - component: {fileID: 6554075798788224145}
   - component: {fileID: 3211064066966881157}
   - component: {fileID: 8832859663439874543}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: FlavorText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -577,7 +577,7 @@ GameObject:
   - component: {fileID: 8096831125217899456}
   - component: {fileID: 3800071210919556852}
   - component: {fileID: 7279036762479477837}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 2094910946420479636}
   - component: {fileID: 6555167945963920549}
   - component: {fileID: 1683467567645050972}
-  m_Layer: 10
+  m_Layer: 6
   m_Name: Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
