@@ -10,7 +10,6 @@ public class GameDAO
     public int numPlayers;
     public int turnPlayer;
     public int turnNum;
-    public int[] players;
 
     public bool Save() {
         numPlayers = GameManager.GetNumPlayers();

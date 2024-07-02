@@ -30,10 +30,6 @@ public class MouseOverTool : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private GameObject instantiatedObject;
 
     public void OnPointerEnter(PointerEventData eventData) {
-        Vector2 coords = Input.mousePosition;
-        coords.x += 10 * infoSlide.GetComponent<RectTransform>().sizeDelta.x / 2;
-        coords.y -= 10 * infoSlide.GetComponent<RectTransform>().sizeDelta.y / 2;
-
         instantiatedObject = Instantiate(infoSlide, location, Quaternion.identity);
         instantiatedObject.GetComponent<Transform>().localScale = new Vector2(10, 10);
 
