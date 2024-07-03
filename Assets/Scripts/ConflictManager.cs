@@ -98,8 +98,17 @@ public class ConflictManager : MonoBehaviour
             }
         }
 
-        if (dc.GetExploit(a.GetOwner()) > 0) 
-            offenceScore = (100*offenceScore + 2*dc.GetExploit(a.GetOwner())) / (100 + 2*dc.GetExploit(a.GetOwner()));
+        int exploit = (m.HasFeature(MalwareFeature.ZeroDayExploit)) ? dc
+            .GetExploits()
+            .Select(kvp => kvp.Value)
+            .Where(e => e > 10)
+            .ToList()
+            .Concat(new List<int>{dc.GetExploit(a.GetOwner()), 0})
+            .Max(e => e) : dc.GetExploit(a.GetOwner());
+        Debug.Log("Exploit Strength: " + exploit.ToString());
+
+        if (exploit > 0) 
+            offenceScore = (100*offenceScore + 2*exploit) / (100 + 2*exploit);
         if (dc.GetRecord().Contains(m.GetTime())) 
             offenceScore /= 2;
         if (!(m.GetMalwareType() == "trojan")) 
@@ -225,7 +234,9 @@ public class ConflictManager : MonoBehaviour
     }
 
     private void FinishAttack(Attack a, DataCenter dc) {
-        dc.AddRecord(malwareController.GetMalware(a.GetMalware()).GetTime());
+        Malware m = malwareController.GetMalware(a.GetMalware());
+        if (!m.HasFeature(MalwareFeature.Polymorphism))
+            dc.AddRecord(m.GetTime());
         a.Reset();
     }
 }
