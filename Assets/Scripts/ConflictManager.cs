@@ -134,8 +134,10 @@ public class ConflictManager : MonoBehaviour
             title2 = "", 
             body2 = "";
         bool notify = false;
-        if (m.GetMalwareType() == "botnet" || m.GetMalwareType() == "adware" || m.GetMalwareType() == "ransomware") ///////////////////////////
+        if (m.GetMalwareType() == "botnet" || m.GetMalwareType() == "adware" || m.GetMalwareType() == "ransomware") {
             dc.AddAttack(a.GetId());
+            return;
+        }
         
         int[] attr = m.GetAttributes();
         attr[3] -= (int) (attr[3] * 0.15f * dc.GetDLP());

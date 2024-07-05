@@ -263,8 +263,34 @@ bool success = dao.Load(this);
 ---
 
 ## Objects
-
+The following objects mainly contain a collection of fields as a way to store data and does not perform an extensive amount of work on these values.
 ### Attack.cs
+The Attack Object represents an attack made by a player against a data center. 
+
+An attack is complete when the work resources is greater than or equal to the work required.
+
+```cs
+Attack attack = new Attack(101);
+Debug.Log("Work Done: " + attack.GetWorkResources());
+Debug.Log("Work Required: " + attack.GetWorkRequired());
+Debug.Log("The Attack is Complete? " + attack.IsComplete());
+/* output:
+    WorkDone: 0
+    WorkRequired: 100
+    The Attack is Complete? false
+*/
+```
+
+To clear all information from an attack object, run the Reset command which will set the malware id, work resources and exploit to zero and remove the objective and delivery method
+
+```cs
+Attack attack = new Attack(101);
+attack.SetDelivery("manual");
+attack.Reset();
+Debug.Log("Delivery Method Exists: " + (attack.GetDelivery() == "").ToString());
+//output: Delivery Method Exist: false
+```
+
 ### DataCenter.cs
 ### Email.cs
 ### Goal.cs

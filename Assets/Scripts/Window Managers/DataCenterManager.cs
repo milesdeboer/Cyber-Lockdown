@@ -411,15 +411,14 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
         //TODO !!! - add chance of undetected malware
         int i = 0;
-        attackManager
+
+        dataCenters[currentDataCenter]
             .GetAttacks()
-            .Select(a => a.Value)
-            .Where(a => dataCenters[currentDataCenter]
-                .GetAttacks()
-                .Any(attack => attack == a.GetId()))
-            .Where(a => 
+            .Select(a => attackManager.GetAttack(a))
+            .Where(a =>
                 (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware") ||
                 (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "botnet"))
+            .Where(a => !malwareManager.GetMalware(a.GetMalware()).HasFeature(MalwareFeature.Steganography))
             .Select(a => a.GetId())
             .ToList()
             .Concat(dataCenters[currentDataCenter]
@@ -432,6 +431,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
                 trafficObjects[i].name  = a.ToString();
                 i++;
             });
+            
         // Initialize event listeners for the delete button on each traffic object
         InitTrafficListeners(trafficObjects);
     }

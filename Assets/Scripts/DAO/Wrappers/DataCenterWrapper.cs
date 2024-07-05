@@ -77,7 +77,7 @@ public class DataCenterWrapper
         output.SetIDS(ids);
         output.SetIPS(ips);
         output.SetFirewall(firewall);
-        output.SetAttacks(new HashSet<int>(phishes.ToList()));
+        output.SetAttacks(new HashSet<int>(attacks.ToList()));
         output.SetPhishes(new HashSet<int>(phishes.ToList()));
 
         output.SetActive(active);

@@ -799,7 +799,7 @@ RectTransform:
   m_Father: {fileID: 2101567435}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -853,6 +853,7 @@ GameObject:
   - component: {fileID: 51075045}
   - component: {fileID: 51075044}
   - component: {fileID: 51075043}
+  - component: {fileID: 51075046}
   m_Layer: 10
   m_Name: trojan
   m_TagString: MalwareType
@@ -974,6 +975,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51075041}
   m_CullTransparentMesh: 1
+--- !u!114 &51075046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 51075041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 1170, y: -325}
+  title: Trojan
+  flavor: A Trojan, or Trojan horse, is a type of malicious software disguised as
+    legitimate software. It tricks users into installing it, allowing attackers to
+    access and control the infected computer. Trojans can steal data, install additional
+    malware, or create backdoors for future access. They rely on user interaction
+    to spread and cause harm.
+  effect: Bypasses some defence systems of the target data center.
 --- !u!1 &55460535
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1009,7 @@ GameObject:
   - component: {fileID: 55460539}
   - component: {fileID: 55460538}
   - component: {fileID: 55460537}
+  - component: {fileID: 55460540}
   m_Layer: 10
   m_Name: rootkit
   m_TagString: MalwareType
@@ -1107,6 +1131,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 55460535}
   m_CullTransparentMesh: 1
+--- !u!114 &55460540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 55460535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 920, y: -325}
+  title: RootKit
+  flavor: 'A rootkit is a type of malicious software designed to gain unauthorized
+    access to a computer and hide its presence. Rootkits allow attackers to control
+    the system, steal data, and install additional malware while remaining undetected.
+    They are difficult to detect and remove due to their stealthy nature and deep
+    integration into the operating system.
+
+
+
+
+
+
+
+'
+  effect: Allows for deeper intrution to inflict mroe damage on target system.
 --- !u!1 &58727594
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,6 +2791,7 @@ GameObject:
   - component: {fileID: 178653955}
   - component: {fileID: 178653954}
   - component: {fileID: 178653953}
+  - component: {fileID: 178653956}
   m_Layer: 10
   m_Name: botnet
   m_TagString: MalwareType
@@ -2858,6 +2913,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178653951}
   m_CullTransparentMesh: 1
+--- !u!114 &178653956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178653951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 1255, y: -325}
+  title: BotNet
+  flavor: A botnet is a network of infected computers controlled by a hacker, often
+    without the owners' knowledge. These "zombie" computers are used to launch coordinated
+    attacks, send spam, or distribute malware. Botnets can cause widespread disruption
+    and are difficult to detect and dismantle.
+  effect: periodically sends malware from the target data center to others when infected
 --- !u!1 &192269479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,7 +2967,7 @@ RectTransform:
   m_Father: {fileID: 1971481708}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4552,7 +4628,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 286521117}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 901058782}
+        m_TargetAssemblyTypeName: MalwareController, Assembly-CSharp
+        m_MethodName: FeatureClick
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Steganography
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &286521117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6840,6 +6928,7 @@ GameObject:
   - component: {fileID: 395582940}
   - component: {fileID: 395582939}
   - component: {fileID: 395582938}
+  - component: {fileID: 395582941}
   m_Layer: 10
   m_Name: adware
   m_TagString: MalwareType
@@ -6961,6 +7050,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 395582936}
   m_CullTransparentMesh: 1
+--- !u!114 &395582941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395582936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 1420, y: -325}
+  title: Adware
+  flavor: Adware is a type of software that automatically displays or downloads advertisements
+    when a user is online. It often accompanies free software and generates revenue
+    for its developers by delivering targeted ads based on the user's browsing habits.
+    While not inherently malicious, adware can disrupt user experience, slow down
+    systems, and compromise privacy by tracking online activities.
+  effect: 'Gives the target player ads that generate money. '
 --- !u!1 &402263867
 GameObject:
   m_ObjectHideFlags: 0
@@ -7690,7 +7801,7 @@ RectTransform:
   m_Father: {fileID: 1829758968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -13132,7 +13243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &744578929
 Transform:
   m_ObjectHideFlags: 0
@@ -14094,7 +14205,7 @@ RectTransform:
   m_Father: {fileID: 1369624294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -14689,7 +14800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &901058780
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15977,7 +16088,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1020955007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16017,7 +16128,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Steganography
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -16044,8 +16155,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 2
+  m_fontSizeBase: 2
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16739,7 +16850,7 @@ RectTransform:
   m_Father: {fileID: 1631952570}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -17060,6 +17171,7 @@ GameObject:
   - component: {fileID: 1112355837}
   - component: {fileID: 1112355836}
   - component: {fileID: 1112355835}
+  - component: {fileID: 1112355838}
   m_Layer: 10
   m_Name: virus
   m_TagString: MalwareType
@@ -17181,6 +17293,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112355833}
   m_CullTransparentMesh: 1
+--- !u!114 &1112355838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112355833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 505, y: -325}
+  title: Virus
+  flavor: A virus is a malicious program that replicates by attaching itself to legitimate
+    files or programs. It spreads to other systems, causing harm such as corrupting
+    data, slowing down performance, or allowing unauthorized access. Like a biological
+    virus, it needs a host to propagate and can significantly damage computers and
+    networks.
+  effect: Standard Malware
 --- !u!1 &1114195038
 GameObject:
   m_ObjectHideFlags: 0
@@ -22185,6 +22319,7 @@ GameObject:
   - component: {fileID: 1354614681}
   - component: {fileID: 1354614680}
   - component: {fileID: 1354614679}
+  - component: {fileID: 1354614682}
   m_Layer: 10
   m_Name: ransomware
   m_TagString: MalwareType
@@ -22306,6 +22441,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354614677}
   m_CullTransparentMesh: 1
+--- !u!114 &1354614682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354614677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 1005, y: -325}
+  title: Ransomware
+  flavor: Ransomware is a type of malicious software that encrypts a victim's data
+    or locks them out of their system. The attacker then demands a ransom payment
+    to restore access. Ransomware spreads through phishing emails, malicious downloads,
+    or exploiting vulnerabilities, causing significant disruption and financial loss.
+  effect: Disables Target datacenter until the cost is paid.
 --- !u!1 &1360022807
 GameObject:
   m_ObjectHideFlags: 0
@@ -25017,7 +25173,7 @@ RectTransform:
   m_Father: {fileID: 1508477138}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -25812,7 +25968,7 @@ RectTransform:
   m_Father: {fileID: 718833795}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -26677,7 +26833,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1615293580
 Transform:
   m_ObjectHideFlags: 0
@@ -27717,6 +27873,7 @@ GameObject:
   - component: {fileID: 1718123676}
   - component: {fileID: 1718123675}
   - component: {fileID: 1718123674}
+  - component: {fileID: 1718123677}
   m_Layer: 10
   m_Name: worm
   m_TagString: MalwareType
@@ -27838,6 +27995,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718123672}
   m_CullTransparentMesh: 1
+--- !u!114 &1718123677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718123672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 1176557584609291443, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 755, y: -325}
+  title: Worm
+  flavor: A worm is a type of malicious software that replicates itself to spread
+    to other computers, often through a network. Unlike a virus, it doesn't need
+    to attach to a host program. Worms can cause harm by consuming bandwidth, overloading
+    systems, or delivering additional malware. They spread rapidly, exploiting vulnerabilities
+    in software or operating systems.
+  effect: Malware can spread to other datacenters controlled by the target's owner
 --- !u!1 &1718660453
 GameObject:
   m_ObjectHideFlags: 0
@@ -31171,7 +31350,7 @@ RectTransform:
   m_Father: {fileID: 1527764488}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
