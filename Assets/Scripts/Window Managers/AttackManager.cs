@@ -170,7 +170,7 @@ public class AttackManager : MonoBehaviour, ISavable
             dataCenter.transform.SetParent(dataCenterSubWindow.transform, false);
             dataCenter.GetComponent<RectTransform>().localPosition.Set(coords.x, coords.y, 0);
 
-            //dataCenter.GetComponent<Image>().color = (dataCenterManager.GetDataCenter(i).GetOwner() == -1) ? new Color(1.0f, 1.0f, 1.0f) : (gameManager.GetColors()[dataCenterManager.GetDataCenter(i).GetOwner()]);
+            dataCenter.GetComponent<Image>().color = (dataCenterManager.GetDataCenter(i).GetOwner() == -1) ? new Color(1.0f, 1.0f, 1.0f) : (gameManager.GetColors()[dataCenterManager.GetDataCenter(i).GetOwner()]);
 
             // Add to list of buttons
             dataCenters.Add(dataCenter);

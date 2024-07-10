@@ -104,6 +104,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
             // Instantiate GameObject.
             GameObject dataCenter = Instantiate(dataCenterButton, coords, Quaternion.identity);
+            dataCenter.name = dataCenters[i].GetId().ToString();
+            dataCenter.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText((dataCenters[i].GetOwner()+1).ToString());
 
             // Set orientation and size of the button.
             dataCenter.transform.SetParent(selectionWindow.transform, false);
@@ -140,11 +142,13 @@ public class DataCenterManager : MonoBehaviour, ISavable
      *  @param {int} i - The index of the data center button.
      */
     public void SelectionClick(int i) {
-        customizationWindow.SetActive(true);
-        currentDataCenter = i;
-        ResetSetup();
-        selectionWindow.SetActive(false);
-        Debug.Log("Switching to Data Center " + i);
+        if (dataCenters[i].GetOwner() == GameManager.GetTurnPlayer()) {
+            customizationWindow.SetActive(true);
+            currentDataCenter = i;
+            ResetSetup();
+            selectionWindow.SetActive(false);
+            Debug.Log("Switching to Data Center " + i);
+        }
     }
 
     public void ResetSetup() {

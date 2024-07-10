@@ -1,8 +1,8 @@
 # Cyber Lockdown Documentation
 ###### Miles DeBoer
 ## Table of Contents - Code Structure
-- \DAO
-    - \Wrappers
+- DAO
+    - Wrappers
         - AttackWrapper.cs
         - DataCenter.cs
         - MalwareWrapper.cs
@@ -15,7 +15,7 @@
     - MalwareDAO.cs
     - NotificationDAO.cs
     - PlayerDAO.cs
-- \Objects
+- Objects
     - Attack.cs
     - DataCenter.cs
     - Email.cs
@@ -24,15 +24,15 @@
     - Malware.cs
     - Notification.cs
     - Player.cs
-- \Scene Managers
+- Scene Managers
     - BetweenManager.cs
     - GameManager.cs
     - NewGameManager.cs
     - TitleManager.cs
-- \Util
+- Util
     - MouseOverTool.cs
     - RadioButton.cs
-- \Window Managers
+- Window Managers
     - AttackManager.cs
     - DataCenterManager.cs
     - GoalManager.cs
@@ -266,6 +266,7 @@ bool success = dao.Load(this);
 The following objects mainly contain a collection of fields as a way to store data and does not perform an extensive amount of work on these values.
 ### Attack.cs
 The Attack Object represents an attack made by a player against a data center. 
+Attack implements Workable.
 
 An attack is complete when the work resources is greater than or equal to the work required.
 
@@ -291,13 +292,76 @@ Debug.Log("Delivery Method Exists: " + (attack.GetDelivery() == "").ToString());
 //output: Delivery Method Exist: false
 ```
 
+---
+
 ### DataCenter.cs
+The DataCenter Object represents the collection of data associated with a specific data center. \
+DataCenter implements Workable.
+
+To Increment one of the attributes of a data center, run the IncrementAttribute function with the name of the attribute as the parameter.'
+The following are the valid attributes for incrementation:
+- *"emailFiltering"* : Email Filtering Level [0, 5]
+- *"dlp"* : Data Loss Prevension Level [0, 5]
+- *"hiddenStructure"* : Hidden Structure Level [0, 5]
+- *"encryption"* : Data Encryption Level [0, 5]
+- *"ids"* : Intrusion Detection System Level [0, 5]
+- *"ips"* : Intrusion Prevention System Level [0, 5]
+
+```cs
+DataCenter dc = new DataCenter();
+dc.IncrementAttribute("encryption");
+dc.IncrementAttribute("encryption");
+Debug.Log(dc.GetEncryption());
+//output: 2
+```
+
+---
+
 ### Email.cs
+The Email Object represents the data associated with a specific email. This is a subclass of **Notification**. \
+The Email class adds an associated DataCenter and Attack object. This class is used for handling phishing attacks. \
+Normally each player will receive one email per data center they control.
+
+---
+
 ### Goal.cs
+The Goal object represents one specific goal of the game. Goals make up a directional acyclic graph where the player must complete previous goals before moving onto the next one. \
+Each goal holds a list of strings representing what is unlocked when the goal is completed by the player.
+
+Goal implements Workable.
+
+---
+
 ### Malware.cs
+The Malware object represents one specific piece of malware in the game. 
+
+Each piece of malware holds a number of different attributes which combine to determine the success rate of an attack. These attributes are:
+- Stealth: Determines how stealthy the attack will be where more stealthy malware will make for an attack with a higher success rate.
+- Speed: Decreases the time spent in the attack process and slightly increases the success rate for the attack
+- Size: Malware with a greater size will be more easily spotted and stopped by the target data center's defences, but decreases the work required to complete the malware
+- Intrusion: Increases the amount of spoils earned through the attack using this malware, but slightly decreases the success rate of the attack.
+
+Malware implements Workable.
+
+---
+
 ### Notification.cs
+The Notification Object represents a notification given to a player. This obejct is simply to notify the player of the events that took place regarding their attacks, malware, and data centers. Each notification has a title, a body, and a player it is associated with.
+
+An example of this would be to notify the player that their attack against another player was successful and list the amount of money stolen.
+
+---
+
 ### Player.cs
+The Player Object represents a specific player in the game. This object holds:
+- Money: the amount of money available to the player.
+- Available Resources: The amount of resources that the player can draw from to perform work on any Workable object.
+- Total amount of resources: The Total amount of resources that the player can draw from including the resources that are currently being used on the production of a Workable object.
+
+---
+
 ### Workable.cs
+The Workable Interface represents any object that work can be performed on. A Workable object requires a way to perform work and has to hold information on the work done and what is being worked on.
 
 ### Scene Managers
 
