@@ -27,12 +27,10 @@ public class Checkbox : MonoBehaviour
 
     public void OnClick(GameObject self) {
         buttons
-            .Where(b => {
-                return b.name == self.name;
-            })
+            .Where(b => b.name == self.name)
             .ToList()
             .ForEach(b => {
-                b.GetComponent<Image>().color = selectedColor;
+                b.GetComponent<Image>().color = (b.GetComponent<Image>().color.Equals(selectedColor)) ? unselectedColor : selectedColor;
             });
     }
 }
