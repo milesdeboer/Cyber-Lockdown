@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour, ISavable
 
     [SerializeField]
     private GameObject turnNumberObject;
+    [SerializeField]
+    private GameObject playerNameObject;
 
     public Color selectionColor;
 
@@ -46,12 +48,14 @@ public class GameManager : MonoBehaviour, ISavable
     public void Start() {
         Load();
         if (turnNumber > 1) playerManager.Load();
+        else playerManager.UpdateDisplay();
         goalManager.Load();
         dataCenterManager.Load();
         malwareManager.Load();
         attackManager.Load();
         notificationManager.Load();
         turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
+        playerNameObject.GetComponent<TextMeshProUGUI>().SetText(PlayerManager.GetPlayer(turnPlayer).GetName());
         InitColors();
     }
 
