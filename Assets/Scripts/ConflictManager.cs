@@ -139,8 +139,12 @@ public class ConflictManager : MonoBehaviour
             return;
         }
         
+        //apply encryption and dlp
         int[] attr = m.GetAttributes();
-        attr[3] -= (int) (attr[3] * 0.15f * dc.GetDLP());
+        int enc = dc.GetEncryption();
+        int dlp = dc.GetDLP();
+        attr[3] = (int) (10f + 0.9f * (Math.Min(attr[3], 1f/8f*Math.Pow(dlp,5) - 5f/3f*Math.Pow(dlp,4) + 55f/8f*Math.Pow(dlp,3) - 35f/6f*Math.Pow(dlp,2) - 59f/2f*dlp + 100f)) * 
+            (5/24*Math.Pow(enc,5f) - 35f/12f*Math.Pow(enc,4f) + 335f/24f*Math.Pow(enc,3) - 295f/12f*Math.Pow(enc,2) - 20f/3f*enc + 100f) / 100f);
 
         Player attacker = PlayerManager.GetPlayer(a.GetOwner());
         Player defender = PlayerManager.GetPlayer(dc.GetOwner());
@@ -159,6 +163,30 @@ public class ConflictManager : MonoBehaviour
 
             case "research":// get random research from owner of dc and set true on attacker. better intrusion = better goals
                 //requires goals
+                Player p1 = PlayerManager.GetPlayer(a.GetOwner());
+                Player p2 = PlayerManager.GetPlayer(dc.GetOwner());
+                int i = -1;
+                int j = 0;
+                List<int> idx = new List<int>();
+                List<int> options = p1.GetUnlocks()
+                    .ToList()
+                    .Select(u => {
+                        i++;
+                        return p2.GetUnlocks()[i] - u;
+                    })
+                    .Select(u => Math.Max(u, 0))
+                    .Select(u => {
+                        if (u > 0) idx.Add(j);
+                        j++;
+                        return (int) (u * ((float) attr[3] / 100f));
+                    })
+                    .ToList();
+                title1 = "You have stolen research from another player :D";
+                body1 = "Attack " + a.GetId() + " was successful and you have gained " + options[idx[i]] + " research points in towards a category";
+                System.Random random = new System.Random();
+                i = random.Next(0, idx.Count);
+
+                p1.SetUnlock(i, options[idx[i]]);
                 break;
 
             case "sabotage"://implement intrusion. keep goin until intrusion is 0
@@ -179,13 +207,13 @@ public class ConflictManager : MonoBehaviour
                     .ToList());
 
                 System.Random rand = new System.Random();
-                int i = rand.Next(0, works.Count);
+                int id = rand.Next(0, works.Count);
 
-                works[i].SetWorkResources(0);
+                works[id].SetWorkResources(0);
 
                 title1 = "You sabotaged another Player's Project :D";
                 body1 = "Attack " + a.GetId() + " was successful and you have set the resources spent on another player's projects to zero.";
-                title2 = "ON eof your project was sabotaged :()";
+                title2 = "One of your projects was sabotaged :(";
                 body2 = "Another player has Sabotaged one of your projects.";
                 notify = true;
 

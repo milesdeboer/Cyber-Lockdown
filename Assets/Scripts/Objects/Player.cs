@@ -67,6 +67,14 @@ public class Player
         this.unlocks = unlocks;
     }
 
+    public int GetUnlock(int i) {
+        return unlocks[i];
+    }
+
+    public void SetUnlock(int i, int unlock) {
+        unlocks[i] = unlock;
+    }
+
     public int GetWorkTarget() {
         return workTarget;
     }

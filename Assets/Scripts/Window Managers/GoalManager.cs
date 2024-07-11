@@ -30,9 +30,7 @@ public class GoalManager : MonoBehaviour
     private Goal startGoal;
     private Goal endGoal;
 
-    private static List<Goal> goals;
-
-    private int active;
+    private static Dictionary<int, Goal> goals;
 
     private static int workTarget;
 
@@ -47,12 +45,23 @@ public class GoalManager : MonoBehaviour
         UpdateDisplay();
     }
 
+    /// <summary>
+    /// Gets a specific Goal object given its Id
+    /// </summary>
+    /// <param name="i">the index of the Goal in the dictionary</param>
+    /// <returns>the Goal at index i</returns>
+    public Goal GetGoal(int i) {
+        return goals[i];
+    }  
+
     public void GoalClick(int i) {
-        active = i;
-        workTarget = i;
-        PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).SetWorkTarget(workTarget);
-        Debug.Log("Goal " + active + " has been selected.");
-        UpdateDisplay();
+        if (goals[i].GetParents()
+            .Select(p => p.GetId())
+            .All(idx => PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).GetUnlock(idx) >= goals[idx].GetWorkRequired())) {
+                workTarget = i;
+                PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).SetWorkTarget(workTarget);
+                UpdateDisplay();
+            }
     }
 
     public void ResourceClick(int change) {
@@ -80,6 +89,7 @@ public class GoalManager : MonoBehaviour
     /// <returns>The Id of the <b>Goal</b> associated with the unlockable</returns>
     public static int UnlockableToGId(string unlockable) {
         return goals
+            .Select(kvp => kvp.Value)
             .Where(g => g.HasUnlockable(unlockable))
             .ToList()
             .Single()
@@ -130,34 +140,34 @@ public class GoalManager : MonoBehaviour
     }
 
     public void InitGoals() {
-        goals = new List<Goal>();
-        goals.Add(new Goal(0, 0, new List<string>(){"virus", "manual"}));//0
+        goals = new Dictionary<int, Goal>();
+        goals.Add(0, new Goal(0, 0, new List<string>(){"virus", "manual"}));//0
 
-        goals.Add(new Goal(1, 100, new List<string>(){"worm", "drain", "firewall"}));//1
-        goals.Add(new Goal(2, 100, new List<string>(){"recon", "rootkit", "encryption"}));//2
-        goals.Add(new Goal(3, 100, new List<string>(){"adware", "phishing"}));//3
-        goals.Add(new Goal(4, 100, new List<string>(){"structure", "apt"}));//4
+        goals.Add(1, new Goal(1, 100, new List<string>(){"worm", "drain", "firewall"}));//1
+        goals.Add(2, new Goal(2, 100, new List<string>(){"recon", "rootkit", "encryption"}));//2
+        goals.Add(3, new Goal(3, 100, new List<string>(){"adware", "phishing"}));//3
+        goals.Add(4, new Goal(4, 100, new List<string>(){"structure", "apt"}));//4
 
-        goals.Add(new Goal(5, 200, new List<string>(){"polymorphism", "email-filter"}));//5
-        goals.Add(new Goal(6, 200, new List<string>(){"zero-day", "backdoor"}));//6
-        goals.Add(new Goal(7, 200, new List<string>(){"scan", "patch"}));//7
+        goals.Add(5, new Goal(5, 200, new List<string>(){"polymorphism", "email-filter"}));//5
+        goals.Add(6, new Goal(6, 200, new List<string>(){"zero-day", "backdoor"}));//6
+        goals.Add(7, new Goal(7, 200, new List<string>(){"scan", "patch"}));//7
 
-        goals.Add(new Goal(8, 300, new List<string>(){"trojan"}));//8
-        goals.Add(new Goal(9, 300, new List<string>(){"ids"}));//9
-        goals.Add(new Goal(10, 300, new List<string>(){"sabotage", "dlp"}));//10
+        goals.Add(8, new Goal(8, 300, new List<string>(){"trojan"}));//8
+        goals.Add(9, new Goal(9, 300, new List<string>(){"ids"}));//9
+        goals.Add(10, new Goal(10, 300, new List<string>(){"sabotage", "dlp"}));//10
 
-        goals.Add(new Goal(11, 400, new List<string>(){"cuckoo-egg"}));//11
-        goals.Add(new Goal(12, 400, new List<string>(){"obfuscation"}));//12
+        goals.Add(11, new Goal(11, 400, new List<string>(){"cuckoo-egg"}));//11
+        goals.Add(12, new Goal(12, 400, new List<string>(){"obfuscation"}));//12
 
-        goals.Add(new Goal(13, 500, new List<string>(){"botnet"}));//13
-        goals.Add(new Goal(14, 500, new List<string>(){"steganography"}));//14
-        goals.Add(new Goal(15, 500, new List<string>(){"disable"}));//15
-        goals.Add(new Goal(16, 500, new List<string>(){"ips"}));//16
+        goals.Add(13, new Goal(13, 500, new List<string>(){"botnet"}));//13
+        goals.Add(14, new Goal(14, 500, new List<string>(){"steganography"}));//14
+        goals.Add(15, new Goal(15, 500, new List<string>(){"disable"}));//15
+        goals.Add(16, new Goal(16, 500, new List<string>(){"ips"}));//16
 
-        goals.Add(new Goal(17, 600, new List<string>(){"ransomware"}));//17
+        goals.Add(17, new Goal(17, 600, new List<string>(){"ransomware"}));//17
 
-        goals.Add(new Goal(18, 1000, new List<string>(){"end-1"}));//18
-        goals.Add(new Goal(19, 1000, new List<string>(){"end-2"}));//19
+        goals.Add(18, new Goal(18, 1000, new List<string>(){"end-1"}));//18
+        goals.Add(19, new Goal(19, 1000, new List<string>(){"end-2"}));//19
 
         // (Virus/Manual) -> {(worm/drain/firewall), (recon/rootkit/firewall), (adware/phishing), (structure/apt)}
         goals[0].AddChild(goals[1]);
