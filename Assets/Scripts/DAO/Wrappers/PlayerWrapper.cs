@@ -12,12 +12,19 @@ public class PlayerWrapper
 
     public string name;
 
+    public int[] unlocks;
+    public int workRate;
+    public int workTarget;
+
     public PlayerWrapper(Player player) {
         pid = player.GetId();
         money = player.GetMoney();
         overallResources = player.GetOverallResources();
         availableResources = player.GetAvailableResources();
         name = player.GetName();
+        unlocks = player.GetUnlocks();
+        workRate = player.GetWorkRate();
+        workTarget = player.GetWorkTarget();
     }
 
     public Player Unwrap() {
@@ -26,6 +33,9 @@ public class PlayerWrapper
         player.SetOverallResources(overallResources);
         player.SetAvailableResources(availableResources);
         player.SetName(name);
+        player.SetUnlocks(unlocks);
+        player.SetWorkRate(workRate);
+        player.SetWorkTarget(workTarget);
 
         return player;
     }

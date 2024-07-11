@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class Goal
 {
+    private int gid;
     private List<Goal> parents;
     private List<Goal> children;
 
     private int workDone = 0;
     private int workRequired;
 
-    private List<string> unlockable;
+    private List<string> unlockables;
 
-    public Goal(int workRequired) {
+    public Goal(int gid, int workRequired) {
+        this.gid = gid;
         this.workRequired = workRequired;
         parents = new List<Goal>();
         children = new List<Goal>();
     }
-    public Goal(int workRequired, List<string> unlockable) {
+    public Goal(int gid, int workRequired, List<string> unlockables) {
+        this.gid = gid;
         this.workRequired = workRequired;
-        this.unlockable = unlockable;
+        this.unlockables = unlockables;
         parents = new List<Goal>();
         children = new List<Goal>();
+    }
+
+    public int GetId() {
+        return gid;
+    }
+    public void SetId(int gid) {
+        this.gid = gid;
     }
 
     public List<Goal> GetParents() {
@@ -59,11 +69,15 @@ public class Goal
         return workDone >= workRequired;
     }
 
-    public List<string> GetUnlockable() {
-        return unlockable;
+    public List<string> GetUnlockables() {
+        return unlockables;
     }
 
     public void AddUnlockable(string unlockable) {
-        this.unlockable.Add(unlockable);
+        this.unlockables.Add(unlockable);
+    }
+
+    public bool HasUnlockable(string unlockable) {
+        return unlockables.Contains(unlockable);
     }
 }

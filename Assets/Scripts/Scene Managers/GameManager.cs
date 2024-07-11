@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour, ISavable
     private PlayerManager playerManager;
     [SerializeField]
     private NotificationManager notificationManager;
+    [SerializeField]
+    private GoalManager goalManager;
 
     [SerializeField]
     private GameObject turnNumberObject;
@@ -44,6 +46,7 @@ public class GameManager : MonoBehaviour, ISavable
     public void Start() {
         Load();
         if (turnNumber > 1) playerManager.Load();
+        goalManager.Load();
         dataCenterManager.Load();
         malwareManager.Load();
         attackManager.Load();
@@ -105,6 +108,7 @@ public class GameManager : MonoBehaviour, ISavable
         malwareManager.Work();
         attackManager.Work();
         dataCenterManager.Work();
+        PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).Work();
         Save();
         playerManager.Save();
         dataCenterManager.Save();
