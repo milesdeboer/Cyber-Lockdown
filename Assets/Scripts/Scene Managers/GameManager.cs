@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour, ISavable
         attackManager.Work();
         dataCenterManager.Work();
         PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).Work();
+        if (WinCheck()) return;
         Save();
         playerManager.Save();
         dataCenterManager.Save();
@@ -120,6 +121,28 @@ public class GameManager : MonoBehaviour, ISavable
         attackManager.Save();
         notificationManager.Save();
         SceneManager.LoadScene("BetweenScene");
+    }
+
+    private bool WinCheck() {
+        string winner = null;
+        int target = goalManager.GetGoals().ToArray()[^1].Value.GetWorkRequired();
+
+        PlayerManager
+            .GetPlayers()
+            .ToList()
+            .Select(kvp => kvp.Value)
+            .Where(p => p.GetUnlocks()[^1] >= target)
+            .Take(1)
+            .ToList()
+            .ForEach(p => winner = p.GetName());
+
+        if (winner != null) {
+            EndGameManager.SetWinner(winner);
+            SceneManager.LoadScene("EndGameScene");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void MainMenu() {

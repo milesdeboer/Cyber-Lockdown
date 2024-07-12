@@ -19,6 +19,9 @@ public class GoalManager : MonoBehaviour
     private GameObject resourceDisplay;
 
     [SerializeField]
+    private GameObject goalEdges;
+
+    [SerializeField]
     private Color uncompletedColor;
     [SerializeField]
     private Color completedColor;
@@ -39,10 +42,21 @@ public class GoalManager : MonoBehaviour
         UpdateDisplay();
     }
 
+    public void OnEnable() {
+        if (goalEdges != null) goalEdges.SetActive(true);
+    }
+    public void OnDisable() {
+        if (goalEdges != null) goalEdges.SetActive(false);
+    }
+
     public void Load() {
         workTarget = PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).GetWorkTarget();
         InitGoals();
         UpdateDisplay();
+    }
+
+    public Dictionary<int, Goal> GetGoals() {
+        return goals;
     }
 
     /// <summary>
@@ -205,7 +219,7 @@ public class GoalManager : MonoBehaviour
 
         goals[11].AddChild(goals[18]);
 
-        goals[12].AddChild(goals[18]);
+        goals[12].AddChild(goals[13]);
 
         goals[13].AddChild(goals[18]);
 
