@@ -31,6 +31,10 @@ public class Attack : Workable
         return id;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public int GetOwner() {
         return owner;
     }

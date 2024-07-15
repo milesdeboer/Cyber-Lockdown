@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+
 using UnityEngine;
 
 public class ConflictManager : MonoBehaviour
@@ -141,103 +143,10 @@ public class ConflictManager : MonoBehaviour
         
         //apply encryption and dlp
         int[] attr = m.GetAttributes();
-        int enc = dc.GetEncryption();
-        int dlp = dc.GetDLP();
-        attr[3] = (int) (10f + 0.9f * (Math.Min(attr[3], 1f/8f*Math.Pow(dlp,5) - 5f/3f*Math.Pow(dlp,4) + 55f/8f*Math.Pow(dlp,3) - 35f/6f*Math.Pow(dlp,2) - 59f/2f*dlp + 100f)) * 
-            (5/24*Math.Pow(enc,5f) - 35f/12f*Math.Pow(enc,4f) + 335f/24f*Math.Pow(enc,3) - 295f/12f*Math.Pow(enc,2) - 20f/3f*enc + 100f) / 100f);
+        
+        attr[3] = ScaleIntrusion(attr[3], dc.GetEncryption(), dc.GetDLP());
 
-        Player attacker = PlayerManager.GetPlayer(a.GetOwner());
-        Player defender = PlayerManager.GetPlayer(dc.GetOwner());
-
-        switch(a.GetObjective()) {
-            case "money":
-                int amount = Math.Min(Math.Max(attr[3] * defender.GetMoney() / 200, attr[3] / 2), defender.GetMoney());
-                attacker.SetMoney(attacker.GetMoney() + amount);
-                defender.SetMoney(defender.GetMoney() - amount);
-                title1 = "You have Stolen Money from another Player :D";
-                body1 = "Attack " + a.GetId() + " was successful and you have gained $" + amount + " from player " + (dc.GetOwner()+1);
-                title2 = "A Player has Stolen Money from you :(";
-                body2 = "One of your data centers has been attacked by another player. They stole $" + amount + " from you.";
-                notify = true;
-                break;
-
-            case "research":// get random research from owner of dc and set true on attacker. better intrusion = better goals
-                //requires goals
-                Player p1 = PlayerManager.GetPlayer(a.GetOwner());
-                Player p2 = PlayerManager.GetPlayer(dc.GetOwner());
-                int i = -1;
-                int j = 0;
-                List<int> idx = new List<int>();
-                List<int> options = p1.GetUnlocks()
-                    .ToList()
-                    .Select(u => {
-                        i++;
-                        return p2.GetUnlocks()[i] - u;
-                    })
-                    .Select(u => Math.Max(u, 0))
-                    .Select(u => {
-                        if (u > 0) idx.Add(j);
-                        j++;
-                        return (int) (u * ((float) attr[3] / 100f));
-                    })
-                    .ToList();
-                title1 = "You have stolen research from another player :D";
-                body1 = "Attack " + a.GetId() + " was successful and you have gained " + options[idx[i]] + " research points in towards a category";
-                System.Random random = new System.Random();
-                i = random.Next(0, idx.Count);
-
-                p1.SetUnlock(i, options[idx[i]]);
-                break;
-
-            case "sabotage"://implement intrusion. keep goin until intrusion is 0
-                // customize notification to stage what was sabotaged
-                List<Workable> works = new List<Workable>();
-
-                works.AddRange(malwareController.GetMalware().Values
-                    .Where(w => w.GetOwner() == dc.GetOwner())
-                    .Where(w => w.GetWorkResources() > 0)
-                    .ToList());
-                works.AddRange(attackManager.GetAttacks().Values
-                    .Where(w => w.GetOwner() == dc.GetOwner())
-                    .Where(w => w.GetWorkResources() > 0)
-                    .ToList());
-                works.AddRange(dataCenterManager.GetDataCenters()
-                    .Where(w => w.GetOwner() == dc.GetOwner())
-                    .Where(w => w.GetWorkResources() > 0)
-                    .ToList());
-
-                System.Random rand = new System.Random();
-                int id = rand.Next(0, works.Count);
-
-                works[id].SetWorkResources(0);
-
-                title1 = "You sabotaged another Player's Project :D";
-                body1 = "Attack " + a.GetId() + " was successful and you have set the resources spent on another player's projects to zero.";
-                title2 = "One of your projects was sabotaged :(";
-                body2 = "Another player has Sabotaged one of your projects.";
-                notify = true;
-
-                break;
-            
-            case "disable":
-                dc.SetActive(attr[3] / 25 + 1);
-                title1 = "You disabled another Player's Data Center";
-                body1 = "Attack " + a.GetId() + " was successful and you have disabled data center " + dc.GetId() + ".";
-                title2 = "Your Data Center was Disabled :(";
-                body2 = "Another player has disabled data center " + dc.GetId() + " which you own.";
-                notify = true;
-                break;
-
-            case "backdoor":
-                dc.AddExploit(a.GetOwner(), 80 * attr[3] / 100 + 20);
-                title1 = "You Created a Backdoor";
-                body1 = "Attack " + a.GetId() + " was successful and you created a backdoor into data center " + dc.GetId() + ". The strength of the backdoor is " + (80 * attr[3] / 100 + 20) + ".";
-                break;
-
-            default:
-                Debug.Log("Invalid Objective");
-                break;
-        }
+        Damage(a, dc, attr[3], out title1, out body1, out title2, out body2);
 
         if (m.GetMalwareType() == "worm") {
             if (m.GetSpread() == -1) m.SetSpread(5);
@@ -260,6 +169,116 @@ public class ConflictManager : MonoBehaviour
             notificationManager.AddNotification(title1, body1, a.GetOwner());
             if (notify) notificationManager.AddNotification(title2, body2, dc.GetOwner());
             FinishAttack(a, dc);
+        }
+    }
+
+    public int ScaleIntrusion(int intrusion, int encryption, int dlp) {
+        return (int) (10f + 0.9f * (Math.Min(intrusion, 1f/8f*Math.Pow(dlp,5) - 5f/3f*Math.Pow(dlp,4) + 55f/8f*Math.Pow(dlp,3) - 35f/6f*Math.Pow(dlp,2) - 59f/2f*dlp + 100f)) * 
+            (5/24*Math.Pow(encryption,5f) - 35f/12f*Math.Pow(encryption,4f) + 335f/24f*Math.Pow(encryption,3) - 295f/12f*Math.Pow(encryption,2) - 20f/3f*encryption + 100f) / 100f);
+    }
+
+    /// <summary>
+    /// Inflicts damage upon data center given the attributes of the attack and creates title and body for notification(s).
+    /// </summary>
+    /// <param name="a">The Attack Object involved in the interaction</param>
+    /// <param name="dc">The DataCenter Object involved in the interaction</param>
+    /// <param name="intrusion">The scaled intrusion value from the malware associated with the attack.</param>
+    /// <param name="t1">out: The title of the first notification to be sent.</param>
+    /// <param name="b1">out: The body of the first notification to be sent.</param>
+    /// <param name="t2">out: The title of the second notification to be sent.</param>
+    /// <param name="b2">out: The body of the second notification to be sent.</param>
+    /// <returns>true if two notifications are to be sent and false otherwise.</returns>
+    public bool Damage(Attack a, DataCenter dc, int intrusion, out string t1, out string b1, out string t2, out string b2) {
+        Player attacker = PlayerManager.GetPlayer(a.GetOwner());
+        Player defender = PlayerManager.GetPlayer(dc.GetOwner());
+
+        t1 = ""; b1 = ""; t2 = ""; b2 = "";
+        
+        switch(a.GetObjective()) {
+            case "money":
+                int amount = Math.Min(Math.Max(intrusion * defender.GetMoney() / 200, intrusion / 2), defender.GetMoney());
+                attacker.SetMoney(attacker.GetMoney() + amount);
+                defender.SetMoney(defender.GetMoney() - amount);
+
+                t1 = "You have Stolen Money from another Player :D";
+                b1 = "Attack " + a.GetId() + " was successful and you have gained $" + amount + " from player " + (dc.GetOwner()+1);
+                t2 = "A Player has Stolen Money from you :(";
+                b2 = "One of your data centers has been attacked by another player. They stole $" + amount + " from you.";
+
+                return true;
+            
+            case "research":
+                int i = -1;
+                int j = 0;
+                List<int> idx = new List<int>();
+                List<int> options = attacker.GetUnlocks()
+                    .ToList()
+                    .Select(u => {
+                        i++;
+                        return defender.GetUnlocks()[i] - u;
+                    })
+                    .Select(u => Math.Max(u, 0))
+                    .Select(u => {
+                        if (u > 0) idx.Add(j);
+                        j++;
+                        return (int) (u * ((float) intrusion / 100f));
+                    })
+                    .ToList();
+
+                t1 = "You have stolen research from another player :D";
+                b1 = "Attack " + a.GetId() + " was successful and you have gained " + options[idx[i]] + " research points in towards a category";
+
+                System.Random random = new System.Random();
+                i = random.Next(0, idx.Count);
+                attacker.SetUnlock(i, options[idx[i]]);
+
+                return false;
+
+            case "sabotage":
+                List<Workable> works = new List<Workable>();
+
+                works.AddRange(malwareController.GetMalware().Values
+                    .Where(w => w.GetOwner() == dc.GetOwner())
+                    .Where(w => w.GetWorkResources() > 0)
+                    .ToList());
+                works.AddRange(attackManager.GetAttacks().Values
+                    .Where(w => w.GetOwner() == dc.GetOwner())
+                    .Where(w => w.GetWorkResources() > 0)
+                    .ToList());
+                works.AddRange(dataCenterManager.GetDataCenters()
+                    .Where(w => w.GetOwner() == dc.GetOwner())
+                    .Where(w => w.GetWorkResources() > 0)
+                    .ToList());
+
+                System.Random rand = new System.Random();
+                int id = rand.Next(0, works.Count);
+
+                works[id].SetWorkResources(Math.Max(works[id].GetWorkResources() - (intrusion * works[id].GetWorkRequirement()) / 100, 0));
+
+                t1 = "You sabotaged another Player's Project :D";
+                b1 = "Attack " + a.GetId() + " was successful and you have set the resources spent on another player's projects to zero.";
+                t2 = "One of your projects was sabotaged :(";
+                b2 = "Another player has Sabotaged one of your projects.";
+
+                return true;
+
+            case "disable":
+                dc.SetActive(intrusion / 25 + 1);
+                t1 = "You disabled another Player's Data Center";
+                b1 = "Attack " + a.GetId() + " was successful and you have disabled data center " + dc.GetId() + ".";
+                t2 = "Your Data Center was Disabled :(";
+                b2 = "Another player has disabled data center " + dc.GetId() + " which you own.";
+                return true;
+
+            case "backdoor":
+                dc.AddExploit(attacker.GetId(), 80 * intrusion / 100 + 20);
+                t1 = "You Created a Backdoor";
+                b1 = "Attack " + a.GetId() + " was successful and you created a backdoor into data center " + dc.GetId() + ". The strength of the backdoor is " + (80 * intrusion / 100 + 20) + ".";
+                return false;
+
+            default:
+                Debug.Log("Invalid Objective");
+                return false;
         }
     }
 

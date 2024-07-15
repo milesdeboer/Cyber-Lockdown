@@ -28,6 +28,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
     private GameObject selectionWindow;
     [SerializeField]
     private GameObject customizationWindow;
+    [SerializeField]
+    private GameObject ransomwareWindow;
 
     [SerializeField]
     private GameObject dataCenterButton;
@@ -45,16 +47,20 @@ public class DataCenterManager : MonoBehaviour, ISavable
     [SerializeField]
     private GameObject resourceDisplay;
 
+    [SerializeField]
+    private GameObject ransomOffer;
+
     private List<DataCenter> dataCenters;
     private List<GameObject> dataCenterButtons;
 
 
     private int currentDataCenter = 0;
 
+    private int ransomId = -1;
+
     public void Start() {
         InitButtons();
         InitSelectionListeners();
-        //InitEmail();
         InitTraffic();
     }
 
@@ -137,36 +143,90 @@ public class DataCenterManager : MonoBehaviour, ISavable
         }
     }
 
-    /**
-     *  onClick event listener for data center button to change target data center.
-     *  @param {int} i - The index of the data center button.
-     */
+    /// <summary>
+    /// onClick event listener for data center button to change target data center.
+    /// </summary>
+    /// <param name="i">The index of the data center button</param>
     public void SelectionClick(int i) {
         if (dataCenters[i].GetOwner() == GameManager.GetTurnPlayer()) {
-            customizationWindow.SetActive(true);
+            
             currentDataCenter = i;
-            ResetSetup();
+            ransomId = RansomCheck();
+
+            if (ransomId == -1) {
+                customizationWindow.SetActive(true);
+                ResetSetup();
+            } else {
+                UpdateRansom();
+            }
+
             selectionWindow.SetActive(false);
-            Debug.Log("Switching to Data Center " + i);
         }
     }
 
+    /// <summary>
+    /// Resets the setup of the attribute displays for the current data center to match the current data center.
+    /// </summary>
     public void ResetSetup() {
-        Debug.Log("Starting Setup");
         GameObject[] sliders = GameObject.FindGameObjectsWithTag("DataCenterAttribute").Where(g => g.GetComponent<Slider>() != null).ToArray();
         Slider slider = sliders[0].GetComponent<Slider>();
         if (slider != null) 
             slider.value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(dataCenters[currentDataCenter].GetWorkRate().ToString());
         InitTraffic();
-        //InitEmail();
         UpdateAttributes();
     }
 
-    /**
-     *  onClick event listener for attribute buttons, increasing the value of the attribute by one.
-     *  @param {string} attribute - The name of the attribute being changed.
-     */
+    /// <summary>
+    /// Checks if the current data center is infected with ransomware and opens ransomware window if true.
+    /// </summary>
+    /// <returns>The id of the attack associated with the ransomware.</returns>
+    public int RansomCheck() {
+        int hasRansomware = -1;
+        ransomwareWindow.SetActive(false);
+
+        dataCenters[currentDataCenter]
+            .GetAttacks()
+            .Select(a => attackManager.GetAttack(a))
+            .Where(a => malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "ransomware")
+            .ToList()
+            .ForEach(a => {
+                ransomwareWindow.SetActive(true);
+                hasRansomware = a.GetId();
+            });
+
+        return hasRansomware;
+    }
+
+    /// <summary>
+    /// Updates the ransomware window with current data.
+    /// </summary>
+    public void UpdateRansom() {//intrusion and objective
+        Attack a = attackManager.GetAttack(ransomId);
+        int intrusion = conflictManager.ScaleIntrusion(malwareManager.GetMalware(a.GetMalware()).GetIntrusion(), dataCenters[currentDataCenter].GetEncryption(), dataCenters[currentDataCenter].GetDLP());
+        
+        ransomOffer.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>().SetText("Objective: " + a.GetObjective() + "\n\nIntrusion Value: " + intrusion);
+    }
+
+    /// <summary>
+    /// onClick event listener for the accept ransom button. It allows the attack to go forward.
+    /// </summary>
+    public void AcceptRansom() {
+        string t1, b1, t2, b2;
+        Attack a = attackManager.GetAttack(ransomId);
+        int intrusion = 2 * conflictManager.ScaleIntrusion(malwareManager.GetMalware(a.GetMalware()).GetIntrusion(), dataCenters[currentDataCenter].GetEncryption(), dataCenters[currentDataCenter].GetDLP());
+        
+        bool notify = conflictManager.Damage(a, dataCenters[currentDataCenter], intrusion, 
+            out t1, out b1, out t2, out b2);
+
+        notificationManager.AddNotification(t1, b1, a.GetOwner());
+        if (notify) notificationManager.AddNotification(t2, b2, dataCenters[currentDataCenter].GetOwner());
+    }
+
+    /// <summary>
+    /// onClick event listener for attribute buttons, increasing the value of the attribute by one.
+    /// </summary>
+    /// <param name="attribute">The name of the attribute being changed.</param>
     public void AttributeClick(string attribute) {
         int[] levels = new int[8];
 
