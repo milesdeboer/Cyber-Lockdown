@@ -69,9 +69,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         InitTraffic();
     }
 
-    /**
-     *  Initializes the Data Center Objects 
-     */
+    /// <summary>
+    /// Initializes the Data Center Objects 
+    /// </summary>
     public void InitDataCenters() {
         dataCenters = new List<DataCenter>();
         for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers(); i++) {
@@ -81,9 +81,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         }
     }
 
-    /**
-     *  Instantiates the data center selection buttons.
-     */
+    /// <summary>
+    /// Instantiates the data center selection buttons.
+    /// </summary>
     public void InitButtons() {
         // Initialize the list of data center buttons
         dataCenterButtons = new List<GameObject>();
@@ -131,9 +131,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         }
     }
 
-    /**
-     *  Adds onClick event listeners for each data center button
-     */
+    /// <summary>
+    /// Adds onClick event listeners for each data center button
+    /// </summary>
     public void InitSelectionListeners() {
         // Iterate through data center buttons
         for (int i = 0; i < dataCenterButtons.Count; i++) {
@@ -230,8 +230,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
         if (notify) notificationManager.AddNotification(t2, b2, dataCenters[currentDataCenter].GetOwner());
     }
 
-    public int AdCheck() {
-        int hasAdware = -1;
+    /// <summary>
+    /// Checks target dataCenter for adware and creates Ads
+    /// </summary>
+    public void AdCheck() {;
         dataCenters[currentDataCenter]
             .GetAttacks()
             .Select(a => attackManager.GetAttack(a))
@@ -240,10 +242,12 @@ public class DataCenterManager : MonoBehaviour, ISavable
             .ForEach(a => {
                 CreateAds(4);
             });
-
-        return hasAdware;
     }
 
+    /// <summary>
+    /// Creates N Ad Objects
+    /// </summary>
+    /// <param name="N">The number of objects to instantiate</param>
     public void CreateAds(int N) {
         System.Random random = new System.Random();
         Vector2 location = new Vector2(0f, 0f);
@@ -321,6 +325,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
         } 
     }
 
+    /// <summary>
+    /// Cancels all work on the target dataCenter given an attribute
+    /// </summary>
+    /// <param name="attribute">The attribute that the work is being canceled</param>
     public void CancelWorkClick(string attribute) {
         string work = dataCenters[currentDataCenter].GetWorkTarget();
         List<string> targets = work.Split("/").Skip(1).ToList();
@@ -329,6 +337,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         UpdateAttributes();
     }
 
+    /// <summary>
+    /// Updates the labels on the attribute buttons
+    /// </summary>
     public void UpdateAttributes() {
         Dictionary<string, int> attrIdx= new Dictionary<string, int>(){
             {"emailFiltering", 0},
@@ -385,23 +396,27 @@ public class DataCenterManager : MonoBehaviour, ISavable
         }
     }
 
+    /// <summary>
+    /// onChange event listener which changes the firewall variable of target dataCenter depending on value from slider
+    /// </summary>
+    /// <param name="value">the current value of the slider</param>
     public void FirewallChange(float value) {
         dataCenters[currentDataCenter].SetFirewall((int) (value * GameManager.VALUE_SCALE));
         Debug.Log("Updated Firewall Strength to " + ((int) (value * GameManager.VALUE_SCALE)) + ".");
     }
 
-    /**
-     *  onClick event listener to go back to data center selection window.
-     */
+    /// <summary>
+    /// onClick event listener to go back to data center selection window.
+    /// </summary>
     public void Back() {
         selectionWindow.SetActive(true);
         currentDataCenter = 0;
         customizationWindow.SetActive(false);
     }
 
-    /**
-     *  Initialize email objects and distributes malware amongst them
-     */
+    /// <summary>
+    ///  Initialize email objects and distributes malware amongst them
+    /// </summary>
     public void InitEmail() {
         // Destroy existing emails
         GameObject[] emails_ = GameObject.FindGameObjectsWithTag("Email");
@@ -448,9 +463,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         InitEmailListeners();
     }
 
-    /**
-     *  Initializes the event listeners for the buttons of each email object
-     */
+    /// <summary>
+    /// Initializes the event listeners for the buttons of each email object
+    /// </summary>
     public void InitEmailListeners() {
         // Iterate through all emails
         foreach(GameObject email in dataCenters[currentDataCenter].GetEmails()) {
@@ -469,11 +484,11 @@ public class DataCenterManager : MonoBehaviour, ISavable
         }
     }
 
-    /**
-     *  onClick listener for the email accept and confirm buttons
-     *  @param {GameObject} self - The GameObject of the email entry
-     *  @param {bool} accepted - boolean determining which button was pressed (accepted or declined)
-     */
+    /// <summary>
+    /// onClick listener for the email accept and confirm buttons
+    /// </summary>
+    /// <param name="self">The GameObject of the email entry</param>
+    /// <param name="accepted">boolean determining which button was pressed (accepted or declined)</param>
     public void EmailClick(GameObject self, bool accepted) {
         if (accepted) {
             int aid;
@@ -487,7 +502,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         Destroy(self);
     }
 
-    
+    /// <summary>
+    /// Initializes the traffic objects and gives them names depending on what malware infected the dataCenter
+    /// </summary>
     public void InitTraffic() {
         GameObject[] traffic_ = GameObject.FindGameObjectsWithTag("Traffic");
         foreach(GameObject traffic in traffic_) Destroy(traffic);
@@ -536,9 +553,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
         InitTrafficListeners(trafficObjects);
     }
 
-    /**
-     *  Initializes the event listeners for the buttons of each email object
-     */
+    /// <summary>
+    /// Initializes the event listeners for the buttons of each email object
+    /// </summary>
+    /// <param name="traffic">Array of the traffic objects</param>
     public void InitTrafficListeners(GameObject[] traffic) {
         // Iterate through all traffic options
         traffic
@@ -551,10 +569,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
             });
     }
 
-    /**
-     *  onClick listener for the traffic delete button
-     *  @param {GameObject} self - The GameObject of the traffic entry
-     */
+    /// <summary>
+    /// onClick listener for the traffic delete button
+    /// </summary>
+    /// <param name="self">The GameObject of the traffic entry</param>
     public void TrafficClick(GameObject self) {
         int aid;
         if (Int32.TryParse(self.name, out aid)) {
@@ -578,23 +596,35 @@ public class DataCenterManager : MonoBehaviour, ISavable
         Destroy(self);
     }
 
-    /**
-     *  Returns the data center at a given index.
-     *  @param {int} i - The index of the data center.
-     *  @returns {DataCenter} - The data center at the given index.
-     */
+    /// <summary>
+    /// Returns the data center at a given index.
+    /// </summary>
+    /// <param name="i">The index of the data center.</param>
+    /// <returns>The data center at the given index.</returns>
     public DataCenter GetDataCenter(int i) {
         return dataCenters[i];
     }
     
+    /// <summary>
+    /// returns the list of DataCenters
+    /// </summary>
+    /// <returns>List of DataCenters</returns>
     public List<DataCenter> GetDataCenters() {
         return dataCenters;
     }
 
+    /// <summary>
+    /// Sets the dataCenters list
+    /// </summary>
+    /// <param name="dataCenters">new dataCenters list</param>
     public void SetDataCenters(List<DataCenter> dataCenters) {
         this.dataCenters = dataCenters;
     }
 
+    /// <summary>
+    /// onClick listener for the resource buttons which increases the allocated resources.
+    /// </summary>
+    /// <param name="change">the amount added to allocated resources. usually -1 or 1</param>
     public void ResourceClick(int change) {
         Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
         if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
@@ -613,6 +643,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
         playerManager.UpdateDisplay();
     }
 
+    /// <summary>
+    /// Performs work on data center tasks, adds money to players controlling adware and decreases the amount of turns a data center is disabled
+    /// </summary>
     public void Work() {
         Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
 
@@ -643,11 +676,17 @@ public class DataCenterManager : MonoBehaviour, ISavable
             });
     }
 
+    /// <summary>
+    /// Saves dataCenters
+    /// </summary>
     public void Save() {
         DataCenterDAO dao = new DataCenterDAO();
         dao.Save(this);
     }
 
+    /// <summary>
+    /// Loads dataCenters
+    /// </summary>
     public void Load() {
         DataCenterDAO dao = new DataCenterDAO();
         if (!dao.Load(this)) InitDataCenters();
