@@ -32,6 +32,10 @@ public class Player
         return money;
     }
 
+    public void AddMoney(int money) {
+        this.money += money;
+    }
+
     public void SetMoney(int money) {
         this.money = money;
     }

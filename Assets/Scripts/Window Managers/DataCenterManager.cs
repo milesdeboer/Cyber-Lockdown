@@ -50,6 +50,11 @@ public class DataCenterManager : MonoBehaviour, ISavable
     [SerializeField]
     private GameObject ransomOffer;
 
+    [SerializeField]
+    private GameObject popUpCanvas;
+    [SerializeField]
+    private GameObject ad;
+
     private List<DataCenter> dataCenters;
     private List<GameObject> dataCenterButtons;
 
@@ -151,6 +156,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
         if (dataCenters[i].GetOwner() == GameManager.GetTurnPlayer()) {
             
             currentDataCenter = i;
+            AdCheck();
             ransomId = RansomCheck();
 
             if (ransomId == -1) {
@@ -169,9 +175,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
     /// </summary>
     public void ResetSetup() {
         GameObject[] sliders = GameObject.FindGameObjectsWithTag("DataCenterAttribute").Where(g => g.GetComponent<Slider>() != null).ToArray();
-        Slider slider = sliders[0].GetComponent<Slider>();
-        if (slider != null) 
-            slider.value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
+
+        if (sliders.Length > 0)
+            sliders[0].GetComponent<Slider>().value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
+
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(dataCenters[currentDataCenter].GetWorkRate().ToString());
         InitTraffic();
         UpdateAttributes();
@@ -221,6 +228,35 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
         notificationManager.AddNotification(t1, b1, a.GetOwner());
         if (notify) notificationManager.AddNotification(t2, b2, dataCenters[currentDataCenter].GetOwner());
+    }
+
+    public int AdCheck() {
+        int hasAdware = -1;
+        dataCenters[currentDataCenter]
+            .GetAttacks()
+            .Select(a => attackManager.GetAttack(a))
+            .Where(a => malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware")
+            .ToList()
+            .ForEach(a => {
+                CreateAds(4);
+            });
+
+        return hasAdware;
+    }
+
+    public void CreateAds(int N) {
+        System.Random random = new System.Random();
+        Vector2 location = new Vector2(0f, 0f);
+        for(int i = 0; i < N; i++) {
+            location.x = (float) random.Next(-584, 584);
+            location.y = (float) random.Next(-75, 296);
+
+            GameObject adObject = Instantiate(ad, location, Quaternion.identity);
+            adObject.transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+                Destroy(adObject);
+            });
+            adObject.transform.SetParent(popUpCanvas.transform, false);
+        }
     }
 
     /// <summary>
@@ -598,6 +634,11 @@ public class DataCenterManager : MonoBehaviour, ISavable
                     }
                     player.SetMoney(player.GetMoney() + d.GetMoney());
                 }
+                d.GetAttacks()
+                    .Select(a => malwareManager.GetMalware(attackManager.GetAttack(a).GetMalware()))
+                    .Where(m => m.GetMalwareType() == "adware")
+                    .ToList()
+                    .ForEach(m => PlayerManager.GetPlayer(m.GetOwner()).AddMoney(9*m.GetIntrusion() + 100));
                 d.SetActive(Math.Max(d.GetActive()-1, 0));
             });
     }
