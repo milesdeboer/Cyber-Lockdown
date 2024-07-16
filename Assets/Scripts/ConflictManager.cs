@@ -172,6 +172,13 @@ public class ConflictManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Scales the intrusion atribute of the attack to a customized function
+    /// </summary>
+    /// <param name="intrusion">the initial intrusion attribute [0, 100]</param>
+    /// <param name="encryption">the encryption level of the target data center [0, 5]</param>
+    /// <param name="dlp">the data loss prevension level of the target data center [0, 5]</param>
+    /// <returns>The scaled intrusion value</returns>
     public int ScaleIntrusion(int intrusion, int encryption, int dlp) {
         return (int) (10f + 0.9f * (Math.Min(intrusion, 1f/8f*Math.Pow(dlp,5) - 5f/3f*Math.Pow(dlp,4) + 55f/8f*Math.Pow(dlp,3) - 35f/6f*Math.Pow(dlp,2) - 59f/2f*dlp + 100f)) * 
             (5/24*Math.Pow(encryption,5f) - 35f/12f*Math.Pow(encryption,4f) + 335f/24f*Math.Pow(encryption,3) - 295f/12f*Math.Pow(encryption,2) - 20f/3f*encryption + 100f) / 100f);

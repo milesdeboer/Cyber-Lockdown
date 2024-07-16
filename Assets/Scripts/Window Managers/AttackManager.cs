@@ -29,6 +29,18 @@ public class AttackManager : MonoBehaviour, ISavable
     private GameObject customizationWindow;
 
     [SerializeField]
+    private GameObject[] selectionButtons;
+
+    [SerializeField]
+    private Color completedColor;
+    [SerializeField]
+    private Color workingColor;
+    [SerializeField]
+    private Color workedColor;
+    [SerializeField]
+    private Color emptyColor;
+
+    [SerializeField]
     private GameObject dataCenterSubWindow;
 
     [SerializeField]
@@ -36,6 +48,9 @@ public class AttackManager : MonoBehaviour, ISavable
 
     [SerializeField]
     private GameObject resourceDisplay;
+
+    [SerializeField]
+    private GameObject locks;
 
     private Dictionary<int, Attack> attacks;
 
@@ -230,6 +245,9 @@ public class AttackManager : MonoBehaviour, ISavable
 
     private void Reset() {
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRate().ToString());
+
+        if (attacks[activeAttack].GetWorkResources() > 0) locks.SetActive(true);
+        else locks.SetActive(false);
     }
 
     public void Work() {
@@ -254,6 +272,20 @@ public class AttackManager : MonoBehaviour, ISavable
         selectionWindow.SetActive(true);
         activeAttack = 0;
         customizationWindow.SetActive(false);
+        UpdateStatusColors();
+    }
+
+    /// <summary>
+    /// Checks the status of each attack (completed, uncompleted, etc.) and assigns the button associated with that malware to a specific color
+    /// </summary>
+    public void UpdateStatusColors() {
+        for (int i = 0; i < selectionButtons.Length; i++) {
+            Color statusColor = (attacks[100 * (GameManager.GetTurnPlayer()+1) + i + 1].IsComplete()) ? completedColor : 
+                (attacks[100 * (GameManager.GetTurnPlayer()+1) + i + 1].GetWorkRate() > 0) ? workingColor : 
+                (attacks[100 * (GameManager.GetTurnPlayer()+1) + i + 1].GetWorkResources() > 0) ? workedColor :
+                emptyColor;
+            selectionButtons[i].GetComponent<Image>().color = statusColor;
+        }
     }
 
     public void Save() {
@@ -264,5 +296,6 @@ public class AttackManager : MonoBehaviour, ISavable
     public void Load() {
         AttackDAO dao = new AttackDAO();
         if (!dao.Load(this)) InitAttacks_();
+        UpdateStatusColors();
     }
 }

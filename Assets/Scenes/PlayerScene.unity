@@ -599,7 +599,7 @@ GameObject:
   - component: {fileID: 37775256}
   - component: {fileID: 37775255}
   m_Layer: 10
-  m_Name: Malware (3)
+  m_Name: Malware (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4292,9 +4292,23 @@ MonoBehaviour:
   dataCenterManager: {fileID: 2112866346}
   selectionWindow: {fileID: 201984916}
   customizationWindow: {fileID: 1309365770}
+  selectionButtons:
+  - {fileID: 1473893980}
+  - {fileID: 583021816}
+  - {fileID: 1188812609}
+  - {fileID: 1557631130}
+  - {fileID: 1102470840}
+  - {fileID: 676793138}
+  - {fileID: 1538227983}
+  - {fileID: 298111706}
+  completedColor: {r: 0.035300493, g: 1, b: 0, a: 1}
+  workingColor: {r: 0, g: 1, b: 0.93085146, a: 1}
+  workedColor: {r: 0.993973, g: 1, b: 0, a: 1}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   dataCenterSubWindow: {fileID: 1779863936}
   dataCenterButton: {fileID: 2807908706005189568, guid: 9f01cfe8396889848900574004784b56, type: 3}
   resourceDisplay: {fileID: 524824208}
+  locks: {fileID: 1547620930}
 --- !u!1 &220818755
 GameObject:
   m_ObjectHideFlags: 0
@@ -4516,7 +4530,7 @@ GameObject:
   - component: {fileID: 238908182}
   - component: {fileID: 238908181}
   m_Layer: 10
-  m_Name: Malware (8)
+  m_Name: Malware (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4783,7 +4797,7 @@ GameObject:
   - component: {fileID: 246364250}
   - component: {fileID: 246364249}
   m_Layer: 10
-  m_Name: Malware (7)
+  m_Name: Malware (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5332,7 +5346,7 @@ GameObject:
   - component: {fileID: 298111709}
   - component: {fileID: 298111708}
   m_Layer: 10
-  m_Name: Attack (8)
+  m_Name: Attack (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5465,7 +5479,7 @@ GameObject:
   - component: {fileID: 303687555}
   - component: {fileID: 303687554}
   m_Layer: 8
-  m_Name: Malware (1)
+  m_Name: Malware (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11268,7 +11282,7 @@ GameObject:
   - component: {fileID: 581318556}
   - component: {fileID: 581318555}
   m_Layer: 10
-  m_Name: Malware (4)
+  m_Name: Malware (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11401,7 +11415,7 @@ GameObject:
   - component: {fileID: 583021819}
   - component: {fileID: 583021818}
   m_Layer: 10
-  m_Name: Attack (2)
+  m_Name: Attack (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12520,7 +12534,7 @@ GameObject:
   - component: {fileID: 676793141}
   - component: {fileID: 676793140}
   m_Layer: 10
-  m_Name: Attack (6)
+  m_Name: Attack (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14647,7 +14661,7 @@ GameObject:
   - component: {fileID: 783136191}
   - component: {fileID: 783136190}
   m_Layer: 10
-  m_Name: Malware (2)
+  m_Name: Malware (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16269,7 +16283,21 @@ MonoBehaviour:
   playerManager: {fileID: 307162849}
   selectionWindow: {fileID: 744578928}
   customizationWindow: {fileID: 1615293579}
+  selectionButtons:
+  - {fileID: 303687552}
+  - {fileID: 783136188}
+  - {fileID: 37775253}
+  - {fileID: 581318553}
+  - {fileID: 1163470442}
+  - {fileID: 1256179976}
+  - {fileID: 246364247}
+  - {fileID: 238908179}
+  completedColor: {r: 0.18245173, g: 1, b: 0, a: 1}
+  workingColor: {r: 0, g: 1, b: 0.9457495, a: 1}
+  workedColor: {r: 0.9559822, g: 1, b: 0, a: 1}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   resourceDisplay: {fileID: 727886785}
+  locks: {fileID: 1435836751}
 --- !u!1 &906089346
 GameObject:
   m_ObjectHideFlags: 0
@@ -18751,7 +18779,7 @@ GameObject:
   - component: {fileID: 1102470843}
   - component: {fileID: 1102470842}
   m_Layer: 10
-  m_Name: Attack (5)
+  m_Name: Attack (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20109,7 +20137,7 @@ GameObject:
   - component: {fileID: 1163470445}
   - component: {fileID: 1163470444}
   m_Layer: 10
-  m_Name: Malware (5)
+  m_Name: Malware (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20877,7 +20905,7 @@ GameObject:
   - component: {fileID: 1188812612}
   - component: {fileID: 1188812611}
   m_Layer: 10
-  m_Name: Attack (3)
+  m_Name: Attack (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21700,7 +21728,7 @@ GameObject:
   - component: {fileID: 1256179979}
   - component: {fileID: 1256179978}
   m_Layer: 10
-  m_Name: Malware (6)
+  m_Name: Malware (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22776,6 +22804,7 @@ Transform:
   - {fileID: 1340258743}
   - {fileID: 1322015901}
   - {fileID: 739583318}
+  - {fileID: 1547620931}
   - {fileID: 419392877}
   - {fileID: 910322300}
   m_Father: {fileID: 217877906}
@@ -26701,6 +26730,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1431298877}
   m_CullTransparentMesh: 1
+--- !u!1 &1435836751
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1435836754}
+  - component: {fileID: 1435836753}
+  - component: {fileID: 1435836752}
+  m_Layer: 10
+  m_Name: Screen Lock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1435836752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435836751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 0.87058824}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1435836753
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435836751}
+  m_CullTransparentMesh: 1
+--- !u!224 &1435836754
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1435836751}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1615293580}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 54, y: 83.4}
+  m_SizeDelta: {x: 108, y: 113.5}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1443542937
 GameObject:
   m_ObjectHideFlags: 0
@@ -27114,7 +27218,7 @@ GameObject:
   - component: {fileID: 1473893983}
   - component: {fileID: 1473893982}
   m_Layer: 8
-  m_Name: Attack (1)
+  m_Name: Attack (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27675,7 +27779,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -27944,7 +28048,7 @@ GameObject:
   - component: {fileID: 1538227986}
   - component: {fileID: 1538227985}
   m_Layer: 10
-  m_Name: Attack (7)
+  m_Name: Attack (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28196,6 +28300,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543348832}
   m_CullTransparentMesh: 1
+--- !u!1 &1547620930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1547620931}
+  - component: {fileID: 1547620933}
+  - component: {fileID: 1547620932}
+  m_Layer: 10
+  m_Name: Screen Lock
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1547620931
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547620930}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1309365771}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 53.99994, y: 83.400024}
+  m_SizeDelta: {x: 108, y: 113.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1547620932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547620930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 0.87058824}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1547620933
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1547620930}
+  m_CullTransparentMesh: 1
 --- !u!1 &1553040476
 GameObject:
   m_ObjectHideFlags: 0
@@ -28419,7 +28598,7 @@ GameObject:
   - component: {fileID: 1557631133}
   - component: {fileID: 1557631132}
   m_Layer: 10
-  m_Name: Attack (4)
+  m_Name: Attack (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29998,6 +30177,7 @@ Transform:
   - {fileID: 193874573}
   - {fileID: 331309131}
   - {fileID: 1560021310}
+  - {fileID: 1435836754}
   - {fileID: 1211360509}
   - {fileID: 1802507460}
   m_Father: {fileID: 901058781}
@@ -30250,7 +30430,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -1.875, y: 0}
+  m_AnchoredPosition: {x: -1.8750038, y: 0}
   m_SizeDelta: {x: -4.25, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1639789569
