@@ -254,6 +254,14 @@ public class AttackManager : MonoBehaviour, ISavable
         playerManager.UpdateDisplay();
     }
 
+    public void Delete(int i) {
+        Attack a = attacks[100 * (GameManager.GetTurnPlayer() + 1) + i + 1];
+        a.Reset();
+        a.SetWorkResources(0);
+        a.SetWorkRate(0);
+        UpdateStatusColors();
+    }
+
     private void Reset() {
         // Update Resource Display
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRate().ToString());
