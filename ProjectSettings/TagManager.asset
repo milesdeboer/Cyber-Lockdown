@@ -12,6 +12,9 @@ TagManager:
   - Traffic
   - MalwareType
   - DataCenterButton
+  - DeliveryButton
+  - ObjectiveButton
+  - MalwareButton
   layers:
   - Default
   - TransparentFX

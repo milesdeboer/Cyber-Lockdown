@@ -136,8 +136,8 @@ GameObject:
   - component: {fileID: 13386861}
   - component: {fileID: 13386860}
   m_Layer: 8
-  m_Name: Malware (6)
-  m_TagString: Untagged
+  m_Name: 6
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2852,8 +2852,8 @@ GameObject:
   - component: {fileID: 143652517}
   - component: {fileID: 143652516}
   m_Layer: 10
-  m_Name: Money
-  m_TagString: Untagged
+  m_Name: money
+  m_TagString: ObjectiveButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4309,6 +4309,10 @@ MonoBehaviour:
   dataCenterButton: {fileID: 2807908706005189568, guid: 9f01cfe8396889848900574004784b56, type: 3}
   resourceDisplay: {fileID: 524824208}
   locks: {fileID: 1547620930}
+  deliveryGroup: {fileID: 1322015900}
+  objectiveGroup: {fileID: 739583317}
+  malwareGroup: {fileID: 1340258742}
+  dataCenterGroup: {fileID: 1779863936}
 --- !u!1 &220818755
 GameObject:
   m_ObjectHideFlags: 0
@@ -7234,8 +7238,8 @@ GameObject:
   - component: {fileID: 381550083}
   - component: {fileID: 381550082}
   m_Layer: 8
-  m_Name: Malware (4)
-  m_TagString: Untagged
+  m_Name: 4
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11149,8 +11153,8 @@ GameObject:
   - component: {fileID: 573486986}
   - component: {fileID: 573486985}
   m_Layer: 8
-  m_Name: Malware (7)
-  m_TagString: Untagged
+  m_Name: 7
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12163,8 +12167,8 @@ GameObject:
   - component: {fileID: 655025683}
   - component: {fileID: 655025686}
   m_Layer: 10
-  m_Name: Sabotage
-  m_TagString: Untagged
+  m_Name: sabotage
+  m_TagString: ObjectiveButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12387,8 +12391,8 @@ GameObject:
   - component: {fileID: 673797968}
   - component: {fileID: 673797971}
   m_Layer: 10
-  m_Name: Phishing
-  m_TagString: Untagged
+  m_Name: phishing
+  m_TagString: DeliveryButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13219,8 +13223,8 @@ GameObject:
   - component: {fileID: 709867812}
   - component: {fileID: 709867815}
   m_Layer: 8
-  m_Name: Reconnaissance
-  m_TagString: Untagged
+  m_Name: 0
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20504,8 +20508,8 @@ GameObject:
   - component: {fileID: 1179303111}
   - component: {fileID: 1179303110}
   m_Layer: 10
-  m_Name: Research
-  m_TagString: Untagged
+  m_Name: research
+  m_TagString: ObjectiveButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21996,8 +22000,8 @@ GameObject:
   - component: {fileID: 1273184322}
   - component: {fileID: 1273184325}
   m_Layer: 10
-  m_Name: Disable
-  m_TagString: Untagged
+  m_Name: disable
+  m_TagString: ObjectiveButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25891,8 +25895,8 @@ GameObject:
   - component: {fileID: 1413927868}
   - component: {fileID: 1413927871}
   m_Layer: 10
-  m_Name: Backdoor
-  m_TagString: Untagged
+  m_Name: backdoor
+  m_TagString: DeliveryButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26610,8 +26614,8 @@ GameObject:
   - component: {fileID: 1431298880}
   - component: {fileID: 1431298879}
   m_Layer: 8
-  m_Name: Malware (8)
-  m_TagString: Untagged
+  m_Name: 8
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29544,8 +29548,8 @@ GameObject:
   - component: {fileID: 1590299882}
   - component: {fileID: 1590299881}
   m_Layer: 8
-  m_Name: Malware (5)
-  m_TagString: Untagged
+  m_Name: 5
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30921,8 +30925,8 @@ GameObject:
   - component: {fileID: 1682508175}
   - component: {fileID: 1682508174}
   m_Layer: 8
-  m_Name: Malware (2)
-  m_TagString: Untagged
+  m_Name: 2
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32276,8 +32280,8 @@ GameObject:
   - component: {fileID: 1776713797}
   - component: {fileID: 1776713796}
   m_Layer: 8
-  m_Name: Malware (3)
-  m_TagString: Untagged
+  m_Name: 3
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32826,8 +32830,8 @@ GameObject:
   - component: {fileID: 1822953234}
   - component: {fileID: 1822953237}
   m_Layer: 10
-  m_Name: Backdoor
-  m_TagString: Untagged
+  m_Name: backdoor
+  m_TagString: ObjectiveButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36788,8 +36792,8 @@ GameObject:
   - component: {fileID: 1982033154}
   - component: {fileID: 1982033157}
   m_Layer: 10
-  m_Name: Manual
-  m_TagString: Untagged
+  m_Name: manual
+  m_TagString: DeliveryButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36935,8 +36939,8 @@ GameObject:
   - component: {fileID: 1985038097}
   - component: {fileID: 1985038096}
   m_Layer: 8
-  m_Name: Malware (1)
-  m_TagString: Untagged
+  m_Name: 1
+  m_TagString: MalwareButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

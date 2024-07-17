@@ -52,6 +52,16 @@ public class AttackManager : MonoBehaviour, ISavable
     [SerializeField]
     private GameObject locks;
 
+    [SerializeField]
+    private GameObject deliveryGroup;
+    [SerializeField]
+    private GameObject objectiveGroup;
+    [SerializeField]
+    private GameObject malwareGroup;
+    [SerializeField]
+    private GameObject dataCenterGroup;
+
+
     private Dictionary<int, Attack> attacks;
 
     private List<GameObject> dataCenters;
@@ -180,6 +190,7 @@ public class AttackManager : MonoBehaviour, ISavable
             GameObject dataCenter = Instantiate(dataCenterButton, coords, Quaternion.identity);
             dataCenter.name = dataCenterManager.GetDataCenter(i).GetId().ToString();
             dataCenter.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText((dataCenterManager.GetDataCenter(i).GetOwner()+1).ToString());
+            dataCenter.name = i.ToString();
 
             // Set orientation of the button
             dataCenter.transform.SetParent(dataCenterSubWindow.transform, false);
@@ -244,8 +255,30 @@ public class AttackManager : MonoBehaviour, ISavable
     }
 
     private void Reset() {
+        // Update Resource Display
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRate().ToString());
 
+        Attack attack = attacks[activeAttack];
+
+        // Update Radio Buttons
+        GameObject[] delivery = GameObject.FindGameObjectsWithTag("DeliveryButton").ToList().Where(d => d.name == attack.GetDelivery()).ToArray();
+        deliveryGroup.GetComponent<RadioButton>().Start();
+        deliveryGroup.GetComponent<RadioButton>().OnClick((delivery.Length > 0) ? delivery[0] : null);
+
+        GameObject[] objective = GameObject.FindGameObjectsWithTag("ObjectiveButton").ToList().Where(o => o.name == attack.GetObjective()).ToArray();
+        objectiveGroup.GetComponent<RadioButton>().Start();
+        objectiveGroup.GetComponent<RadioButton>().OnClick((objective.Length > 0) ? objective[0] : null);
+        
+
+        GameObject[] malware = GameObject.FindGameObjectsWithTag("MalwareButton").ToList().Where(m => m.name == (attack.GetMalware() % 100).ToString()).ToArray();
+        malwareGroup.GetComponent<RadioButton>().Start();
+        malwareGroup.GetComponent<RadioButton>().OnClick((malware.Length > 0) ? malware[0] : null);
+
+        GameObject[] dataCenter = GameObject.FindGameObjectsWithTag("DataCenterButton").ToList().Where(dc => dc.name == attack.GetTarget().ToString()).ToArray();
+        dataCenterGroup.GetComponent<RadioButton>().Start();
+        dataCenterGroup.GetComponent<RadioButton>().OnClick((dataCenter.Length > 0) ? dataCenter[0] : null);
+
+        // Update Lock Display
         if (attacks[activeAttack].GetWorkResources() > 0) locks.SetActive(true);
         else locks.SetActive(false);
     }

@@ -9,7 +9,7 @@ public class Attack : Workable
     private int owner;// to id
     private int target;// to id
 
-    private int malware;// to id
+    private int malware = -1;// to id
     private string objective;
     private string delivery;
     private int exploit;

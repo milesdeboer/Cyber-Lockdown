@@ -112,7 +112,14 @@ public class GameManager : MonoBehaviour, ISavable
         malwareManager.Work();
         attackManager.Work();
         dataCenterManager.Work();
-        PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).Work();
+
+        Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
+        player.Work();
+        if (player.GetUnlock(GoalManager.GetWorkTarget()) >= goalManager.GetGoal(GoalManager.GetWorkTarget()).GetWorkRequired()) {
+            player.SetAvailableResources(player.GetAvailableResources() + player.GetWorkRate());
+            player.SetWorkRate(0);
+        }
+        
         if (WinCheck()) return;
         Save();
         playerManager.Save();

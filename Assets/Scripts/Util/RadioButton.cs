@@ -24,11 +24,12 @@ public class RadioButton : MonoBehaviour
         }
     }
 
-    public void OnClick(GameObject self) {
+    public void OnClick(GameObject self) {// if passed null, unselect all
+        Debug.Log("Running OnClick");
         buttons
             .Where(b => {
                 b.GetComponent<Image>().color = unselectedColor;
-                return b.name == self.name;
+                return (self != null) ? b.name == self.name : false;
             })
             .ToList()
             .ForEach(b => {

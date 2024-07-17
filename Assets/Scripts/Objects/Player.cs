@@ -123,7 +123,7 @@ public class Player
     /// </summary>
     public void Work() {
         if (GoalManager.GetWorkTarget() >= 0)
-            unlocks[GoalManager.GetWorkTarget()] += workRate;
+            unlocks[GoalManager.GetWorkTarget()] += workRate; 
     }
 
 
