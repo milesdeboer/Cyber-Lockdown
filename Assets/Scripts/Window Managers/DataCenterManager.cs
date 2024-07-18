@@ -58,6 +58,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
     private List<DataCenter> dataCenters;
     private List<GameObject> dataCenterButtons;
 
+    private Queue<int> patchQueue;
+    private bool patching;
+    private bool scanning;
+
 
     private int currentDataCenter = 0;
 
@@ -178,6 +182,13 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
         if (sliders.Length > 0)
             sliders[0].GetComponent<Slider>().value = (float) dataCenters[currentDataCenter].GetFirewall() / GameManager.VALUE_SCALE;
+
+        // reset checkbox
+        GameObject scanpatch = GameObject.FindGameObjectsWithTag("scanpatch").ToList().Single();
+        Checkbox checkbox = scanpatch.GetComponent<Checkbox>();
+        checkbox.UpdateDisplay();
+        if (dataCenters[currentDataCenter].IsScanning()) checkbox.OnClick(scanpatch.transform.GetChild(0).gameObject);
+        if (dataCenters[currentDataCenter].IsPatching()) checkbox.OnClick(scanpatch.transform.GetChild(1).gameObject);
 
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(dataCenters[currentDataCenter].GetWorkRate().ToString());
         InitTraffic();
@@ -655,6 +666,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
             .ForEach(d => {
                 if (d.IsActive()) {
                     d.AddWorkResources(d.GetWorkRate());
+                    if (d.IsPatching()) Patch(d.GetId());
+                    if (d.IsScanning()) Scan(d.GetId());
                     if (d.IsComplete()) {
                         d.GetWorkTarget().Split("/").Skip(1).ToList()
                             .ForEach(t => d.IncrementAttribute(t.ToString()));
@@ -674,6 +687,58 @@ public class DataCenterManager : MonoBehaviour, ISavable
                     .ForEach(m => PlayerManager.GetPlayer(m.GetOwner()).AddMoney(9*m.GetIntrusion() + 100));
                 d.SetActive(Math.Max(d.GetActive()-1, 0));
             });
+    }
+
+    public void ToggleScan() {
+        dataCenters[currentDataCenter].EnableScan(!dataCenters[currentDataCenter].IsScanning());
+    }
+
+    /// <summary>
+    /// Scans target data center for infected malware and exploits then adds them to the patch queue before sending a notification to the player.
+    /// </summary>
+    /// <param name="dcid">The id of the target data center.</param>
+    public void Scan(int dcid) {
+        DataCenter dc = dataCenters[dcid];
+        int scanCost = dc.GetSize();
+        if (dc.GetWorkResources() - scanCost > 0) {
+            dc.SetWorkResources(dc.GetWorkResources() - scanCost);
+            int count = 0;
+            dc
+                .GetAttacks()
+                .Concat(dc
+                    .GetExploits()
+                    .Select(e => e.Key)
+                    .ToList())
+                .ToList()
+                .ForEach(v => {
+                    dc.AddToPatchQueue(v);
+                    count++;
+                });
+            string title = "DataCenter Scan Complete";
+            string body = ("You have scanned " + count + " pieces of malware that have infected data center " + dcid + ".");
+            notificationManager.AddNotification(title, body, dc.GetOwner());
+        }
+    }
+
+    public void TogglePatch() {
+        dataCenters[currentDataCenter].EnablePatch(!dataCenters[currentDataCenter].IsPatching());
+    }
+
+    /// <summary>
+    /// Removes PATCH_COST resources from the allocated resources for the data center and removes one exploit/attack from the target data center.
+    /// </summary>
+    /// <param name="dcid">The id of the target data center.</param>
+    public void Patch(int dcid) {
+        DataCenter dc = dataCenters[dcid];
+        while(dc.GetWorkResources() - DataCenter.PATCH_COST > 0 && dc.GetPatchQueue().Count > 0) {
+            dc.SetWorkResources(dc.GetWorkResources() - DataCenter.PATCH_COST);
+            int target = dc.GetFromPatchQueue();
+            if (target < 100) dc.RemoveExploit(target);
+            else dc.RemoveAttack(target);
+            string title = "Patched Malware/Exploit";
+            string body = "Removed a piece of malaware/exploit from data center " + dcid + ".";
+            notificationManager.AddNotification(title, body, dc.GetOwner());
+        }
     }
 
     /// <summary>

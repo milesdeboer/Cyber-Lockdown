@@ -15,12 +15,10 @@ public class Checkbox : MonoBehaviour
     private List<GameObject> buttons;
 
     public void Start() {
-        buttons = new List<GameObject>();
-        foreach(Transform child_ in transform) {
-            GameObject child = child_.gameObject;
-            buttons.Add(child);
-            child.GetComponent<Button>().onClick.AddListener(delegate {
-                OnClick(child);
+        if (!IsInitialized()) UpdateDisplay();
+        foreach(GameObject button in buttons) {
+            button.GetComponent<Button>().onClick.AddListener(delegate {
+                OnClick(button);
             });
         }
     }
@@ -32,5 +30,18 @@ public class Checkbox : MonoBehaviour
             .ForEach(b => {
                 b.GetComponent<Image>().color = (b.GetComponent<Image>().color.Equals(selectedColor)) ? unselectedColor : selectedColor;
             });
+    }
+
+    public void UpdateDisplay() {
+        buttons = new List<GameObject>();
+        foreach(Transform child_ in transform) {
+            GameObject child = child_.gameObject;
+            buttons.Add(child);
+            child.GetComponent<Image>().color = unselectedColor;
+        }
+    }
+
+    public bool IsInitialized() {
+        return buttons != null;
     }
 }

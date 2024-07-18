@@ -26,6 +26,10 @@ public class DataCenterWrapper
     public List<int> exploits = new List<int>();
     public List<string> record = new List<string>();
 
+    public bool scanning = false;
+    public bool patching = false;
+    public int[] patches;
+
     public string target;
     public int workResources;
     public int workRequirement;
@@ -64,6 +68,10 @@ public class DataCenterWrapper
         workResources = dataCenter.GetWorkResources();
         workRequirement = dataCenter.GetWorkRequirement();
         workRate = dataCenter.GetWorkRate();
+
+        scanning = dataCenter.IsScanning();
+        patching = dataCenter.IsPatching();
+        patches = dataCenter.GetPatchQueue().ToArray();
     }   
 
     public DataCenter Unwrap() {
@@ -98,6 +106,10 @@ public class DataCenterWrapper
         output.SetWorkResources(workResources);
         output.SetWorkRequirement(workRequirement);
         output.SetWorkRate(workRate);
+
+        output.EnableScan(scanning);
+        output.EnablePatch(patching);
+        output.SetPatchQueue(new Queue<int>(patches.ToList()));
 
         return output;
     }

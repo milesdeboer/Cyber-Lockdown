@@ -7,6 +7,7 @@ public class DataCenter : Workable
 {
     public static int BASE_DATA_CENTER_MONEY = 100;
     public static int BASE_DATA_CENTER_RESOURCES = 50;
+    public static int PATCH_COST = 20;
 
     private int id = -1;
 
@@ -40,6 +41,10 @@ public class DataCenter : Workable
     private GameObject[] traffic;
     private int[] malTraffic;
 
+    private bool scanning = false;
+    private bool patching = false;
+    private Queue<int> patchQueue;
+
     private int workResources;
     private int workRequirement;
     private int workRate;
@@ -51,6 +56,7 @@ public class DataCenter : Workable
         phishes = new HashSet<int>();
         exploits = new Dictionary<int, int>();
         record = new HashSet<DateTime>();
+        patchQueue = new Queue<int>();
     }
 
     public int GetOwner() {
@@ -269,6 +275,45 @@ public class DataCenter : Workable
     }
     public void AddWorkRate(int rate) {
         this.workRate += rate;
+    }
+
+    public int GetSize() {
+        return 
+            emailFilter +
+            dlp +
+            hiddenStructure +
+            encryption +
+            ids +
+            ips +
+            (int) firewall * 50 +
+            money / 10;
+    }
+
+    public bool IsScanning() {
+        return scanning;
+    }   
+    public void EnableScan(bool scanning) {
+        this.scanning = scanning;
+    }
+
+    public bool IsPatching() {
+        return patching;
+    }
+    public void EnablePatch(bool patching) {
+        this.patching = patching;
+    }
+
+    public Queue<int> GetPatchQueue() {
+        return patchQueue;
+    }
+    public void SetPatchQueue(Queue<int> patchQueue) {
+        this.patchQueue = patchQueue;
+    }
+    public void AddToPatchQueue(int patch) {
+        patchQueue.Enqueue(patch);
+    }
+    public int GetFromPatchQueue() {
+        return patchQueue.Dequeue();
     }
 
     public void IncrementAttribute(string attr) {

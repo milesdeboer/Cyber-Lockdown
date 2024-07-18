@@ -28,6 +28,8 @@ public class ConflictManager : MonoBehaviour
         float r = (float) random.NextDouble();
 
         Malware m = ((a.GetMalware() % 100) == 0) ? new Malware(0) : malwareController.GetMalware(a.GetMalware());
+        if (m.GetId() != 0) dc.AddRecord(m.GetTime());
+        
         // Get Malware Attributes
         int[] attr = m.GetAttributes();
 
@@ -292,7 +294,6 @@ public class ConflictManager : MonoBehaviour
     private void FinishAttack(Attack a, DataCenter dc) {
         Malware m = malwareController.GetMalware(a.GetMalware());
         if (!m.HasFeature(MalwareFeature.Polymorphism))
-            dc.AddRecord(m.GetTime());
         a.Reset();
     }
 }

@@ -294,14 +294,15 @@ public class AttackManager : MonoBehaviour, ISavable
     public void Work() {
         attacks
             .Where(a => a.Value.GetOwner() == GameManager.GetTurnPlayer())
+            .Select(kvp => kvp.Value)
             .ToList()
             .ForEach(a => {
-                a.Value.SetWorkResources(a.Value.GetWorkResources() + a.Value.GetWorkRate());
-                if (a.Value.IsComplete()) {
-                    conflictManager.Process(a.Value, dataCenterManager.GetDataCenter(a.Value.GetTarget()));
-                    Player p = PlayerManager.GetPlayer(a.Value.GetOwner());
-                    p.SetAvailableResources(p.GetAvailableResources() + a.Value.GetWorkRate());
-                    a.Value.SetWorkRate(0);
+                a.SetWorkResources(a.GetWorkResources() + a.GetWorkRate());
+                if (a.IsComplete() && !dataCenterManager.GetDataCenter(a.GetTarget()).GetAttacks().Contains(a.GetId())) {
+                    conflictManager.Process(a, dataCenterManager.GetDataCenter(a.GetTarget()));
+                    Player p = PlayerManager.GetPlayer(a.GetOwner());
+                    p.SetAvailableResources(p.GetAvailableResources() + a.GetWorkRate());
+                    a.SetWorkRate(0);
                 }
             });
     }
