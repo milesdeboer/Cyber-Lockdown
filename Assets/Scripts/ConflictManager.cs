@@ -28,7 +28,7 @@ public class ConflictManager : MonoBehaviour
         float r = (float) random.NextDouble();
 
         Malware m = ((a.GetMalware() % 100) == 0) ? new Malware(0) : malwareController.GetMalware(a.GetMalware());
-        if (m.GetId() != 0) dc.AddRecord(m.GetTime());
+        if (m.GetId() % 100 != 0) dc.AddRecord(m.GetTime());
         
         // Get Malware Attributes
         int[] attr = m.GetAttributes();
@@ -81,8 +81,9 @@ public class ConflictManager : MonoBehaviour
         }
 
         // Calculate Attack Chance
-        float offenceScore = Math.Max(attr.Zip(weights, (a,w) => a * w / 100f).Sum() / 1.2f, 0f);
-
+        //float offenceScore = Math.Max(attr.Zip(weights, (a,w) => a * w / 100f).Sum() / 1.2f, 0f);
+        float offenceScore = ((attr.Zip(weights, (a,w) => a * w / 100f).Sum() + 0.9f) / 2.1f * 0.9f) + 0.05f;
+        Debug.Log("Offence1: " + offenceScore);
         // Apply Thresholds
         if (!(m.GetMalwareType() == "rootkit" || m.GetMalwareType() == "trojan")) {
             // Apply IPS Threshold
@@ -101,7 +102,7 @@ public class ConflictManager : MonoBehaviour
                 notificationManager.AddNotification(new Notification(title, body, dc.GetOwner()));
             }
         }
-
+        Debug.Log("Offence2: " + offenceScore);
         int exploit = (m.HasFeature(MalwareFeature.ZeroDayExploit)) ? dc
             .GetExploits()
             .Select(kvp => kvp.Value)
@@ -112,11 +113,12 @@ public class ConflictManager : MonoBehaviour
         Debug.Log("Exploit Strength: " + exploit.ToString());
 
         if (exploit > 0) 
-            offenceScore = (100*offenceScore + 2*exploit) / (100 + 2*exploit);
+            offenceScore = (100*offenceScore + 2*((float) exploit)) / (100f + 2*((float) exploit));
         if (dc.GetRecord().Contains(m.GetTime())) 
-            offenceScore /= 2;
+            offenceScore /= 2f;
         if (!(m.GetMalwareType() == "trojan")) 
             offenceScore /= (float) dc.GetFirewall() * 3f + 1f;
+        Debug.Log("Offence3: " + offenceScore);
 
         if (offenceScore < r) {
             Debug.Log("Attack Failed - " + offenceScore + " < " + r);
