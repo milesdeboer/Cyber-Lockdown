@@ -184,115 +184,36 @@ bool success = dao.Load(this);
 ```
 
 ## Bug Report
+### Line Renderer Bug - Resolved
+Date: 2024-07-12
 
+The Line renderer componenet displays a line outside of the canvas which is where all visual elements of the game are. since the canvas ui elements are displayed on top of the line renderer, none of the lines would be able to be displayed.
 
-
-## Objects
-The following objects mainly contain a collection of fields as a way to store data and does not perform an extensive amount of work on these values.
-### Attack.cs
-The Attack Object represents an attack made by a player against a data center. 
-Attack implements Workable.
-
-An attack is complete when the work resources is greater than or equal to the work required.
-
-```cs
-Attack attack = new Attack(101);
-Debug.Log("Work Done: " + attack.GetWorkResources());
-Debug.Log("Work Required: " + attack.GetWorkRequired());
-Debug.Log("The Attack is Complete? " + attack.IsComplete());
-/* output:
-    WorkDone: 0
-    WorkRequired: 100
-    The Attack is Complete? false
-*/
-```
-
-To clear all information from an attack object, run the Reset command which will set the malware id, work resources and exploit to zero and remove the objective and delivery method
-
-```cs
-Attack attack = new Attack(101);
-attack.SetDelivery("manual");
-attack.Reset();
-Debug.Log("Delivery Method Exists: " + (attack.GetDelivery() == "").ToString());
-//output: Delivery Method Exist: false
-```
+Solution: Created a series of images in the canvas and created the edges to the goal graph individually to get a rough picture and display neccessary information. In the future, I am going to create an image as the background for that window and make the buttons invisible on top of the buttons on the image.
 
 ---
 
-### DataCenter.cs
-The DataCenter Object represents the collection of data associated with a specific data center. \
-DataCenter implements Workable.
+### Checkbox Bug - Resolved
+Date: 2024-07-16
 
-To Increment one of the attributes of a data center, run the IncrementAttribute function with the name of the attribute as the parameter.'
-The following are the valid attributes for incrementation:
-- *"emailFiltering"* : Email Filtering Level [0, 5]
-- *"dlp"* : Data Loss Prevension Level [0, 5]
-- *"hiddenStructure"* : Hidden Structure Level [0, 5]
-- *"encryption"* : Data Encryption Level [0, 5]
-- *"ids"* : Intrusion Detection System Level [0, 5]
-- *"ips"* : Intrusion Prevention System Level [0, 5]
+The checkboxes were holding information from window to window so when the player opened a malware object, it displayed the incorrect information associated with that object. This was happening specifically when opening new malware and had no effect on opening those already at least partially created.
 
-```cs
-DataCenter dc = new DataCenter();
-dc.IncrementAttribute("encryption");
-dc.IncrementAttribute("encryption");
-Debug.Log(dc.GetEncryption());
-//output: 2
-```
+Solution: updated the function that runs when the player selects an object to edit so that it goes through each button to make them deselected and then loads information if there is an object with that id.
 
 ---
 
-### Email.cs
-The Email Object represents the data associated with a specific email. This is a subclass of **Notification**. \
-The Email class adds an associated DataCenter and Attack object. This class is used for handling phishing attacks. \
-Normally each player will receive one email per data center they control.
+### Conflict Record Bug
+Date: 2024-07-18
+
+The conflict manager added the malware involved in the attack to the target data center's record before checking if it was already there. Since if the malware is in the data center's record, it halved the attack score, the attack score will always be halved making most attacks fail.
+
+Solution: I moved the line that adds the attack to the target data center's record.
 
 ---
 
-### Goal.cs
-The Goal object represents one specific goal of the game. Goals make up a directional acyclic graph where the player must complete previous goals before moving onto the next one. \
-Each goal holds a list of strings representing what is unlocked when the goal is completed by the player.
+### Notification Bug
+Date 2024-07-18
 
-Goal implements Workable.
+Notifications were not being sent to both players when needed to.
 
----
-
-### Malware.cs
-The Malware object represents one specific piece of malware in the game. 
-
-Each piece of malware holds a number of different attributes which combine to determine the success rate of an attack. These attributes are:
-- Stealth: Determines how stealthy the attack will be where more stealthy malware will make for an attack with a higher success rate.
-- Speed: Decreases the time spent in the attack process and slightly increases the success rate for the attack
-- Size: Malware with a greater size will be more easily spotted and stopped by the target data center's defences, but decreases the work required to complete the malware
-- Intrusion: Increases the amount of spoils earned through the attack using this malware, but slightly decreases the success rate of the attack.
-
-Malware implements Workable.
-
----
-
-### Notification.cs
-The Notification Object represents a notification given to a player. This obejct is simply to notify the player of the events that took place regarding their attacks, malware, and data centers. Each notification has a title, a body, and a player it is associated with.
-
-An example of this would be to notify the player that their attack against another player was successful and list the amount of money stolen.
-
----
-
-### Player.cs
-The Player Object represents a specific player in the game. This object holds:
-- Money: the amount of money available to the player.
-- Available Resources: The amount of resources that the player can draw from to perform work on any Workable object.
-- Total amount of resources: The Total amount of resources that the player can draw from including the resources that are currently being used on the production of a Workable object.
-
----
-
-### Workable.cs
-The Workable Interface represents any object that work can be performed on. A Workable object requires a way to perform work and has to hold information on the work done and what is being worked on.
-
-### Scene Managers
-
-
-
-## Util
-## Window Managers
-
-
+Solution: When resolving conflict record bug, I removed a line which notifies the notification manager to send a notification to both players instead of just one.
