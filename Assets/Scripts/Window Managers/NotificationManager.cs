@@ -15,6 +15,8 @@ public class NotificationManager : MonoBehaviour, ISavable
     [SerializeField]
     private ConflictManager conflictManager;
     [SerializeField]
+    private MalwareController malwareManager;
+    [SerializeField]
     private AttackManager attackManager;
     [SerializeField]
     private DataCenterManager dataCenterManager;
@@ -39,6 +41,7 @@ public class NotificationManager : MonoBehaviour, ISavable
             if (Int32.TryParse(self.name, out aid)) {
                 DataCenter dc = dataCenterManager.GetDataCenter(((Email) n).GetDataCenter());
                 Attack phish = attackManager.GetAttack(aid);
+                dc.AddRecord(malwareManager.GetMalware(phish.GetMalware()).GetTime());
                 conflictManager.Infect(phish, dc);
                 playerManager.UpdateDisplay();
                 dc.GetPhishes().Remove(phish.GetId());
@@ -105,6 +108,7 @@ public class NotificationManager : MonoBehaviour, ISavable
         this.notifications = notifications;
     }
     public void AddNotification(Notification n) {
+        Debug.Log("Adding Notification to " + n.GetOwner());
         notifications.Add(n);
     }
     public void AddNotification(string title, string body, int owner) {

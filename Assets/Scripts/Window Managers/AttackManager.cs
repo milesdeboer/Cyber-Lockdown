@@ -133,7 +133,6 @@ public class AttackManager : MonoBehaviour, ISavable
      */
     public void MalwareClick(int i) {
         attacks[activeAttack].SetMalware((GameManager.GetTurnPlayer() + 1) * 100 + i);
-        Debug.Log("Switching Malware of Attack " + (activeAttack+1) + " to " + attacks[activeAttack].GetMalware() + ".");
     }
 
     /**
@@ -142,7 +141,7 @@ public class AttackManager : MonoBehaviour, ISavable
      */
     public void ObjectiveClick(string objective) {
         attacks[activeAttack].SetObjective(objective);
-        Debug.Log("Setting Objective of Attack " + activeAttack + " to " + objective + ".");
+        attacks[activeAttack].UpdateRequirement();
     }
 
     /**
@@ -151,12 +150,13 @@ public class AttackManager : MonoBehaviour, ISavable
      */
     public void DeliveryClick(string delivery) {
         attacks[activeAttack].SetDelivery(delivery);
-        Debug.Log("Setting Delivery of Attack " + activeAttack + " to " + delivery + ".");
+        attacks[activeAttack].UpdateRequirement();
+    
     }
 
-    /**
-     *  Instantiates the data center buttons.
-     */
+    /// <summary>
+    /// Instantiates the data center buttons.
+    /// </summary>
     private void InitDataCenters() {
         // Initialize the list of data center buttons
         dataCenters = new List<GameObject>();
@@ -204,9 +204,9 @@ public class AttackManager : MonoBehaviour, ISavable
         dataCenterSubWindow.GetComponent<RadioButton>().Start();
     }
 
-    /**
-     *  Adds onClick event listeners for each data center button
-     */
+    /// <summary>
+    /// Adds onClick event listeners for each data center button
+    /// </summary>
     public void AssignListeners() {
         // Iterate through data center buttons
         for(int i = 0; i < dataCenters.Count; i++) {
@@ -219,10 +219,10 @@ public class AttackManager : MonoBehaviour, ISavable
         }
     }
 
-    /**
-     *  onClick event listener for data center button to change target data center.
-     *  @param {int} i - The index of the data center button.
-     */
+    /// <summary>
+    /// onClick event listener for data center button to change target data center.
+    /// </summary>
+    /// <param name="i">The index of the data center button.</param>
     public void DataCenterClick(int i) {
         GameObject[] buttons = GameObject.FindGameObjectsWithTag("DataCenterButton");
         buttons
@@ -236,6 +236,10 @@ public class AttackManager : MonoBehaviour, ISavable
         Debug.Log("Setting Target of Attack " + activeAttack + " to " + i + ".");
     }
 
+    /// <summary>
+    /// onClick event listener for the buttons controlling the allocated resources for production
+    /// </summary>
+    /// <param name="change">The amount of resources that is being added to the allocated resources usually [-1, 1]</param>
     public void ResourceClick(int change) {
         Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
         if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
@@ -254,6 +258,10 @@ public class AttackManager : MonoBehaviour, ISavable
         playerManager.UpdateDisplay();
     }
 
+    /// <summary>
+    /// onClick listener for the delete button for an attack which clears all information stored in the attack
+    /// </summary>
+    /// <param name="i">The index of the attack</param>
     public void Delete(int i) {
         Attack a = attacks[100 * (GameManager.GetTurnPlayer() + 1) + i + 1];
         a.Reset();
@@ -262,6 +270,9 @@ public class AttackManager : MonoBehaviour, ISavable
         UpdateStatusColors();
     }
 
+    /// <summary>
+    /// Resets the display elements of the attack customization window
+    /// </summary>
     private void Reset() {
         // Update Resource Display
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRate().ToString());

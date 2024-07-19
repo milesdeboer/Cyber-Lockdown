@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Attack : Workable
@@ -130,6 +132,13 @@ public class Attack : Workable
     }
     public void SetWorkRequirement(int requiredResources) {
         this.workRequirement = requiredResources;
+    }
+
+    public void UpdateRequirement() {
+        workRequirement = (malware % 100 == 0) ? 25 : Math.Max(25, 0
+            +   ((delivery == "manual") ? 50 : (delivery == "phishing") ? 25 : (delivery == "backdoor") ? 15 : 0)
+            +   ((objective == "money") ? 0 : (objective == "research") ? 25 : (objective == "sabotage") ? 50 :
+                (objective == "disable") ? 100 : (objective == "backdoor") ? 50 : 0));
     }
 
     public int GetWorkRate() {

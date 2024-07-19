@@ -28,7 +28,6 @@ public class ConflictManager : MonoBehaviour
         float r = (float) random.NextDouble();
 
         Malware m = ((a.GetMalware() % 100) == 0) ? new Malware(0) : malwareController.GetMalware(a.GetMalware());
-        if (m.GetId() % 100 != 0) dc.AddRecord(m.GetTime());
         
         // Get Malware Attributes
         int[] attr = m.GetAttributes();
@@ -54,9 +53,11 @@ public class ConflictManager : MonoBehaviour
                 if (!dc.GetExploits().ContainsKey(a.GetOwner())) break;
                 else if (dc.GetExploit(a.GetOwner()) == 10) break;
                 else if (0.005 * dc.GetExploit(a.GetOwner()) + 0.5 > r) {
+                    dc.AddRecord(m.GetTime());
                     Infect(a, dc);
                     return;
                 } else {
+                    dc.AddRecord(m.GetTime());
                     FinishAttack(a, dc);
                     return;
                 }
@@ -81,9 +82,7 @@ public class ConflictManager : MonoBehaviour
         }
 
         // Calculate Attack Chance
-        //float offenceScore = Math.Max(attr.Zip(weights, (a,w) => a * w / 100f).Sum() / 1.2f, 0f);
         float offenceScore = ((attr.Zip(weights, (a,w) => a * w / 100f).Sum() + 0.9f) / 2.1f * 0.9f) + 0.05f;
-        Debug.Log("Offence1: " + offenceScore);
         // Apply Thresholds
         if (!(m.GetMalwareType() == "rootkit" || m.GetMalwareType() == "trojan")) {
             // Apply IPS Threshold
@@ -91,6 +90,7 @@ public class ConflictManager : MonoBehaviour
                 string title = "Data Center " + dc.GetId() + " Attacked";
                 string body = "Player " + a.GetOwner() + " has tried to infect your data center (data center " + dc.GetId() + ") with a " + m.GetMalwareType() + ". This attack was seen and prevented by your Intrusion Detection System and Intrusion Prevention System.";
                 notificationManager.AddNotification(new Notification(title, body, dc.GetOwner()));
+                dc.AddRecord(m.GetTime());
                 FinishAttack(a, dc);
                 return;
             }
@@ -118,7 +118,8 @@ public class ConflictManager : MonoBehaviour
             offenceScore /= 2f;
         if (!(m.GetMalwareType() == "trojan")) 
             offenceScore /= (float) dc.GetFirewall() * 3f + 1f;
-        Debug.Log("Offence3: " + offenceScore);
+
+        dc.AddRecord(m.GetTime());
 
         if (offenceScore < r) {
             Debug.Log("Attack Failed - " + offenceScore + " < " + r);
@@ -149,8 +150,9 @@ public class ConflictManager : MonoBehaviour
         int[] attr = m.GetAttributes();
         
         attr[3] = ScaleIntrusion(attr[3], dc.GetEncryption(), dc.GetDLP());
-
-        Damage(a, dc, attr[3], out title1, out body1, out title2, out body2);
+        Debug.Log("Before Damage");
+        notify = Damage(a, dc, attr[3], out title1, out body1, out title2, out body2);
+        Debug.Log("After Damage");
 
         if (m.GetMalwareType() == "worm") {
             if (m.GetSpread() == -1) m.SetSpread(5);
@@ -204,6 +206,8 @@ public class ConflictManager : MonoBehaviour
         Player defender = PlayerManager.GetPlayer(dc.GetOwner());
 
         t1 = ""; b1 = ""; t2 = ""; b2 = "";
+
+        Debug.Log("During Damage");
         
         switch(a.GetObjective()) {
             case "money":
@@ -215,7 +219,6 @@ public class ConflictManager : MonoBehaviour
                 b1 = "Attack " + a.GetId() + " was successful and you have gained $" + amount + " from player " + (dc.GetOwner()+1);
                 t2 = "A Player has Stolen Money from you :(";
                 b2 = "One of your data centers has been attacked by another player. They stole $" + amount + " from you.";
-
                 return true;
             
             case "research":
