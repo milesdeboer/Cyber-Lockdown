@@ -1,6 +1,6 @@
 # Cyber Lockdown Documentation
 ###### Miles DeBoer
-## Table of Contents - Code Structure
+## Table of Contents
 - DAO
     - Wrappers
         - AttackWrapper.cs
@@ -43,224 +43,149 @@
 - ConflictManager.cs
 - PlayerManager.cs
 
-## DAOs
-Data Access Objects (DAO) is the name for a set of objects handling access between the software and the save data. The data is saved to *Application.persistentDataPath* on the host's device
+## Table of Contents
+1. [Introduction](#Introduction)
+2. [User Guide](#User-Guide)
+3. [Developer Guide](#Developer-Guide) \
+    3.1. [Malware](#Malware) \
+    3.2. [Attacks](#Attacks) \
+    3.3. [DataCenters](#DataCenters) \
+    3.4. [Notifications](#Notifications)
+4. [Data Storage](#Data-Storage)
+4. [Troubleshooting](#Troubleshooting)
 
+
+## Introduction
+Welcome to Cyber Lockdown, an immersive and interactive game developed using Unity 2022.3.21f1. In this multiplayer game, players can create and defend against cyber threats.
+
+## User Guide
+
+## Developer Guide
+### UI
+#### Title Scene
+The TitleScene is the initial scene loaded by the game. It has three buttons *New Game*, *Load Game*, and *Exit Game*.
+
+The New Game button brings the player to the New Game Scene. \
+The Load Game button brings the player to the Between Scene to resume the game. \
+The Exit Game exits the game.
+
+#### New Game Scene
+The New Game Scene is for customizing game parameters.
+
+Currently, this scene only has a list of player entries where they can enter their name and add or remove other players.
+There is also a button to start the game which leads the player to the Between Scene.
+
+#### Between Scene
+The BetweenScene is the scene that takes place between player turns. It says the turn number, the turn player and a button to start the player's turn.
+
+#### Player Scene
+At the bottom of this scene is a taskbar meant to resemble that of a computer OS. This lists the turn player, their money/resources and a list of buttons which open a different window.
+The Player scene is split into several windows:
+
+##### Notification Window
+The notification window displays a list of notifications and emails sent to the turn player. each notification has a button to remove it from the inbox and emails have two buttons, one to accept the email and another to decline. There is also a button to clear all notifications.
+
+##### Data Center Window
+The data center window displays a map of the data centers in the game as buttons, each labeled with the player controlling it or blank for an unpurchased data center. 
+the button hides the data center map and opens a customization subwindow.
+
+The customization window has a list of buttons which increase a respective attribute of the selected data center, a slider which represents the strength of the firewall at this data center, a box filled with traffic entries that each have a delete button, a resources section with an increase and decrease button to control the allocated resources and a back button which takes the player back to the data center map. Any of the attributes specific to this data center can not be visible to the player if not unlocked.
+
+##### Goal Window
+The Goal Window has a graph of goal buttons that can be selected by the player. depending on the status of the goal, each button will be displayed as a different color. There is also a resources section with an increase and decrease button to control the allocated resources.
+
+##### Malware Window
+The Malware Window has a list of malware controlled by the turn player that they can select from. When one is selected, it brings the player to a customization window where they can customize that malware.
+
+The customization window has a list of radio buttons representing the type of malware, a list of sliders representing the attributes of the malware and a list of checkboxes representing a feature for the malware. There is also a resources section with an increase and decrease button to control the allocated resources.
+
+##### Attack Window
+The Attack Window has a list of attacks controlled by the turn player that they can select from. When one is selected, it brings the player to a customization window where they can customize that attack.
+
+The customization window has a list of radio buttons representing the target data center, selected malware, delivery method and objective of the attack. There is also a resources section with an increase and decrease button to control the allocated resources.
+##### Pause Window
+The pause window has a list of buttons for ending th eplayers turn which leads to the Between Scene, A button returning to the Title Scene, and a button to exit the game.
+
+#### End Game Scene
+The end game scene is the scene visible once the game is over. It displays the winner of the game and has a button leading back to the Title Scene and another to exit the game.
+
+### Malware
+A **Malware** Object represents the information associated with one piece of malware. The Malware class implements the interface, Workable which allows work to be done on the object.
+
+The Malware Objects are managed by the **MalwareManager** which also handles user interaction in the malware window of the game. Any interaction between a Malware object and the player needs to come through this object.
+
+### Attacks
+An **Attack** Object represents the information associated with one attack. The Attack class implements the interface, Workable which allows work to be done on the object.
+
+The Attack Objects are managed by the **AttackManager** which also handles user interaction in the attack window of the game. Any interaction between an Attack object and the player needs to come through this object.
+
+### DataCenters
+A **DataCenter** Object represents the information associated with one data center. The DataCenter class implements the interface, Workable which allows work to be done on the object.
+
+The DataCenter Objects are managed by the **DataCenterManager** which also handles user interaction in the data center window of the game. Any interaction between a DataCenter object and the player needs to come through this object.
+
+### Notifications
+A **Notification** Object represents the information associated with one notification. The Malware class implements the interface, Workable which allows work to be done on the object.
+
+The Notification Objects are managed by the **NotificationManager** which also handles user interaction in the notification window of the game. Any interaction between a Notification object and the player needs to come through this object.
+
+## Data Storage
 ### Wrappers
-Wrappers are simplified versions of existing objects involved in the saving process. The purpose is to allow saving through **JsonUtility** without giving up unneccessary access to these objecs.
+**Wrappers** are simplified versions of existing objects involved in the saving process. The purpose is to allow saving through **JsonUtility** without giving unneccessary access to these objects. Wrappers exist for the following objects:
+- *Malware* → *MalwareWrapper*
+- *Attack* → *AttackWrapper*
+- *DataCenter* → *DataCenterWrapper*
+- *Notification* → *NotificationWrapper*
+- *Player* → *PlayerWrapper*
 
-#### AttackWrapper.cs
-**AttackWrapper** is the wrapper object equivalent for the **Attack** object. It holds all neccessary raw information for the attack object as public variables as to satisfy the **JsonUtility** requirements. The Object requires the saved fields to exist and be valid or the wrapper will throw a **WrapperException**.
-
+Each of the base object have a function called **Wrap** which returns the wrapper equivalent object. Similarly, a wrapper object holds a function called **Unwrap** which returns the base object type.
 ```cs
 DataCenter dataCenter = new DataCenter(1001);
 
-attack.SetObjective("money");
 attack.SetDelivery("phishing");
 
 try {
+    // Wrap Object
     AttackWrapper wrapper = AttackWrapper(attack);
+    //Unwrap Object
     Attack unwrapped = wrapper.Unwrap();
-    Debug.Log(wrapper.delivery + ", " + unwrapped.GetDelivery());
+
+    Debug.Log(dataCenter.GetDelivery() + ", " + wrapper.delivery + ", " + unwrapped.GetDelivery());
 } catch (WrapperException e) {
     Debug.Log(e.ToString());
 }
-//output: phishing, phishing
+//output: phishing, phishing, phishing
 
 ```
+### DAO
 
-The **AttackWrapper** can be converted back to an **Attack** object through the **Unwrap** function. If the fields of the Wrapper have been improperly set, the wrapper will throw a **WrapperException**.
+**Data Access Objects (DAO)** is the name for a set of objects handling access between the software and the save data. The data is saved to *Application.persistentDataPath* on the host's device. DAO objects exist for the following objects:
+- *MalwareManager* → *MalwareDAO*
+- *AttackManager* → *AttackDAO*
+- *DataCenterManager* → *DataCenterDAO
+- *NotificationManager* → *NotificationDAO*
+- *PlayerManager* → *PlayerDAO*
+- *GameManager* → *GameDAO*
 
----
+All DAO object except *GameDAO* holds a list of their respective wrapper (e.g. MalwareDAO has List<MalwareManager>) as a public field as to satisfy the conditions of the **JsonUtility** saving method.
 
-#### DataCenterWrapper.cs
-**DataCentertWrapper** is the wrapper object equivalent for the **DataCenter** object. It holds all neccessary raw information for the **DataCenter** object as public variables as to satisfy teh **JsonUtility** requirements. The object requires the saved fields to be unequal to null and be valid or the wrapper will throw a **WrapperException**.
+Each DAO object has a Save and Load function which takes a parameter of the appropiate type (e.g. *MalwareDAO.Save(MalwareManager manager)*) and returns ture if the data was successfully saved/loaded. These functions are only called by the manager themselves for simplicity.
 
-```cs
-DataCenter dataCenter = new DataCenter(0);
-
-dataCenter.SetWorkTarget("ids");
-
-try {
-    DataCenterWrapper wrapper = DataCenterWrapper(dataCenter);
-    DataCenter unwrapped = wrapper.Unwrap();
-    Debug.Log(wrapper.target + ", " + unwrapped.GetWorkTarget());
-} catch (WrapperException e) {
-    Debug.Log(e.ToString());
-}
-// output: ids, ids
-```
-
-The **DataCenterWrapper** can be converted back to a **DataCenter** object through the **Unwrap** function. If teh fields of the Wrapper have been improperly set, the wrapper will throw a **WrapperException**.
-
----
-
-#### MalwareWrapper.cs
-**MalwareWrapper** is the wrapper object equivalent for the **Malware** object. It holds all neccessary raw information for the **Malware** object as public variables as to satisfy teh **JsonUtility** requirements. The object requires the saved fields to be unequal to null and be valid or the wrapper will throw. 
-
-```cs
-Malware malware = new Malware(101);
-
-malware.SetMalwareType("virus");
-malware.SetTime(DateTime.UtcNow);
-
-try {
-    MalwareWrapper wrapper = MalwareWrapper(malware);
-    Malware unwrapped = wrapper.Unwrap();
-    Debug.Log(wrapper.type + ", " + unwrapped.GetMalwareType());
-} catch(WrapperException e) {
-    Debug.Log(e.ToString());
-}
-//output: virus, virus
-```
-
-The **MalwareWrapper** can be converted back to a **Malware** object through the **Unwrap** function. If teh fields of the Wrapper have been improperly set, the wrapper will throw a **WrapperException**.
-
----
-
-#### NotificationWrapper
-**NotificationWrapper** is the wrapper object equivalent for the **Notification** object. It holds all neccessary raw information for the **Notification** object as public variables as to satisfy the **JsonUtility** requirements. The object requires the saved fields to be unequal to null and be valid or the wrapper will throw. 
-
-```cs
-Notification notification = new Notification(
-    "You successfully did a thing :D", 
-    "You did that one thing successfully against the one player", 
-    0);
-
-try {
-    NotificationWrapper wrapper = NotificationWrapper(notification);
-    Notification unwrapped = wrapper.Unwrap();
-    Debug.Log(wrapper.title + ", " + unwrapped.GetTitle());
-} catch(WrapperException e) {
-    Debug.Log(e.ToString());
-}
-//output: You successfully did a thing :D, You successfully did a thing :D
-```
-
-
-The **NotificationWrapper** can be converted back to a **Notification** object through the **Unwrap** function. If teh fields of the Wrapper have been improperly set, the wrapper will throw a **WrapperException**.
-
----
-
-#### PlayerWrapper.cs
-**PlayerWrapper** is the wrapper object equivalent for the **Player** object. It holds all neccessary raw information for the **Player** object as public variables as to satisfy the **JsonUtility** requirements. The object requires the saved fields to be unequal to null and be valid or the wrapper will throw. 
-
-```cs
-Player player = new Player(0);
-
-player.SetName("bob");
-
-try {
-    PlayerWrapper wrapper = PlayerWrapper(player);
-    Player unwrapped = wrapper.Unwrap();
-    Debug.Log(wrapper.name + ", " + unwrapped.GetName());
-} catch(WrapperException e) {
-    Debug.Log(e.ToString());
-}
-//output: bob, bob
-```
-
-The **PlayerWrapper** can be converted back to a **Player** object through the **Unwrap** function. If the fields of the Wrapper have been improperly set, the wrapper will throw a **WrapperException**.
-
----
-
-### AttackDAO.cs
-**AttackDAO** is the DAO object involved in saving information about the attacks. It holds an array of **AttackWrapper** objects as a public variable to satisfy the **JsonUtility** requirement. This object is used to both save and load information from an **AttackManager**. In order to save attack data, the following code must be run from **AttackManager**. The Save function will return true if the data has been successfully saved and false otherwise.
-
-```cs
-AttackDAO dao = new AttackDAO();
-bool success = dao.Save(this);
-```
-Similarly, attack data is loaded using the following code which must be run from the **AttackManager**.  The Load function will return true if the data has been successfully loaded and false otherwise.
-```cs
-AttackDAO dao = new AttackDAO();
-bool success = dao.Load(this);
-```
-
----
-
-### DataCenterDAO.cs
-**DataCenterDAO** is the DAO object involved in saving information about the data centers. It holds an array of **DataCenterWrapper** objects as a public variable to satisfy the **JsonUtility** requirement. This object is used to both save and load information from an **DataCenterManager**. In order to save data center data, the following code must be run from **DataCenterManager**. The Save function will return true if the data has been successfully saved and false otherwise.
-
-```cs
-DataCenterDAO dao = new DataCenterDAO();
-bool success = dao.Save(this);
-```
-Similarly, data center data is loaded using the following code which must be run from the **DataCenterManager**.  The Load function will return true if the data has been successfully loaded and false otherwise.
-```cs
-DataCenterDAO dao = new DataCenterDAO();
-bool success = dao.Load(this);
-```
-
----
-
-### GameDAO
-**GameDAO** is teh DAO object involved in saving infromation about the game. It holds fields for the number of players, the turn player and the turn number. These fields are public to satisfy the **JsonUtility** requirement. The following two functions do not take a parameter as it is saving and loading from static data stored in the **GameManager**. The Save function will return true if the data has been successfully saved and false otherwise.
-
-```cs
-GameDAO dao = new GameDAO();
-bool success = dao.Save();
-```
-
-Similarly, game data is loaded using the following code. The Load function will return true if the data has been successfully loaded and false otherwise.
-
-```cs
-GameDAO dao = new GameDAO();
-bool success = dao.Load();
-```
-
----
-
-### MalwareDAO
-**MalwareDAO** is the DAO object involved in saving information about the malware. It holds an array of **MalwareWrapper** objects as a public variable to satisfy the **JsonUtility** requirement. This object is used to both save and load information from an **MalwareManager**. In order to save malware data, the following code must be run from **MalwareManager**. The Save function will return true if the data has been successfully saved and false otherwise.
-
+Saving
 ```cs
 MalwareDAO dao = new MalwareDAO();
 bool success = dao.Save(this);
 ```
-
-Similarly, malware data is loaded using the following code which must be run from the **MalwareManager**.  The Load function will return true if the data has been successfully loaded and false otherwise.
+Loading
 
 ```cs
 MalwareDAO dao = new MalwareDAO();
 bool success = dao.Load(this);
 ```
 
----
+## Bug Report
 
-### NotificationDAO
-**NotificationDAO** is the DAO object involved in saving information about the notification. It holds an array of **NotificationWrapper** objects as a public variable to satisfy the **JsonUtility** requirement. This object is used to both save and load information from an **NotificationManager**. In order to save notification data, the following code must be run from **NotificationManager**. The Save function will return true if the data has been successfully saved and false otherwise.
 
-```cs
-NotificationDAO dao = new NotificationDAO();
-bool success = dao.Save(this);
-```
-
-Similarly, notification data is loaded using the following code which must be run from the **NotificationManager**.  The Load function will return true if the data has been successfully loaded and false otherwise.
-
-```cs
-MalwareDAO dao = new MalwareDAO();
-bool success = dao.Load(this);
-```
-
----
-
-### PlayerDAO
-**PlayerDAO** is the DAO object involved in saving information about the notification. It holds an array of **PlayerWrapper** objects as a public variable to satisfy the **JsonUtility** requirement. This object is used to both save and load information from an **NotificationManager**. In order to save player data, the following code must be run from **PlayerManager**. The Save function will return true if the data has been successfully saved and false otherwise.
-
-```cs
-PlayerDAO dao = new PlayerDAO();
-bool success = dao.Save(this);
-```
-
-Similarly, player data is loaded using the following code which must be run from the **PlayerManager**.  The Load function will return true if the data has been successfully loaded and false otherwise.
-
-```cs
-PlayerDAO dao = new PlayerDAO();
-bool success = dao.Load(this);
-```
-
----
 
 ## Objects
 The following objects mainly contain a collection of fields as a way to store data and does not perform an extensive amount of work on these values.

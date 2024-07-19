@@ -33558,6 +33558,7 @@ MonoBehaviour:
   gameManager: {fileID: 307162847}
   playerManager: {fileID: 307162849}
   conflictManager: {fileID: 307162850}
+  malwareManager: {fileID: 0}
   attackManager: {fileID: 217877907}
   dataCenterManager: {fileID: 2112866346}
   notificationEntry: {fileID: 9063904651869116804, guid: 97efa1cc6d4b2cb499c2c3ba213556c5, type: 3}
