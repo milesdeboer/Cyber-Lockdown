@@ -10,6 +10,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
 {
     public static int BASE_DATA_CENTER_MONEY = 20;
     public static int BASE_DATA_CENTER_RESOURCES = 20;
+    public static int DATA_CENTER_COST = 2000;
 
     [SerializeField] 
     private GameManager gameManager;
@@ -80,8 +81,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
         dataCenters = new List<DataCenter>();
         for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers(); i++) {
             dataCenters.Add(new DataCenter(i));
-            // Temperary
-            dataCenters[i].SetOwner(i / GameManager.DATA_CENTERS_PER_PLAYER);
+            if (i % GameManager.DATA_CENTERS_PER_PLAYER == 0) dataCenters[i].SetOwner(i / GameManager.DATA_CENTERS_PER_PLAYER);
         }
     }
 
@@ -89,6 +89,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
     /// Instantiates the data center selection buttons.
     /// </summary>
     public void InitButtons() {
+        GameObject.FindGameObjectsWithTag("DataCenterButton").ToList().ForEach(dc => Destroy(dc));
         // Initialize the list of data center buttons
         dataCenterButtons = new List<GameObject>();
 
@@ -129,9 +130,34 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
             // Set Color of button based on owner
             dataCenter.GetComponent<Image>().color = (dataCenters[i].GetOwner() == -1) ? new Color(1.0f, 1.0f, 1.0f) : (gameManager.GetColors()[dataCenters[i].GetOwner()]);
+            dataCenter.transform.GetChild(1).gameObject.SetActive(false);
+            if (dataCenters[i].GetOwner() == -1) {
+                var x = i;
+                dataCenter.transform.GetChild(1).gameObject.SetActive(true);
+                dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
+                    Purchase(x);
+                });
+            }
 
             // Add to list of buttons.
             dataCenterButtons.Add(dataCenter);
+        }
+    }
+
+    /// <summary>
+    /// onClick listener for unowned data center button
+    /// </summary>
+    /// <param name="dcid">The index of the target data center</param>
+    public void Purchase(int dcid) {
+        Debug.Log("Purchasing " + dcid);
+        Debug.Log("Total DataCenters: " + dataCenters.Count);
+        Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
+        if (player.GetMoney() >= DATA_CENTER_COST) {
+            player.AddMoney(-DATA_CENTER_COST);
+            dataCenters[dcid].SetOwner(player.GetId());
+            InitButtons();
+            InitSelectionListeners();
+            playerManager.UpdateDisplay();
         }
     }
 
@@ -145,9 +171,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
             int x = i;
 
             // Add the DataCenterClick listener
-            dataCenterButtons[x].GetComponent<Button>().onClick.AddListener(delegate {
-                SelectionClick(x);
-            });
+            if (dataCenters[x].GetOwner() == GameManager.GetTurnPlayer()) 
+                dataCenterButtons[x].GetComponent<Button>().onClick.AddListener(delegate {
+                    SelectionClick(x);
+                });
 
         }
     }
@@ -157,6 +184,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
     /// </summary>
     /// <param name="i">The index of the data center button</param>
     public void SelectionClick(int i) {
+        Debug.Log("Selection CLick: " + i);
         if (dataCenters[i].GetOwner() == GameManager.GetTurnPlayer()) {
             
             currentDataCenter = i;

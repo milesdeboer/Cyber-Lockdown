@@ -1,47 +1,5 @@
 # Cyber Lockdown Documentation
 ###### Miles DeBoer
-## Table of Contents
-- DAO
-    - Wrappers
-        - AttackWrapper.cs
-        - DataCenter.cs
-        - MalwareWrapper.cs
-        - NotificationWrapper.cs
-        - PlayerWrapper.cs
-    - AttackDAO.cs
-    - DataCenterDAO.cs
-    - GameDAO.cs
-    - IDAO.cs
-    - MalwareDAO.cs
-    - NotificationDAO.cs
-    - PlayerDAO.cs
-- Objects
-    - Attack.cs
-    - DataCenter.cs
-    - Email.cs
-    - Goal.cs
-    - IWorkable.cs
-    - Malware.cs
-    - Notification.cs
-    - Player.cs
-- Scene Managers
-    - BetweenManager.cs
-    - GameManager.cs
-    - NewGameManager.cs
-    - TitleManager.cs
-- Util
-    - MouseOverTool.cs
-    - RadioButton.cs
-- Window Managers
-    - AttackManager.cs
-    - DataCenterManager.cs
-    - GoalManager.cs
-    - ISavable.cs
-    - MalwareController.cs
-    - NotificationManager.cs
-    - TaskbarController.cs
-- ConflictManager.cs
-- PlayerManager.cs
 
 ## Table of Contents
 1. [Introduction](#Introduction)
@@ -212,8 +170,17 @@ Solution: I moved the line that adds the attack to the target data center's reco
 ---
 
 ### Notification Bug
-Date 2024-07-18
+Date: 2024-07-18
 
 Notifications were not being sent to both players when needed to.
 
 Solution: When resolving conflict record bug, I removed a line which notifies the notification manager to send a notification to both players instead of just one.
+
+---
+
+### Capturing Error
+Date: 2024-07-19
+
+When adding onClick listeners with a parameter to a list of objects in a loop, it would set the parameter to id of the last element in the list instead of their own respective id.
+
+Solution: Create a local variable before delegation of listener so that it is not changed on next iteration.
