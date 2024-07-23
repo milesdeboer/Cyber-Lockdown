@@ -145,6 +145,13 @@ public class ConflictManager : MonoBehaviour
             dc.AddAttack(a.GetId());
             return;
         }
+
+        if (m.HasFeature(MalwareFeature.CuckooEgg)) {
+            dc.AddAttack(1001);
+            dc.AddAttack(1002);
+            dc.AddAttack(1003);
+            dc.AddAttack(1004);
+        }
         
         //apply encryption and dlp
         int[] attr = m.GetAttributes();

@@ -10,7 +10,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
 {
     public static int BASE_DATA_CENTER_MONEY = 20;
     public static int BASE_DATA_CENTER_RESOURCES = 20;
-    public static int DATA_CENTER_COST = 2000;
+    public static int DATA_CENTER_COST = 20000;
 
     [SerializeField] 
     private GameManager gameManager;
@@ -233,6 +233,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
         dataCenters[currentDataCenter]
             .GetAttacks()
+            .Where(a => a < 1000)
             .Select(a => attackManager.GetAttack(a))
             .Where(a => malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "ransomware")
             .ToList()
@@ -275,6 +276,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
     public void AdCheck() {;
         dataCenters[currentDataCenter]
             .GetAttacks()
+            .Where(a => a < 1000)
             .Select(a => attackManager.GetAttack(a))
             .Where(a => malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware")
             .ToList()
@@ -568,18 +570,24 @@ public class DataCenterManager : MonoBehaviour, ISavable
         //TODO !!! - add chance of undetected malware
         int i = 0;
 
-        dataCenters[currentDataCenter]
-            .GetAttacks()
-            .Select(a => attackManager.GetAttack(a))
-            .Where(a =>
-                (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware") ||
-                (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "botnet"))
-            .Where(a => !malwareManager.GetMalware(a.GetMalware()).HasFeature(MalwareFeature.Steganography))
-            .Select(a => a.GetId())
-            .ToList()
-            .Concat(dataCenters[currentDataCenter]
-                .GetExploits()
-                .Select(e => e.Key)
+        Shuffle<int>(
+            dataCenters[currentDataCenter]
+                .GetAttacks()
+                .Where(a => a < 1000)// filter out egg
+                .Select(a => attackManager.GetAttack(a))
+                .Where(a =>
+                    (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware") ||
+                    (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "botnet"))
+                .Where(a => !malwareManager.GetMalware(a.GetMalware()).HasFeature(MalwareFeature.Steganography))
+                .Select(a => a.GetId())
+                .ToList()
+                .Concat(dataCenters[currentDataCenter]
+                    .GetExploits()
+                    .Select(e => e.Key)
+                    .ToList())// add eggs and shuffle
+                .Concat(dataCenters[currentDataCenter]
+                    .GetAttacks()
+                    .Where(a => a > 1000))
                 .ToList())
             .Take(trafficObjects.Length)
             .ToList()
@@ -590,6 +598,17 @@ public class DataCenterManager : MonoBehaviour, ISavable
             
         // Initialize event listeners for the delete button on each traffic object
         InitTrafficListeners(trafficObjects);
+    }
+
+    private List<T> Shuffle<T>(List<T> list) {
+        List<T> l = list.ToList();
+        List<T> list_ = new List<T>();
+        while (l.Count > 0) {
+            int i = UnityEngine.Random.Range(0, l.Count - 1);
+            list_.Add(l[i]);
+            l.Remove(l[i]);
+        }
+        return list_;
     }
 
     /// <summary>
@@ -624,9 +643,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
                 );
             } else {
                 dataCenters[currentDataCenter].RemoveAttack(aid);
+                string body = (aid > 1000) ? "You found a decoy virus" : ("Your system was infected with a " + malwareManager.GetMalware(attackManager.GetAttack(aid).GetMalware()).GetMalwareType());
                 notificationManager.AddNotification(
                     ("Successfully removed malware from Data Center " + currentDataCenter.ToString()),
-                    ("Your system was infected with a " + malwareManager.GetMalware(attackManager.GetAttack(aid).GetMalware()).GetMalwareType()),
+                    body,
                     GameManager.GetTurnPlayer()
                 );
             }
@@ -709,6 +729,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
                     player.SetMoney(player.GetMoney() + d.GetMoney());
                 }
                 d.GetAttacks()
+                    .Where(a => a < 1000)
                     .Select(a => malwareManager.GetMalware(attackManager.GetAttack(a).GetMalware()))
                     .Where(m => m.GetMalwareType() == "adware")
                     .ToList()
