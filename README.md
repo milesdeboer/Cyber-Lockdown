@@ -11,8 +11,9 @@ Welcome to Cyber Lockdown, an immersive and interactive game developed using Uni
 ## Table of Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
-3. [Features](#features)
-4. [Additional Documentation](#additional-documentation)
+3. [User Guide](#User-Guide)
+4. [Features](#features)
+5. [Additional Documentation](#additional-documentation)
 
 ## Installation
 
@@ -64,6 +65,29 @@ This game offers an immersive experience where players can develop and defend ag
 ### Tips
 
 - **Saving Progress**: The game auto saves at the end of every turn therefore if you exit the game mid turn, moves taken during your turn will be lost.
+
+## User Guide
+### Overview
+In this multiplayer game, players can create and defend against cyber threats. Your goal is to complete your research into cyber security whiel preventing your opponeents from doing the same as the first player to complete their research wins.
+
+### Starting a Game
+Once the game has been installed and launched, the player will be prompted with the option to create a new game or to load an existing game. To start a new game, press the new game button. 
+
+This will take you to a game customization window where you can customize the game settings. Once the settings are set to your preference, press start game.
+
+### Player's Turn
+During a player's turn, you have the option to create malware, launch attacks on other players, build up your defences, or research new cyber security techniques. The player's money and available resources are shown in the taskbar. To end the player's turn, press the pause window at the bottom right of the taskbar and press end turn.
+
+In between turns, the player's data centers will produce money and your resources will be used to work on where they were allocated.
+
+### Malware Building
+In the malware window, the player can choose from one of their malware slots to customize and allocate resources to build malware. The player can unlock more features by continuing research in the goals tab.
+
+### Attacking
+Launching an attack on another player is simple. make your way to the attack window and press one of the player's attack slots. The player can then customize how the attack is performed and on which data center it is performed on. The player can unlock more attack features by continuing research in the goals tab.
+
+### Defence
+In the Data Center tab, the player can purchase new data centers or manage the data centers they already own. Here the player can increase the defences of the data center to decrease the likelihood of being infected by someone else's malware. You can also increase the rate at which money is earned and the amount of resources produced by this data center.
 
 ## Features
 ## Additional Documentation
