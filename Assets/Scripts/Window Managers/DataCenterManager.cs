@@ -36,11 +36,6 @@ public class DataCenterManager : MonoBehaviour, ISavable
     private GameObject dataCenterButton;
 
     [SerializeField]
-    private GameObject email;
-    [SerializeField]
-    private GameObject emailSubWindow;
-
-    [SerializeField]
     private GameObject traffic;
     [SerializeField]
     private GameObject trafficSubWindow;
@@ -68,8 +63,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
     private int ransomId = -1;
 
-    public void Start() {
-        InitButtons();
+    public void Start_() {
+        //InitButtons();
+        InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
         InitSelectionListeners();
         InitTraffic();
     }
@@ -142,6 +138,65 @@ public class DataCenterManager : MonoBehaviour, ISavable
             // Add to list of buttons.
             dataCenterButtons.Add(dataCenter);
         }
+        InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="dcpp">Data Centers Per Player</param>
+    /// <param name="p">The number of Players</param>
+    public void InitMap(int dcpp, int p) {
+        GameObject.FindGameObjectsWithTag("DataCenterButton").ToList().ForEach(dc => Destroy(dc));
+        // Initialize the list of data center buttons
+        dataCenterButtons = new List<GameObject>();
+
+        float padding = 20f;
+        float[] xRange = new float[2]{  - (float) GameManager.SCREEN_DIMENSION.x / 2f, 
+                                        (float) GameManager.SCREEN_DIMENSION.x / 2f};
+        float[] yRange = new float[2]{  -460f, 
+                                        460f};
+        //The width and height of the area a data center is allowed to be intantiated in
+        float width = (xRange[1] - xRange[0] - padding * (float) (p+1)) / p;
+        float height = (yRange[1] - yRange[0] - padding * (float) (dcpp+1)) / dcpp;
+
+        for(int i = 0; i < p; i++) {
+            float xMin = xRange[0] + padding + (float) i * (width + padding);
+            float xMax = xMin + width;
+
+            for (int j = 0; j < dcpp; j++) {
+                float yMin = yRange[0] + padding + (float) j * (height + padding);
+                float yMax = yMin + height;
+
+                float x = UnityEngine.Random.Range(xMin + 25f, xMax - 25f);
+                float y = UnityEngine.Random.Range(yMin + 25f, yMax - 25f);
+
+                GameObject dataCenter = Instantiate(dataCenterButton, new Vector3(x, y, 0f), Quaternion.identity);
+                dataCenter.transform.SetParent(selectionWindow.transform, false);
+                dataCenter.GetComponent<RectTransform>().sizeDelta = new Vector2(50f, 50f);
+
+                int idx = (int) (GameManager.DATA_CENTERS_PER_PLAYER*i + j);
+
+                dataCenter.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText((dataCenters[idx].GetOwner()+1).ToString());
+
+                if (dataCenters[idx].GetOwner() == -1) {
+                    dataCenter.transform.GetChild(1).gameObject.SetActive(true);
+                    dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
+                        Purchase(idx);
+                    });
+                } else if (dataCenters[idx].GetOwner() == GameManager.GetTurnPlayer()) {
+                    dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
+                        SelectionClick(idx);
+                    });
+                }
+                dataCenterButtons.Add(dataCenter);
+            }
+        }
+
+    }
+
+    public List<GameObject> GetDataCenterButtons() {
+        return dataCenterButtons;
     }
 
     /// <summary>
@@ -155,7 +210,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
         if (player.GetMoney() >= DATA_CENTER_COST) {
             player.AddMoney(-DATA_CENTER_COST);
             dataCenters[dcid].SetOwner(player.GetId());
-            InitButtons();
+            //InitButtons();
+            InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
             InitSelectionListeners();
             playerManager.UpdateDisplay();
         }
@@ -411,7 +467,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
                     aLevel = dataCenters[currentDataCenter].GetEmailFilter().ToString() + ((levels[0] > 0) ? ("→" + (dataCenters[currentDataCenter].GetEmailFilter() + levels[0]).ToString()) : "");
                     break;
                 case "Data Loss Prevention":
-                    aLevel = dataCenters[currentDataCenter].GetDLP().ToString() + ((levels[1] > 0) ? "→" + (dataCenters[currentDataCenter].GetDLP() + levels[1].ToString()) : "");
+                    aLevel = dataCenters[currentDataCenter].GetDLP().ToString() + ((levels[1] > 0) ? "→" + (dataCenters[currentDataCenter].GetDLP() + levels[1]).ToString() : "");
                     break;
                 case "Hide Structure":
                     aLevel = dataCenters[currentDataCenter].GetHiddenStructure().ToString() + ((levels[2] > 0) ? "→" + (dataCenters[currentDataCenter].GetHiddenStructure() + levels[2]).ToString() : "");
@@ -433,7 +489,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
                     break;
                 default:break;
             }
-            if (aLevel != "") g.transform.GetChild(2).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText(aLevel.ToString());
+            if (aLevel != "") g.transform.GetChild(1).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText("Level: " + aLevel.ToString());
         }
     }
 
@@ -453,94 +509,6 @@ public class DataCenterManager : MonoBehaviour, ISavable
         selectionWindow.SetActive(true);
         currentDataCenter = 0;
         customizationWindow.SetActive(false);
-    }
-
-    /// <summary>
-    ///  Initialize email objects and distributes malware amongst them
-    /// </summary>
-    public void InitEmail() {
-        // Destroy existing emails
-        GameObject[] emails_ = GameObject.FindGameObjectsWithTag("Email");
-        foreach(GameObject email in emails_) Destroy(email);
-
-        // Generate random email order
-        System.Random random = new System.Random();
-        int order = random.Next(0, 6);
-
-        // Instantiate email objects
-        GameObject[] emails = {
-            Instantiate(email, new Vector2(207f, ((order < 2) ? 275f : (order % 2 == 0) ? 240f : 205f)), Quaternion.identity),
-            Instantiate(email, new Vector2(207f, ((order == 2 || order == 3) ? 275f : (order == 0 || order == 5) ? 240f : 205f)), Quaternion.identity),
-            Instantiate(email, new Vector2(207f, ((order > 3) ? 275f : (order % 2 == 1) ? 240f : 205f)), Quaternion.identity)
-        };
-        
-        // Place emails under the email section in game scene
-        foreach(GameObject emailObject in emails) {
-            emailObject.transform.SetParent(emailSubWindow.transform, false);
-            emailObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0.95f, 0.3f);
-        }
-
-        dataCenters[currentDataCenter].SetEmails(emails);
-
-        // Declare malicious email array
-        Attack[] malMail = new Attack[emails.Length];
-
-        if (!attackManager.IsInitialized()) attackManager.Load();
-
-        int i = 0;
-        attackManager
-            .GetAttacks()
-            .Where(attack => dataCenters[currentDataCenter]
-                .GetPhishes()
-                .Any(a => a == attack.Value.GetId()))
-            .Select(a => a.Value)
-            .Take(emails.Length)
-            .ToList()
-            .ForEach(a => {
-                emails[i].name = a.GetId().ToString();
-                i++;
-            });
-
-        InitEmailListeners();
-    }
-
-    /// <summary>
-    /// Initializes the event listeners for the buttons of each email object
-    /// </summary>
-    public void InitEmailListeners() {
-        // Iterate through all emails
-        foreach(GameObject email in dataCenters[currentDataCenter].GetEmails()) {
-            GameObject acceptButton = email.transform.GetChild(0).gameObject;
-            GameObject declineButton = email.transform.GetChild(1).gameObject;
-
-            // Add onClick listener to accept button
-            acceptButton.GetComponent<Button>().onClick.AddListener(delegate {
-                EmailClick(email, true);
-            });
-
-            // Add onClick listener to decline button
-            declineButton.GetComponent<Button>().onClick.AddListener(delegate {
-                EmailClick(email, false);
-            });
-        }
-    }
-
-    /// <summary>
-    /// onClick listener for the email accept and confirm buttons
-    /// </summary>
-    /// <param name="self">The GameObject of the email entry</param>
-    /// <param name="accepted">boolean determining which button was pressed (accepted or declined)</param>
-    public void EmailClick(GameObject self, bool accepted) {
-        if (accepted) {
-            int aid;
-            if (Int32.TryParse(self.name, out aid)) {
-                Attack phish = attackManager.GetAttack(aid);
-                conflictManager.Infect(phish, dataCenters[currentDataCenter]);
-                playerManager.UpdateDisplay();
-                dataCenters[currentDataCenter].GetPhishes().Remove(phish.GetId());
-            }
-        }
-        Destroy(self);
     }
 
     /// <summary>

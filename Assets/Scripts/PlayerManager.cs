@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour, ISavable
 
     public void Load() {
         PlayerDAO dao = new PlayerDAO();
-        dao.Load(this);
+        if (!dao.Load(this)) InitPlayers();
         UpdateDisplay();
     }
 

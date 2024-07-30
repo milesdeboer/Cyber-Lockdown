@@ -7,9 +7,12 @@ using UnityEngine.UI;
 public class RadioButton : MonoBehaviour
 {
     [SerializeField]
-    private Color selectedColor;
+    private Sprite selected;
     [SerializeField]
-    private Color unselectedColor;
+    private Sprite unselected;
+
+    [SerializeField]
+    private Material iconMat;
 
     private List<GameObject> buttons;
 
@@ -28,12 +31,21 @@ public class RadioButton : MonoBehaviour
         Debug.Log("Running OnClick");
         buttons
             .Where(b => {
-                b.GetComponent<Image>().color = unselectedColor;
+                b.GetComponent<Image>().sprite = unselected;
+                if (b.transform.childCount > 0) {
+                    Image image = b.transform.GetChild(0).gameObject.GetComponent<Image>();
+                    if (image != null) image.material = iconMat;
+                }
                 return (self != null) ? b.name == self.name : false;
             })
             .ToList()
             .ForEach(b => {
-                b.GetComponent<Image>().color = selectedColor;
+                b.GetComponent<Image>().sprite = selected;
+                if (b.transform.childCount > 0) {
+                    Image image = b.transform.GetChild(0).gameObject.GetComponent<Image>();
+                    if (image != null) image.material = null;
+                }
             });
     }
+
 }

@@ -8,11 +8,12 @@ using TMPro;
 public class GameManager : MonoBehaviour, ISavable
 {
     public static int VALUE_SCALE = 100;
-    public static int DATA_CENTERS_PER_PLAYER = 3;
+    public static int DATA_CENTERS_PER_PLAYER = 4;// 2 - 4 
     public static int MALWARE_PER_PLAYER = 8;
     public static int ATTACKS_PER_PLAYER = 8;
 
     public static bool READABLE_SAVE = true;
+    public static Vector2 SCREEN_DIMENSION = new Vector2(1920, 1080);
 
     private static int numPlayers = 2;
 
@@ -49,14 +50,15 @@ public class GameManager : MonoBehaviour, ISavable
         Load();
         if (turnNumber > 1) playerManager.Load();
         else playerManager.UpdateDisplay();
+        InitColors();
         goalManager.Load();
         dataCenterManager.Load();
+        dataCenterManager.Start_();
         malwareManager.Load();
         attackManager.Load();
         notificationManager.Load();
         turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
         playerNameObject.GetComponent<TextMeshProUGUI>().SetText(PlayerManager.GetPlayer(turnPlayer).GetName());
-        InitColors();
     }
 
     /**

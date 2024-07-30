@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class Checkbox : MonoBehaviour
 {
     [SerializeField]
-    private Color selectedColor;
+    private Sprite selected;
     [SerializeField]
-    private Color unselectedColor;
+    private Sprite unselected;
 
     private List<GameObject> buttons;
 
@@ -28,7 +28,7 @@ public class Checkbox : MonoBehaviour
             .Where(b => b.name == self.name)
             .ToList()
             .ForEach(b => {
-                b.GetComponent<Image>().color = (b.GetComponent<Image>().color.Equals(selectedColor)) ? unselectedColor : selectedColor;
+                b.GetComponent<Image>().sprite = (b.GetComponent<Image>().sprite.Equals(selected)) ? unselected : selected;
             });
     }
 
@@ -37,7 +37,7 @@ public class Checkbox : MonoBehaviour
         foreach(Transform child_ in transform) {
             GameObject child = child_.gameObject;
             buttons.Add(child);
-            child.GetComponent<Image>().color = unselectedColor;
+            child.GetComponent<Image>().sprite = unselected;
         }
     }
 

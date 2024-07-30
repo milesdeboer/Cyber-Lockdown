@@ -72,8 +72,9 @@ public class AttackManager : MonoBehaviour, ISavable
 
     public void Start() {
         if (attacks == null) Load();
-        InitDataCenters();
-        AssignListeners();
+        //InitDataCenters();
+        InitMap();
+        //AssignListeners();
         resourceDisplay.GetComponent<TextMeshProUGUI>().SetText("0");
     }
 
@@ -196,12 +197,32 @@ public class AttackManager : MonoBehaviour, ISavable
             dataCenter.transform.SetParent(dataCenterSubWindow.transform, false);
             dataCenter.GetComponent<RectTransform>().localPosition.Set(coords.x, coords.y, 0);
 
-            dataCenter.GetComponent<Image>().color = (dataCenterManager.GetDataCenter(i).GetOwner() == -1) ? new Color(1.0f, 1.0f, 1.0f) : (gameManager.GetColors()[dataCenterManager.GetDataCenter(i).GetOwner()]);
-
             // Add to list of buttons
             dataCenters.Add(dataCenter);
         }
+        InitMap();
         dataCenterSubWindow.GetComponent<RadioButton>().Start();
+    }
+
+    private void InitMap() {
+        GameObject[] dataCenters = dataCenterManager.GetDataCenterButtons().ToArray();
+        Debug.Log("Data Centers: " + dataCenters.Length);
+        for(int i = 0; i < dataCenters.Length; i++) {
+            Vector3 pos = dataCenters[i].GetComponent<RectTransform>().localPosition;
+            Vector2 scale = new Vector2(0.4545454545f, 0.5543478261f);
+            Vector3 coords = new Vector3(pos.x * scale.x, pos.y * scale.y, 0f);
+
+            GameObject dataCenter = Instantiate(dataCenterButton, coords, Quaternion.identity);
+            dataCenter.name = dataCenterManager.GetDataCenter(i).GetId().ToString();
+            dataCenter.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText((dataCenterManager.GetDataCenter(i).GetOwner()+1).ToString());
+            dataCenter.transform.SetParent(dataCenterSubWindow.transform, false);
+
+            int x = i;
+            // Add the DataCenterClick listener
+            dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
+                DataCenterClick(x);
+            });
+        }
     }
 
     /// <summary>
@@ -225,13 +246,13 @@ public class AttackManager : MonoBehaviour, ISavable
     /// <param name="i">The index of the data center button.</param>
     public void DataCenterClick(int i) {
         GameObject[] buttons = GameObject.FindGameObjectsWithTag("DataCenterButton");
-        buttons
+        /*buttons
             .Where(b => {
                 b.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
                 return b.name == i.ToString();
             })
             .ToList()
-            .ForEach(b => b.GetComponent<Image>().color = gameManager.selectionColor);
+            .ForEach(b => b.GetComponent<Image>().color = gameManager.selectionColor);*/
         attacks[activeAttack].SetTarget(dataCenterManager.GetDataCenters()[i].GetId());
         Debug.Log("Setting Target of Attack " + activeAttack + " to " + i + ".");
     }
