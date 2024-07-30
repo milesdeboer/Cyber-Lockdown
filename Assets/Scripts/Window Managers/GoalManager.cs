@@ -141,7 +141,7 @@ public class GoalManager : MonoBehaviour
             int workDone = PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).GetUnlocks()[gid];
             int workRequired = goals[gid].GetWorkRequired();
             // assign color
-            if (workDone >= workRequired) {
+           /* if (workDone >= workRequired) {
                 goal.GetComponent<Image>().color = completedColor;
             } else if (workTarget == gid) {
                 goal.GetComponent<Image>().color = workingColor;
@@ -149,7 +149,7 @@ public class GoalManager : MonoBehaviour
                 goal.GetComponent<Image>().color = stoppedColor;
             } else {
                 goal.GetComponent<Image>().color = uncompletedColor;
-            }
+            }*/
         }
     }
 
