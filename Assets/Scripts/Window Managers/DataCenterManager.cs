@@ -42,6 +42,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
     [SerializeField]
     private GameObject resourceDisplay;
+    [SerializeField]
+    private GameObject requirementDisplay;
 
     [SerializeField]
     private GameObject ransomOffer;
@@ -417,6 +419,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
         if (levels[attrIdx[attribute]] < 5) {
             dataCenters[currentDataCenter].AddTarget(attribute);
             dataCenters[currentDataCenter].SetWorkRequirement(dataCenters[currentDataCenter].GetWorkRequirement() + 20);
+            requirementDisplay.GetComponent<TextMeshProUGUI>().SetText(dataCenters[currentDataCenter].GetWorkRequirement().ToString());
             Debug.Log("Increased " + attribute + " of data center " + currentDataCenter + " by one.");
             UpdateAttributes();
         } 

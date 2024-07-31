@@ -48,6 +48,8 @@ public class AttackManager : MonoBehaviour, ISavable
 
     [SerializeField]
     private GameObject resourceDisplay;
+    [SerializeField]
+    private GameObject requirementDisplay;
 
     [SerializeField]
     private GameObject locks;
@@ -143,6 +145,7 @@ public class AttackManager : MonoBehaviour, ISavable
     public void ObjectiveClick(string objective) {
         attacks[activeAttack].SetObjective(objective);
         attacks[activeAttack].UpdateRequirement();
+        requirementDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRequirement().ToString());
     }
 
     /**
@@ -152,6 +155,7 @@ public class AttackManager : MonoBehaviour, ISavable
     public void DeliveryClick(string delivery) {
         attacks[activeAttack].SetDelivery(delivery);
         attacks[activeAttack].UpdateRequirement();
+        requirementDisplay.GetComponent<TextMeshProUGUI>().SetText(attacks[activeAttack].GetWorkRequirement().ToString());
     
     }
 

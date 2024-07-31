@@ -17,6 +17,8 @@ public class GoalManager : MonoBehaviour
     private GameObject objectContainer;
     [SerializeField]
     private GameObject resourceDisplay;
+    [SerializeField]
+    private GameObject requirementDisplay;
 
     [SerializeField]
     private GameObject goalEdges;
@@ -29,6 +31,13 @@ public class GoalManager : MonoBehaviour
     private Color workingColor;
     [SerializeField]
     private Color stoppedColor;
+
+    [SerializeField]
+    private Sprite uncompleted;
+    [SerializeField]
+    private Sprite completed;
+    [SerializeField]
+    private Sprite working;
 
     private Goal startGoal;
     private Goal endGoal;
@@ -75,11 +84,13 @@ public class GoalManager : MonoBehaviour
                 workTarget = i;
                 PlayerManager.GetPlayer(GameManager.GetTurnPlayer()).SetWorkTarget(workTarget);
                 UpdateDisplay();
+                requirementDisplay.GetComponent<TextMeshProUGUI>().SetText(goals[i].GetWorkRequired().ToString());
             }
     }
 
     public void ResourceClick(int change) {
         Player player = PlayerManager.GetPlayer(GameManager.GetTurnPlayer());
+        Debug.Log("Click");
         if (!(player.GetAvailableResources() - change > player.GetOverallResources()) &&
             !(player.GetAvailableResources() - change < 0) &&
             !(Int32.Parse(resourceDisplay.GetComponent<TextMeshProUGUI>().text) == 0 && change < 0)) {
@@ -150,6 +161,13 @@ public class GoalManager : MonoBehaviour
             } else {
                 goal.GetComponent<Image>().color = uncompletedColor;
             }*/
+            if (workDone >= workRequired) {
+                goal.GetComponent<Image>().sprite = completed;
+            } else if (workTarget == gid) {
+                goal.GetComponent<Image>().sprite = working;
+            } else {
+                goal.GetComponent<Image>().sprite = uncompleted;
+            }
         }
     }
 
