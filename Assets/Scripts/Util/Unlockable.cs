@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Unlockable : MonoBehaviour
 {
+    public static bool bypass = true;
+
     [SerializeField]
     private GoalManager goalManager;
 
@@ -75,7 +77,7 @@ public class Unlockable : MonoBehaviour
     /// Sets this game object to active if this feature is unlocked and inactive otherwise.
     /// </summary>
     public void UnlockCheck() {
-        if (IsUnlocked()) {
+        if (IsUnlocked() || bypass) {
             gameObject.SetActive(true);
         } else {
             gameObject.SetActive(false);

@@ -4900,7 +4900,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &120126094
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9626,6 +9626,7 @@ GameObject:
   - component: {fileID: 246259831}
   - component: {fileID: 246259833}
   - component: {fileID: 246259832}
+  - component: {fileID: 246259834}
   m_Layer: 10
   m_Name: Resources
   m_TagString: Untagged
@@ -9693,6 +9694,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 246259830}
   m_CullTransparentMesh: 1
+--- !u!114 &246259834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246259830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Resources
+  flavor: Resources represent the amount of people and time spent on a project.
+  effect: This increases the amount of resources that this data center gives you.
 --- !u!1 &246616993
 GameObject:
   m_ObjectHideFlags: 0
@@ -17506,6 +17525,7 @@ GameObject:
   - component: {fileID: 417702827}
   - component: {fileID: 417702829}
   - component: {fileID: 417702830}
+  - component: {fileID: 417702831}
   m_Layer: 10
   m_Name: IDS
   m_TagString: DataCenterAttribute
@@ -17643,6 +17663,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: ids
+--- !u!114 &417702831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417702825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Intrusion Detection System (IDS)
+  flavor: An Intrusion Detection System (IDS) monitors network traffic for suspicious
+    activity and potential threats, alerting administrators to any detected anomalies.
+    By identifying and responding to security incidents in real-time, an IDS helps
+    protect against unauthorized access, data breaches, and other cyberattacks, enhancing
+    the overall security posture of an organization.
+  effect: Notifies the player when an attack was made on this data center. The higher
+    the level, the more this will detect.
 --- !u!1 &417845870
 GameObject:
   m_ObjectHideFlags: 0
@@ -24265,6 +24308,7 @@ GameObject:
   - component: {fileID: 564668054}
   - component: {fileID: 564668056}
   - component: {fileID: 564668057}
+  - component: {fileID: 564668058}
   m_Layer: 10
   m_Name: Data Loss Prevention
   m_TagString: DataCenterAttribute
@@ -24402,6 +24446,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: dlp
+--- !u!114 &564668058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564668052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Data Loss Prevention (DLP)
+  flavor: Data Loss Prevention (DLP) is a strategy that involves monitoring, detecting,
+    and blocking sensitive data from being accessed, used, or shared unauthorizedly.
+    By implementing DLP policies, organizations can prevent accidental or malicious
+    data breaches, ensuring that confidential information remains secure and compliant
+    with regulatory standards.
+  effect: Thresholds the amount of damage an opponent's attack can deal on this data
+    center.
 --- !u!1 &574245570
 GameObject:
   m_ObjectHideFlags: 0
@@ -31955,7 +32022,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &726851472
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32363,6 +32430,8 @@ GameObject:
   - component: {fileID: 733990583}
   - component: {fileID: 733990582}
   - component: {fileID: 733990581}
+  - component: {fileID: 733990584}
+  - component: {fileID: 733990585}
   m_Layer: 5
   m_Name: Patch
   m_TagString: Untagged
@@ -32484,6 +32553,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733990579}
   m_CullTransparentMesh: 1
+--- !u!114 &733990584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733990579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a831ef4a3867f64aaec26c5e51307d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalManager: {fileID: 1759234347}
+  feature: patch
+--- !u!114 &733990585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733990579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Network Patch
+  flavor: Patching your network involves applying updates and fixes to software and
+    hardware components to address security vulnerabilities and improve functionality.
+    Regularly patching ensures that known weaknesses are mitigated, reducing the
+    risk of exploits and maintaining the overall security and performance of the
+    network.
+  effect: Periodically clears the scan queue, removing infections and vulnerabilities
+    as it does so.
 --- !u!1 &740282285
 GameObject:
   m_ObjectHideFlags: 0
@@ -32631,6 +32737,7 @@ GameObject:
   - component: {fileID: 742103995}
   - component: {fileID: 742103997}
   - component: {fileID: 742103998}
+  - component: {fileID: 742103999}
   m_Layer: 10
   m_Name: Hide Structure
   m_TagString: DataCenterAttribute
@@ -32768,6 +32875,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: structure
+--- !u!114 &742103999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 742103993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Hiding Network Structure
+  flavor: Hiding the structure of your network involves concealing details about
+    the network's configuration, such as IP addresses and device types, to prevent
+    attackers from gaining insight into its layout. This technique enhances security
+    by making it harder for potential intruders to map the network and identify targets,
+    thereby reducing the risk of attacks and unauthorized access.
+  effect: Increases the chance that reconnaissance attacks against this data center
+    will fail.
 --- !u!1 &742744344
 GameObject:
   m_ObjectHideFlags: 0
@@ -44099,6 +44229,7 @@ GameObject:
   - component: {fileID: 1021445792}
   - component: {fileID: 1021445794}
   - component: {fileID: 1021445795}
+  - component: {fileID: 1021445796}
   m_Layer: 10
   m_Name: Email Filtering
   m_TagString: DataCenterAttribute
@@ -44236,6 +44367,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: email-filter
+--- !u!114 &1021445796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1021445790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Email Filtering
+  flavor: Email filtering automatically sorts and categorizes incoming emails to
+    block spam, phishing attempts, and malicious content. By detecting suspicious
+    emails, scanning attachments, and analyzing links, it prevents malware from reaching
+    users' inboxes, significantly reducing the risk of infections and enhancing cybersecurity.
+  effect: Helps filter out phishing email attacks against this data center. The higher
+    the level, the better the filter.
 --- !u!1 &1032667848
 GameObject:
   m_ObjectHideFlags: 0
@@ -50648,7 +50801,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1287690508}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -51798,7 +51952,7 @@ RectTransform:
   m_Father: {fileID: 1085628307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -55303,6 +55457,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284563837}
   m_CullTransparentMesh: 1
+--- !u!224 &1287690508 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  m_PrefabInstance: {fileID: 1385352319845711205}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1294108720
 GameObject:
   m_ObjectHideFlags: 0
@@ -55754,6 +55913,7 @@ GameObject:
   - component: {fileID: 1320099344}
   - component: {fileID: 1320099346}
   - component: {fileID: 1320099345}
+  - component: {fileID: 1320099347}
   m_Layer: 10
   m_Name: Money
   m_TagString: Untagged
@@ -55821,6 +55981,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320099343}
   m_CullTransparentMesh: 1
+--- !u!114 &1320099347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320099343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Money
+  flavor: It's money... you use it to buy things.
+  effect: Increases the money production at this data center. You can use money to
+    buy new data centers.
 --- !u!1 &1325770672
 GameObject:
   m_ObjectHideFlags: 0
@@ -56966,6 +57145,8 @@ GameObject:
   - component: {fileID: 1358794962}
   - component: {fileID: 1358794961}
   - component: {fileID: 1358794960}
+  - component: {fileID: 1358794963}
+  - component: {fileID: 1358794964}
   m_Layer: 5
   m_Name: Scan
   m_TagString: Untagged
@@ -57087,6 +57268,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358794958}
   m_CullTransparentMesh: 1
+--- !u!114 &1358794963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358794958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a831ef4a3867f64aaec26c5e51307d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalManager: {fileID: 1759234347}
+  feature: scan
+--- !u!114 &1358794964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358794958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Network Scan
+  flavor: Scanning your network involves systematically examining the network's devices,
+    services, and vulnerabilities to identify potential security risks. By regularly
+    performing network scans, organizations can detect and address weaknesses, ensuring
+    their network remains secure and resilient against attacks.
+  effect: Scans for infections and vulnerabilities against this data center and loads
+    them into a queue.
 --- !u!1 &1359970385
 GameObject:
   m_ObjectHideFlags: 0
@@ -57667,6 +57884,7 @@ GameObject:
   - component: {fileID: 1373507995}
   - component: {fileID: 1373507997}
   - component: {fileID: 1373507996}
+  - component: {fileID: 1373507998}
   m_Layer: 10
   m_Name: Firewall
   m_TagString: Untagged
@@ -57732,6 +57950,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1373507994}
   m_CullTransparentMesh: 1
+--- !u!114 &1373507998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1373507994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 50}
+  title: Firewall
+  flavor: A firewall is a security device or software that monitors and controls
+    incoming and outgoing network traffic based on predetermined security rules.
+    It acts as a barrier between a trusted internal network and untrusted external
+    networks, such as the internet, blocking unauthorized access while allowing legitimate
+    communication to protect the network from threats and attacks.
+  effect: Scales the likelihood of an attack on this data center failing by the strength
+    you assign to it. The higher the strength, the less resources this data center
+    gives you.
 --- !u!1 &1377655844
 GameObject:
   m_ObjectHideFlags: 0
@@ -60285,7 +60527,7 @@ RectTransform:
   m_Father: {fileID: 1768124815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -63842,6 +64084,7 @@ GameObject:
   - component: {fileID: 1503474078}
   - component: {fileID: 1503474080}
   - component: {fileID: 1503474081}
+  - component: {fileID: 1503474082}
   m_Layer: 10
   m_Name: Encryption
   m_TagString: DataCenterAttribute
@@ -63979,6 +64222,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: encryption
+--- !u!114 &1503474082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1503474076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Encryption
+  flavor: Encryption is the process of converting data into a coded format to prevent
+    unauthorized access. By encrypting information, organizations ensure that even
+    if data is intercepted or accessed without permission, it remains unreadable
+    and secure, thereby protecting sensitive information and maintaining privacy.
+  effect: Scales the amount of damage an opponent's attack can deal on this data
+    center.
 --- !u!1 &1511525073
 GameObject:
   m_ObjectHideFlags: 0
@@ -83419,6 +83684,7 @@ GameObject:
   - component: {fileID: 2035651103}
   - component: {fileID: 2035651105}
   - component: {fileID: 2035651104}
+  - component: {fileID: 2035651106}
   m_Layer: 10
   m_Name: Traffic
   m_TagString: Untagged
@@ -83483,6 +83749,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035651102}
   m_CullTransparentMesh: 1
+--- !u!114 &2035651106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035651102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 50}
+  title: Network Traffic
+  flavor: Traffic analysis involves monitoring and examining network data flow to
+    identify patterns, detect anomalies, and understand network behavior. By analyzing
+    traffic, organizations can uncover potential security threats, optimize network
+    performance, and ensure efficient and secure data transmission.
+  effect: Deleting traffic with an anomally will remove the infection from the data
+    center. No matter what, deleting traffic will lower the production of the data
+    center.
 --- !u!1 &2038248358
 GameObject:
   m_ObjectHideFlags: 0
@@ -84721,7 +85010,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2075312690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -84972,6 +85261,7 @@ GameObject:
   - component: {fileID: 2079242261}
   - component: {fileID: 2079242263}
   - component: {fileID: 2079242264}
+  - component: {fileID: 2079242265}
   m_Layer: 10
   m_Name: IPS
   m_TagString: DataCenterAttribute
@@ -85109,6 +85399,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: ips
+--- !u!114 &2079242265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2079242259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 600, y: -90}
+  title: Intrusion Prevention System (IPS)
+  flavor: An Intrusion Prevention System (IPS) actively monitors network traffic
+    to detect and block suspicious activities and potential threats. Unlike an IDS,
+    which only alerts administrators, an IPS takes immediate action to prevent attacks,
+    enhancing network security by stopping unauthorized access and mitigating the
+    risk of data breaches in real-time.
+  effect: Prevents "weak" malware from infecting this data center. The higher the
+    level, the more this will prevent.
 --- !u!1 &2079443153
 GameObject:
   m_ObjectHideFlags: 0
@@ -86921,6 +87234,107 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146267129}
   m_CullTransparentMesh: 1
+--- !u!1001 &1385352319845711205
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1169749681}
+    m_Modifications:
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -503.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_Name
+      value: Info Slide
+      objectReference: {fileID: 0}
+    - target: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

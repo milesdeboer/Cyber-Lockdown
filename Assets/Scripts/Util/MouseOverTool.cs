@@ -31,7 +31,7 @@ public class MouseOverTool : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData) {
         instantiatedObject = Instantiate(infoSlide, location, Quaternion.identity);
-        instantiatedObject.GetComponent<Transform>().localScale = new Vector2(10, 10);
+        //instantiatedObject.GetComponent<Transform>().localScale = new Vector2(10, 10);
 
         instantiatedObject.transform.SetParent(canvas.transform, false);
 
