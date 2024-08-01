@@ -306,6 +306,6 @@ public class ConflictManager : MonoBehaviour
     private void FinishAttack(Attack a, DataCenter dc) {
         Malware m = malwareController.GetMalware(a.GetMalware());
         if (!m.HasFeature(MalwareFeature.Polymorphism))
-        a.Reset();
+            a.Reset();
     }
 }

@@ -822,6 +822,7 @@ GameObject:
   - component: {fileID: 21551320}
   - component: {fileID: 21551319}
   - component: {fileID: 21551322}
+  - component: {fileID: 21551323}
   m_Layer: 5
   m_Name: Backdoor
   m_TagString: Untagged
@@ -957,6 +958,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: backdoor
+--- !u!114 &21551323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21551317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Backdoor
+  flavor: A backdoor is a hidden or unauthorized method of accessing a computer system
+    or network, often installed by malware or an attacker. It allows an attacker
+    to bypass standard authentication procedures and gain control over the system
+    without the user's knowledge. Backdoors can be used for various malicious purposes,
+    including data theft, system manipulation, or maintaining persistent access for
+    future attacks.
+  effect: Creates a backdoor in the target data center which will increase the chance
+    of successful attacks against that data center in the future.
 --- !u!1 &22132457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1171,7 @@ GameObject:
   - component: {fileID: 23161487}
   - component: {fileID: 23161486}
   - component: {fileID: 23161485}
+  - component: {fileID: 23161488}
   m_Layer: 5
   m_Name: Cuckoo's Egg
   m_TagString: Untagged
@@ -1267,6 +1293,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23161483}
   m_CullTransparentMesh: 1
+--- !u!114 &23161488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23161483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Cuckoo's Egg
+  flavor: In a modern Cuckoo's Egg attack, the attacker plants both a primary malicious
+    payload and a decoy malware. The decoy is designed to be easily detected, diverting
+    attention and resources away from the primary payload. While security teams focus
+    on the decoy, the primary payload remains hidden, continuing its malicious activities
+    undetected. This strategy enhances the attack's persistence and effectiveness.
+  effect: Leaves decoy malware in the data center.
 --- !u!1 &26712635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2340,6 +2388,7 @@ GameObject:
   - component: {fileID: 59349361}
   - component: {fileID: 59349360}
   - component: {fileID: 59349363}
+  - component: {fileID: 59349364}
   m_Layer: 5
   m_Name: Manual
   m_TagString: Untagged
@@ -2475,6 +2524,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: manual
+--- !u!114 &59349364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59349358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Manual Attack
+  flavor: 'A manual attack, in terms of a delivery method, involves an attacker personally
+    executing the steps required to compromise a target, rather than relying on automated
+    tools or malware. This includes physically accessing a device to install malicious
+    software. '
+  effect: Standard Attack Delivery
 --- !u!1 &62310167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4614,6 +4684,7 @@ GameObject:
   - component: {fileID: 108409397}
   - component: {fileID: 108409396}
   - component: {fileID: 108409399}
+  - component: {fileID: 108409400}
   m_Layer: 5
   m_Name: botnet
   m_TagString: Untagged
@@ -4749,6 +4820,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: botnet
+--- !u!114 &108409400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108409394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Botnet
+  flavor: A botnet is a network of infected computers, known as bots or zombies,
+    controlled by a hacker or cybercriminal. These compromised machines are used
+    collectively to perform malicious activities, such as launching distributed denial-of-service
+    (DDoS) attacks, sending spam emails, or stealing data, often without the knowledge
+    of the device owners.
+  effect: Will periodically send random malware to other data centers if infects
+    data center.
 --- !u!1 &119191695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4900,7 +4994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &120126094
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4971,6 +5065,7 @@ GameObject:
   - component: {fileID: 121891054}
   - component: {fileID: 121891053}
   - component: {fileID: 121891056}
+  - component: {fileID: 121891057}
   m_Layer: 5
   m_Name: adware
   m_TagString: Untagged
@@ -5106,6 +5201,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: adware
+--- !u!114 &121891057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121891051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Adware
+  flavor: Adware is a type of software that automatically displays or downloads advertisements
+    to a user's computer, often without their consent. While typically not as harmful
+    as other malware, adware can be intrusive, degrade system performance, and sometimes
+    serve as a gateway for more malicious threats by tracking user behavior and compromising
+    privacy.
+  effect: Gives an infected data center ads that generate money for you.
 --- !u!1 &123133918
 GameObject:
   m_ObjectHideFlags: 0
@@ -13924,6 +14041,7 @@ GameObject:
   - component: {fileID: 337313866}
   - component: {fileID: 337313865}
   - component: {fileID: 337313864}
+  - component: {fileID: 337313867}
   m_Layer: 5
   m_Name: APT
   m_TagString: Untagged
@@ -14045,6 +14163,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337313862}
   m_CullTransparentMesh: 1
+--- !u!114 &337313867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337313862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Advanced Persistant Threat (APT)
+  flavor: An Advanced Persistent Threat (APT) is a prolonged and targeted cyberattack
+    where attackers gain unauthorized access to a network and remain undetected for
+    an extended period. APTs are characterized by their sophistication, often involving
+    multiple stages such as reconnaissance, initial exploitation, and data exfiltration.
+    The goal is typically to steal sensitive information, conduct espionage, or disrupt
+    operations, rather than causing immediate or widespread damage.
+  effect: Stays infected in the data center for longer and returns with more damage
+    dealt.
 --- !u!1 &343634883
 GameObject:
   m_ObjectHideFlags: 0
@@ -15062,6 +15204,7 @@ GameObject:
   - component: {fileID: 363889489}
   - component: {fileID: 363889488}
   - component: {fileID: 363889487}
+  - component: {fileID: 363889490}
   m_Layer: 5
   m_Name: Obfuscation
   m_TagString: Untagged
@@ -15183,6 +15326,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 363889485}
   m_CullTransparentMesh: 1
+--- !u!114 &363889490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363889485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Obfuscation
+  flavor: Obfuscation is the technique of deliberately making the code difficult
+    to understand or analyze. This is achieved through methods like renaming variables
+    and functions, using complex or misleading code structures, or employing encryption.
+    The goal is to hinder reverse engineering and make it challenging for security
+    analysts and antivirus programs to detect, analyze, and neutralize the malicious
+    software.
+  effect: Bypasses firewall and slows down the scan/patch process of an infected
+    data center.
 --- !u!1 &367422705
 GameObject:
   m_ObjectHideFlags: 0
@@ -15751,6 +15918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 374961621}
   - component: {fileID: 374961622}
+  - component: {fileID: 374961623}
   m_Layer: 5
   m_Name: Speed
   m_TagString: MalwareAttribute
@@ -15843,6 +16011,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &374961623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374961620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 400, y: -30}
+  title: Speed
+  flavor: 'The speed of malware refers to how quickly it executes its malicious activities,
+    spreads through a network, or performs its intended actions. Fast malware can
+    rapidly infect systems, propagate across networks, and cause widespread damage
+    or disruption. However, some malware is designed to operate slowly to avoid detection,
+    gradually exfiltrating data or performing actions over time to remain under the
+    radar.
+
+
+
+
+
+
+
+'
+  effect: The higher this attribute is, the faster an attack using this will be.
+    It also slightly improves the chance of a successful attack
 --- !u!1 &376323539
 GameObject:
   m_ObjectHideFlags: 0
@@ -27360,6 +27560,7 @@ GameObject:
   - component: {fileID: 621308445}
   - component: {fileID: 621308444}
   - component: {fileID: 621308443}
+  - component: {fileID: 621308446}
   m_Layer: 5
   m_Name: Research
   m_TagString: Untagged
@@ -27481,6 +27682,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621308441}
   m_CullTransparentMesh: 1
+--- !u!114 &621308446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 621308441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Research
+  flavor: "This type of attack aims to acquire confidential information that can
+    be used for competitive advantage, financial gain, or further espionage. The
+    stolen research might include groundbreaking scientific studies, technological
+    developments, or trade secrets, potentially causing significant harm to the targeted
+    organization\u2019s innovation and market position."
+  effect: Steals progress towards a research goal you have not completed, but target
+    data center's owner has started.
 --- !u!1 &624588550
 GameObject:
   m_ObjectHideFlags: 0
@@ -31475,6 +31699,7 @@ GameObject:
   m_Component:
   - component: {fileID: 713679047}
   - component: {fileID: 713679048}
+  - component: {fileID: 713679049}
   m_Layer: 5
   m_Name: Intrusion
   m_TagString: MalwareAttribute
@@ -31567,6 +31792,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &713679049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713679046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 400, y: -30}
+  title: Intrusion
+  flavor: The intrusion of malware refers to the extent and severity of damage it
+    can inflict on a system or network. This can range from minor disruptions, such
+    as slowing down performance, to severe consequences, such as data theft, system
+    corruption, or complete system shutdowns. High-intrusion malware can compromise
+    sensitive information, alter or destroy data, and disrupt operations, leading
+    to significant financial and operational damage.
+  effect: 'The higher this attribute is, the more damage the attack will deal to
+    a data center. '
 --- !u!1 &715240045
 GameObject:
   m_ObjectHideFlags: 0
@@ -32022,7 +32271,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &726851472
 RectTransform:
   m_ObjectHideFlags: 0
@@ -32326,6 +32575,7 @@ GameObject:
   m_Component:
   - component: {fileID: 728978169}
   - component: {fileID: 728978170}
+  - component: {fileID: 728978171}
   m_Layer: 5
   m_Name: Stealth
   m_TagString: MalwareAttribute
@@ -32418,6 +32668,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &728978171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728978168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 400, y: -30}
+  title: Stealth
+  flavor: The stealth of malware refers to its ability to avoid detection and remain
+    hidden from security measures, such as antivirus programs and intrusion detection
+    systems. Stealth techniques can include hiding within legitimate processes, using
+    encryption or obfuscation to mask its code, employing rootkits to conceal its
+    presence, and using advanced methods like polymorphism and metamorphism to continuously
+    change its appearance.
+  effect: The higher this attribute it, the more likely it will be that an attack
+    using this malware will be successful.
 --- !u!1 &733990579
 GameObject:
   m_ObjectHideFlags: 0
@@ -33639,6 +33913,7 @@ GameObject:
   - component: {fileID: 757293021}
   - component: {fileID: 757293020}
   - component: {fileID: 757293019}
+  - component: {fileID: 757293022}
   m_Layer: 5
   m_Name: Money
   m_TagString: Untagged
@@ -33760,6 +34035,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 757293017}
   m_CullTransparentMesh: 1
+--- !u!114 &757293022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 757293017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Money
+  flavor: Money :D
+  effect: Steals money from the target data center.
 --- !u!1 &760661652
 GameObject:
   m_ObjectHideFlags: 0
@@ -34236,6 +34529,7 @@ GameObject:
   - component: {fileID: 765820370}
   - component: {fileID: 765820369}
   - component: {fileID: 765820368}
+  - component: {fileID: 765820371}
   m_Layer: 5
   m_Name: Polymorphism
   m_TagString: Untagged
@@ -34357,6 +34651,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 765820366}
   m_CullTransparentMesh: 1
+--- !u!114 &765820371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765820366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Polymorphism
+  flavor: Polymorphism in malware refers to the technique used by malicious software
+    to constantly change its code or appearance while maintaining its core functionality.
+    This makes it difficult for antivirus programs and security systems to detect
+    and identify the malware, as each version appears different from the last, evading
+    traditional signature-based defenses.
+  effect: A data center infected with this malware cannot learn from the infection
+    to stop later attacks with this malware.
 --- !u!1 &768560788
 GameObject:
   m_ObjectHideFlags: 0
@@ -34595,7 +34912,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 35862711}
-  - {fileID: 2075312690}
   - {fileID: 1318669519}
   - {fileID: 1195355438}
   - {fileID: 1759234344}
@@ -44095,6 +44411,7 @@ GameObject:
   - component: {fileID: 1020472734}
   - component: {fileID: 1020472733}
   - component: {fileID: 1020472732}
+  - component: {fileID: 1020472735}
   m_Layer: 5
   m_Name: Steganography
   m_TagString: Untagged
@@ -44216,6 +44533,29 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020472730}
   m_CullTransparentMesh: 1
+--- !u!114 &1020472735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020472730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Steganography
+  flavor: Steganography is used to hide malicious code or data within seemingly benign
+    files, such as images, audio, or video. This technique conceals the presence
+    of the malware, making it harder for security systems to detect and analyze.
+    By embedding harmful payloads within legitimate content, attackers can evade
+    detection and increase the chances of their malware being successfully deployed.
+  effect: Malware using staganography doesn't appear on the traffic window of the
+    infected data center.
 --- !u!1 &1021445790
 GameObject:
   m_ObjectHideFlags: 0
@@ -48663,7 +49003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Drain
+  m_text: Slow Drain
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9c55c12ced5ba35429f2f54451c09ebd, type: 2}
   m_sharedMaterial: {fileID: -1895530871831787941, guid: 9c55c12ced5ba35429f2f54451c09ebd, type: 2}
@@ -51683,16 +52023,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1195355438}
-  - component: {fileID: 1195355439}
   - component: {fileID: 1195355441}
   - component: {fileID: 1195355440}
+  - component: {fileID: 1195355439}
   m_Layer: 5
   m_Name: Attack Window
   m_TagString: Window
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1195355438
 RectTransform:
   m_ObjectHideFlags: 0
@@ -51952,7 +52292,7 @@ RectTransform:
   m_Father: {fileID: 1085628307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -55707,6 +56047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309431486}
   - component: {fileID: 1309431487}
+  - component: {fileID: 1309431488}
   m_Layer: 5
   m_Name: Size
   m_TagString: MalwareAttribute
@@ -55799,6 +56140,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1309431488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309431485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: 400, y: -30}
+  title: Size
+  flavor: The size of malware can negatively impact its effectiveness in several
+    ways, such as increasing the likelihood of detection and slowing down system
+    performance. Larger malware files may trigger security alerts or consume significant
+    system resources, making them easier to spot. However, smaller malware can be
+    more efficient to develop and deploy, as it requires less production time and
+    can be designed to operate more stealthily.
+  effect: Decreases the amount of resources required for developing the malware,
+    but slightly decreases the chance of a successful attack.
 --- !u!1 &1318669518
 GameObject:
   m_ObjectHideFlags: 0
@@ -55832,6 +56197,7 @@ RectTransform:
   m_Children:
   - {fileID: 2008304786}
   - {fileID: 1582742636}
+  - {fileID: 2075312690}
   m_Father: {fileID: 774011452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -56452,6 +56818,7 @@ GameObject:
   - component: {fileID: 1336022638}
   - component: {fileID: 1336022637}
   - component: {fileID: 1336022640}
+  - component: {fileID: 1336022641}
   m_Layer: 5
   m_Name: trojan
   m_TagString: Untagged
@@ -56587,6 +56954,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: trojan
+--- !u!114 &1336022641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336022635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Trojan
+  flavor: A Trojan, or Trojan horse, is a type of malicious software that disguises
+    itself as a legitimate or harmless program to deceive users into installing it.
+    Once activated, it can perform harmful actions such as stealing data, creating
+    backdoors, or enabling unauthorized access to the user's system, often without
+    the user's knowledge.
+  effect: Attacks with a trojan bypass intrusion detection and prevention systems
+    (IDS and IPS) as well as the data center's firewall
 --- !u!1 &1340147039
 GameObject:
   m_ObjectHideFlags: 0
@@ -60527,7 +60917,7 @@ RectTransform:
   m_Father: {fileID: 1768124815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -60945,6 +61335,7 @@ GameObject:
   - component: {fileID: 1444853584}
   - component: {fileID: 1444853583}
   - component: {fileID: 1444853586}
+  - component: {fileID: 1444853587}
   m_Layer: 5
   m_Name: worm
   m_TagString: Untagged
@@ -61080,6 +61471,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: worm
+--- !u!114 &1444853587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1444853581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Worm
+  flavor: A worm is a type of malicious software that self-replicates and spreads
+    independently across networks, without needing to attach itself to a host program.
+    Unlike viruses, worms exploit vulnerabilities in operating systems or applications
+    to infect and propagate, often leading to widespread damage, network congestion,
+    and data breaches.
+  effect: If successfully infects data center, it will try attacking another data
+    center controlled by the same owner.
 --- !u!1 &1451926313
 GameObject:
   m_ObjectHideFlags: 0
@@ -62249,6 +62663,7 @@ GameObject:
   - component: {fileID: 1477545613}
   - component: {fileID: 1477545612}
   - component: {fileID: 1477545615}
+  - component: {fileID: 1477545616}
   m_Layer: 5
   m_Name: Sabotage
   m_TagString: Untagged
@@ -62384,6 +62799,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: sabotage
+--- !u!114 &1477545616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1477545610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Sabotage
+  flavor: "Sabotage as an attack objective involves deliberately damaging or disrupting
+    an organization\u2019s systems, operations, or infrastructure to cause harm or
+    hinder functionality. This can include altering or destroying data, corrupting
+    software, disrupting services, or damaging physical assets. The intent is often
+    to create chaos, degrade performance, or cripple operations, which can lead to
+    financial losses, operational setbacks, and reputational damage."
+  effect: Damages the production of something the target data center's owner is working
+    on whether that be the production of malware, data center, research, or an attack.
 --- !u!1 &1478588673
 GameObject:
   m_ObjectHideFlags: 0
@@ -63936,6 +64375,7 @@ GameObject:
   - component: {fileID: 1502636943}
   - component: {fileID: 1502636942}
   - component: {fileID: 1502636945}
+  - component: {fileID: 1502636946}
   m_Layer: 5
   m_Name: virus
   m_TagString: Untagged
@@ -64071,6 +64511,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: virus
+--- !u!114 &1502636946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502636940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Virus
+  flavor: A virus is a type of malicious software designed to replicate itself and
+    spread to other computers, often causing harm by corrupting files, stealing data,
+    or disrupting system operations. It attaches itself to legitimate programs or
+    files, and when these are executed, the virus activates and begins its destructive
+    activities.
+  effect: Generic Malware Type.
 --- !u!1 &1503474076
 GameObject:
   m_ObjectHideFlags: 0
@@ -64256,6 +64718,7 @@ GameObject:
   - component: {fileID: 1511525077}
   - component: {fileID: 1511525076}
   - component: {fileID: 1511525075}
+  - component: {fileID: 1511525078}
   m_Layer: 5
   m_Name: Zero Day Exploit
   m_TagString: Untagged
@@ -64377,6 +64840,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1511525073}
   m_CullTransparentMesh: 1
+--- !u!114 &1511525078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511525073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Zero Day Exploit
+  flavor: A zero-day exploit is a type of cyberattack that takes advantage of a previously
+    unknown vulnerability in software or hardware before the developer has released
+    a fix or patch. Because there is no prior knowledge or defense against this vulnerability,
+    zero-day exploits can be particularly dangerous, leading to significant security
+    breaches and damage.
+  effect: Allows the attack to use vulnerabilities created by other players.
 --- !u!1 &1512812071
 GameObject:
   m_ObjectHideFlags: 0
@@ -66519,6 +67004,7 @@ GameObject:
   - component: {fileID: 1563731618}
   - component: {fileID: 1563731617}
   - component: {fileID: 1563731620}
+  - component: {fileID: 1563731621}
   m_Layer: 5
   m_Name: Backdoor
   m_TagString: Untagged
@@ -66654,6 +67140,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: backdoor
+--- !u!114 &1563731621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1563731615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Backdoor
+  flavor: A backdoor is a hidden or unauthorized method of accessing a computer system
+    or network, often installed by malware or an attacker. It allows an attacker
+    to bypass standard authentication procedures and gain control over the system
+    without the user's knowledge. Backdoors can be used for various malicious purposes,
+    including data theft, system manipulation, or maintaining persistent access for
+    future attacks.
+  effect: Uses an existing vulnerability in the target data center to initiate the
+    attack.
 --- !u!1 &1565840673
 GameObject:
   m_ObjectHideFlags: 0
@@ -70716,6 +71226,7 @@ GameObject:
   - component: {fileID: 1671354122}
   - component: {fileID: 1671354121}
   - component: {fileID: 1671354124}
+  - component: {fileID: 1671354125}
   m_Layer: 5
   m_Name: Phishing
   m_TagString: Untagged
@@ -70851,6 +71362,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: phishing
+--- !u!114 &1671354125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671354119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Phishing
+  flavor: Phishing is a cyberattack technique where attackers deceive individuals
+    into revealing sensitive information, such as usernames, passwords, or financial
+    details, by pretending to be a trustworthy entity. This is often done through
+    fraudulent emails, messages, or websites that mimic legitimate organizations.
+    The goal of phishing is to trick victims into providing their personal information
+    or clicking on malicious links, which can lead to data theft, account compromise,
+    or further malware infections.
+  effect: Attaches the malware to an email. If the target accepts the email, the
+    attack is successful.
 --- !u!1 &1683753136
 GameObject:
   m_ObjectHideFlags: 0
@@ -72601,6 +73137,7 @@ GameObject:
   - component: {fileID: 1725767548}
   - component: {fileID: 1725767547}
   - component: {fileID: 1725767546}
+  - component: {fileID: 1725767549}
   m_Layer: 5
   m_Name: Drain
   m_TagString: Untagged
@@ -72722,6 +73259,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1725767544}
   m_CullTransparentMesh: 1
+--- !u!114 &1725767549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725767544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Slow Drain
+  flavor: This type of malware systematically and gradually siphons off data over
+    an extended period. By avoiding sudden large data transfers, it reduces the risk
+    of detection and increases the chances of extracting valuable information without
+    triggering security alarms.
+  effect: Stay infected in the data center and drain the data center each turn
 --- !u!1 &1726872087
 GameObject:
   m_ObjectHideFlags: 0
@@ -74480,7 +75038,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1765356822
 RectTransform:
   m_ObjectHideFlags: 0
@@ -75622,6 +76180,7 @@ GameObject:
   - component: {fileID: 1785130614}
   - component: {fileID: 1785130613}
   - component: {fileID: 1785130616}
+  - component: {fileID: 1785130617}
   m_Layer: 5
   m_Name: Disable
   m_TagString: Untagged
@@ -75757,6 +76316,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: disable
+--- !u!114 &1785130617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785130611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: 0}
+  title: Disable
+  flavor: "Disabling as an attack objective aims to render systems, applications,
+    or infrastructure inoperable or unusable. This can involve actions like shutting
+    down critical services, corrupting software, or disrupting network connectivity.
+    The goal is to interrupt normal operations, causing downtime, productivity losses,
+    and potential financial damage, often to weaken the target\u2019s operational
+    capabilities or to distract from other malicious activities."
+  effect: Disables work, money production and resource allocation at the target data
+    center for a set number of turns.
 --- !u!1 &1787329202
 GameObject:
   m_ObjectHideFlags: 0
@@ -78603,6 +79186,7 @@ GameObject:
   - component: {fileID: 1879733138}
   - component: {fileID: 1879733137}
   - component: {fileID: 1879733140}
+  - component: {fileID: 1879733141}
   m_Layer: 5
   m_Name: rootkit
   m_TagString: Untagged
@@ -78738,6 +79322,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: rootkit
+--- !u!114 &1879733141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879733135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Rootkit
+  flavor: A rootkit is a type of malicious software designed to gain unauthorized
+    access to a computer system and maintain persistent, undetected control. It typically
+    hides its presence and the presence of other malicious software, allowing cybercriminals
+    to remotely execute commands, steal data, and manipulate system functions without
+    being detected by standard security measures.
+  effect: Attacks with a rootkit bypass intrusion detection and prevention systems.
+    (IDS and IPS)
 --- !u!1 &1884525566
 GameObject:
   m_ObjectHideFlags: 0
@@ -85010,7 +85617,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2075312690
 RectTransform:
   m_ObjectHideFlags: 0
@@ -85018,7 +85625,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075312689}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -85026,7 +85633,7 @@ RectTransform:
   - {fileID: 120126094}
   - {fileID: 726851472}
   - {fileID: 1814765542}
-  m_Father: {fileID: 774011452}
+  m_Father: {fileID: 1318669519}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -85061,7 +85668,7 @@ MonoBehaviour:
   requirementDisplay: {fileID: 130589737}
   ransomOffer: {fileID: 988029212}
   popUpCanvas: {fileID: 1169749677}
-  ad: {fileID: 7906232981005753912, guid: 78cb7c2a14bc9fe4aadad98381a58017, type: 3}
+  ad: {fileID: 8736501776379642822, guid: 78cb7c2a14bc9fe4aadad98381a58017, type: 3}
 --- !u!114 &2075312692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85113,6 +85720,7 @@ GameObject:
   - component: {fileID: 2078084700}
   - component: {fileID: 2078084699}
   - component: {fileID: 2078084702}
+  - component: {fileID: 2078084703}
   m_Layer: 5
   m_Name: ransomware
   m_TagString: Untagged
@@ -85248,6 +85856,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goalManager: {fileID: 1759234347}
   feature: ransomware
+--- !u!114 &2078084703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2078084697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca678f590778da143acb7952a4e78324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoSlide: {fileID: 7433852987358558085, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
+  canvas: {fileID: 1169749680}
+  location: {x: -500, y: -30}
+  title: Ransomware
+  flavor: Ransomware is a type of malicious software that encrypts a victim's data,
+    rendering it inaccessible, and then demands a ransom payment for the decryption
+    key. It typically spreads through phishing emails, malicious downloads, or exploiting
+    vulnerabilities, causing significant disruption and financial loss to individuals
+    and organizations until the ransom is paid or the data is restored from backups.
+  effect: If successfully infects target data center, it will disable it until the
+    owner pays you a cost.
 --- !u!1 &2079242259
 GameObject:
   m_ObjectHideFlags: 0
@@ -87304,11 +87935,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -503.92
+      value: -500
       objectReference: {fileID: 0}
     - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 183385210187859777, guid: bfca3bd0733f15640b1e37fbd2b1bec3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

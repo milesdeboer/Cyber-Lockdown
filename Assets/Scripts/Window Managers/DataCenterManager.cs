@@ -355,7 +355,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
             location.y = (float) random.Next(-75, 296);
 
             GameObject adObject = Instantiate(ad, location, Quaternion.identity);
-            adObject.transform.GetChild(2).gameObject.GetComponent<Button>().onClick.AddListener(delegate {
+            adObject.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(delegate {
                 Destroy(adObject);
             });
             adObject.transform.SetParent(popUpCanvas.transform, false);
