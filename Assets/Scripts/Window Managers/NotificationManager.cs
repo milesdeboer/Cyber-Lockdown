@@ -29,10 +29,10 @@ public class NotificationManager : MonoBehaviour, ISavable
     private GameObject emailEntry;
 
     private Vector2[] positions = {
-        new Vector2(42f, 120f),
-        new Vector2(42f, 94f),
-        new Vector2(42f, 68f),
-        new Vector2(42f, 42f)
+        new Vector2(-240f, 370f),
+        new Vector2(-240f, 150f),
+        new Vector2(-240f, -70f),
+        new Vector2(-240f, -290f)
     };
 
     public void OnClick(GameObject self, Notification n, bool accepted) {
