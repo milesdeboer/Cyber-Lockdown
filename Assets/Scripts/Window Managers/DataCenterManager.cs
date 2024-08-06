@@ -26,6 +26,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
     private NotificationManager notificationManager;
 
     [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
     private GameObject selectionWindow;
     [SerializeField]
     private GameObject customizationWindow;
@@ -180,6 +183,10 @@ public class DataCenterManager : MonoBehaviour, ISavable
                 int idx = (int) (GameManager.DATA_CENTERS_PER_PLAYER*i + j);
 
                 dataCenter.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText((dataCenters[idx].GetOwner()+1).ToString());
+
+                dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
+                    audioSource.Play();
+                });
 
                 if (dataCenters[idx].GetOwner() == -1) {
                     dataCenter.transform.GetChild(1).gameObject.SetActive(true);

@@ -9650,6 +9650,7 @@ MonoBehaviour:
   conflictManager: {fileID: 0}
   malwareController: {fileID: 84715879}
   dataCenterManager: {fileID: 969156450}
+  audioSource: {fileID: 0}
   selectionWindow: {fileID: 1377655844}
   customizationWindow: {fileID: 1094429797}
   selectionButtons:
@@ -42590,8 +42591,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 932343169}
-  - component: {fileID: 932343168}
   - component: {fileID: 932343170}
+  - component: {fileID: 932343168}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -44132,6 +44133,7 @@ MonoBehaviour:
   attackManager: {fileID: 241437735}
   playerManager: {fileID: 0}
   notificationManager: {fileID: 804493985}
+  audioSource: {fileID: 0}
   selectionWindow: {fileID: 0}
   customizationWindow: {fileID: 1208960966}
   ransomwareWindow: {fileID: 1409821860}
@@ -53288,6 +53290,7 @@ MonoBehaviour:
   conflictManager: {fileID: 307162850}
   malwareController: {fileID: 1318669520}
   dataCenterManager: {fileID: 2075312691}
+  audioSource: {fileID: 932343170}
   selectionWindow: {fileID: 653446834}
   customizationWindow: {fileID: 1830204297}
   selectionButtons: []
@@ -87266,6 +87269,7 @@ MonoBehaviour:
   attackManager: {fileID: 1195355439}
   playerManager: {fileID: 307162849}
   notificationManager: {fileID: 35862712}
+  audioSource: {fileID: 932343170}
   selectionWindow: {fileID: 120126093}
   customizationWindow: {fileID: 726851471}
   ransomwareWindow: {fileID: 1814765541}

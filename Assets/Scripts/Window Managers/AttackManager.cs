@@ -24,6 +24,9 @@ public class AttackManager : MonoBehaviour, ISavable
     private DataCenterManager dataCenterManager;
 
     [SerializeField]
+    private AudioSource audioSource;
+
+    [SerializeField]
     private GameObject selectionWindow;
     [SerializeField]
     private GameObject customizationWindow;
@@ -222,6 +225,9 @@ public class AttackManager : MonoBehaviour, ISavable
             dataCenter.transform.SetParent(dataCenterSubWindow.transform, false);
 
             int x = i;
+            dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
+                audioSource.Play();
+            });
             // Add the DataCenterClick listener
             dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
                 DataCenterClick(x);
