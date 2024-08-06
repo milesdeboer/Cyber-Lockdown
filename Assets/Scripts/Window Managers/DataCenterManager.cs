@@ -68,8 +68,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
     public void Start_() {
         //InitButtons();
         InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
-        InitSelectionListeners();
-        InitTraffic();
+        //InitSelectionListeners();
+        //InitTraffic();
     }
 
     /// <summary>
@@ -214,7 +214,6 @@ public class DataCenterManager : MonoBehaviour, ISavable
             dataCenters[dcid].SetOwner(player.GetId());
             //InitButtons();
             InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
-            InitSelectionListeners();
             playerManager.UpdateDisplay();
         }
     }
@@ -222,7 +221,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
     /// <summary>
     /// Adds onClick event listeners for each data center button
     /// </summary>
-    public void InitSelectionListeners() {
+    public void InitSelectionListeners() {/////////!!!
         // Iterate through data center buttons
         for (int i = 0; i < dataCenterButtons.Count; i++) {
             // Avoid capturing error
@@ -523,19 +522,28 @@ public class DataCenterManager : MonoBehaviour, ISavable
 
         // Get random order for the traffic entries
         System.Random random = new System.Random();
-        int order = random.Next(0, 6);
-
+        int order = random.Next(0, 4);
+        Vector3[] coords = {
+            new Vector3(0f, (172.5f + (float)(Math.Max(order-1,0) % 3) * 115f - (float)((order+3)/4) * 345f), 0f),
+            new Vector3(0f, ((float) (order % 2) * 115f + 57.5f - (float) (order / 2) * 230f), 0f),
+            new Vector3(0f, ((float) (order % 3) * 115f - 57.5f - (float) (order / 3) * 115f), 0f),
+            new Vector3(0f, ((float) order * 115f - 172.5f), 0f)
+        };
+        foreach(Vector3 vec in coords) {
+            Debug.Log("Vector: " + vec.ToString());
+        }
         // Declare traffic objects
         GameObject[] trafficObjects = {
-            Instantiate(traffic, new Vector2(207f, ((order < 2) ? 155f : (order % 2 == 0) ? 120f : 85f)), Quaternion.identity),
-            Instantiate(traffic, new Vector2(207f, ((order == 2 || order == 3) ? 155f : (order == 0 || order == 5) ? 120f : 85f)), Quaternion.identity),
-            Instantiate(traffic, new Vector2(207f, ((order > 3) ? 155f : (order % 2 == 1) ? 120f : 85f)), Quaternion.identity)
+            Instantiate(traffic, Vector2.zero, Quaternion.identity),
+            Instantiate(traffic, Vector2.zero, Quaternion.identity),
+            Instantiate(traffic, Vector2.zero, Quaternion.identity),
+            Instantiate(traffic, Vector2.zero, Quaternion.identity)
         };
-
+        Debug.Log("order " + order);
         // Orient each traffic obejct to correct position
-        foreach(GameObject trafficObject in trafficObjects) {
-            trafficObject.transform.SetParent(trafficSubWindow.transform, false);
-            trafficObject.GetComponent<RectTransform>().sizeDelta = new Vector2(0.95f, 0.3f);
+        for (int j = 0; j < trafficObjects.Length; j++) {
+            trafficObjects[j].transform.SetParent(trafficSubWindow.transform, false);
+            trafficObjects[j].GetComponent<RectTransform>().anchoredPosition = coords[j];
         }
 
         //TODO !!! - add chance of undetected malware
