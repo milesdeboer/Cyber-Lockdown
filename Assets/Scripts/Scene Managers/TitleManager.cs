@@ -14,15 +14,25 @@ public class TitleManager : MonoBehaviour
         (new NotificationDAO()).Erase();
         (new PlayerDAO()).Erase();
 
-        SceneManager.LoadScene("NewGameScene");
+        StartCoroutine(LoadSceneDelay("NewGameScene"));
     }
 
     public void LoadGame() {
-        SceneManager.LoadScene("BetweenScene");
+        StartCoroutine(LoadSceneDelay("BetweenScene"));
     }
 
     public void Exit() {
-        Debug.Log("Exiting Game");
+        StartCoroutine(ExitDelay());
+    }
+
+    IEnumerator LoadSceneDelay(string sceneName) {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(sceneName);
+
+    }
+
+    IEnumerator ExitDelay() {
+        yield return new WaitForSeconds(1f);
         Application.Quit();
     }
 }

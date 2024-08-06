@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour, ISavable
         malwareManager.Save();
         attackManager.Save();
         notificationManager.Save();
-        SceneManager.LoadScene("BetweenScene");
+        StartCoroutine(LoadSceneDelay("BetweenScene"));
     }
 
     private bool WinCheck() {
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour, ISavable
 
         if (winner != null) {
             EndGameManager.SetWinner(winner);
-            SceneManager.LoadScene("EndGameScene");
+            StartCoroutine(LoadSceneDelay("EndGameScene"));
             return true;
         } else {
             return false;
@@ -155,9 +155,19 @@ public class GameManager : MonoBehaviour, ISavable
     }
 
     public void MainMenu() {
-        SceneManager.LoadScene("TitleScene");
+        StartCoroutine(LoadSceneDelay("TitleScene"));
     }
     public void ExitGame() {
+        StartCoroutine(ExitDelay());
+    }
+
+    IEnumerator LoadSceneDelay(string sceneName) {
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(sceneName);
+    }
+
+    IEnumerator ExitDelay() {
+        yield return new WaitForSeconds(1f);
         Application.Quit();
     }
 }
