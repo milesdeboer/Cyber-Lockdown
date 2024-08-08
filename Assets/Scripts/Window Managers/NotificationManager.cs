@@ -61,7 +61,8 @@ public class NotificationManager : MonoBehaviour, ISavable
     }
 
     public void CreateEmails() {
-        Debug.Log("CREATING EMAILS");
+        ContentGenerator contentGenerator = new ContentGenerator();
+
         notifications.ToList().ForEach(n => {
             if (n is Email)
                 notifications.Remove(n);
@@ -70,7 +71,15 @@ public class NotificationManager : MonoBehaviour, ISavable
             .GetDataCenters()
             .Where(dc => dc.GetOwner() == GameManager.GetTurnPlayer())
             .ToList()
-            .ForEach(dc => AddNotification(new Email(dc.GetOwner(), dc.GetId(), (dc.GetPhishes().Count > 0) ? dc.GetPhishes().Single() : -1)));
+            .ForEach(dc => {
+                Email email = new Email(dc.GetOwner(), dc.GetId(), (dc.GetPhishes().Count > 0) ? dc.GetPhishes().Single() : -1);
+                string[] tb = (email.GetAttack() != -1) ? 
+                    contentGenerator.GeneratePhish(PlayerManager.GetPlayer(dc.GetOwner()).GetName(), malwareManager.GetMalware(attackManager.GetAttack(email.GetAttack()).GetMalware()).GetStealth()) : 
+                    contentGenerator.GenerateEmail(PlayerManager.GetPlayer(dc.GetOwner()).GetName());
+                email.SetTitle(tb[0]);
+                email.SetBody(tb[1]);
+                AddNotification(email);
+            });
     }
 
     public void UpdateDisplay() {

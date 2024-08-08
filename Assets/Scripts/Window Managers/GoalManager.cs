@@ -38,6 +38,8 @@ public class GoalManager : MonoBehaviour
     private Sprite completed;
     [SerializeField]
     private Sprite working;
+    [SerializeField]
+    private Material greenMat;
 
     private Goal startGoal;
     private Goal endGoal;
@@ -163,37 +165,40 @@ public class GoalManager : MonoBehaviour
             }*/
             if (workDone >= workRequired) {
                 goal.GetComponent<Image>().sprite = completed;
+                goal.transform.GetChild(0).GetComponent<Image>().material = null;
             } else if (workTarget == gid) {
                 goal.GetComponent<Image>().sprite = working;
+                goal.transform.GetChild(0).GetComponent<Image>().material = greenMat;
             } else {
                 goal.GetComponent<Image>().sprite = uncompleted;
+                goal.transform.GetChild(0).GetComponent<Image>().material = greenMat;
             }
         }
     }
 
     public void InitGoals() {
         goals = new Dictionary<int, Goal>();
-        goals.Add(0, new Goal(0, 0, new List<string>(){"virus", "manual"}));//0
+        goals.Add(0, new Goal(0, 0, new List<string>(){"virus", "manual"}));//0 - image 1
 
-        goals.Add(1, new Goal(1, 100, new List<string>(){"worm", "drain", "firewall"}));//1
-        goals.Add(2, new Goal(2, 100, new List<string>(){"recon", "rootkit", "encryption"}));//2
-        goals.Add(3, new Goal(3, 100, new List<string>(){"adware", "phishing"}));//3
-        goals.Add(4, new Goal(4, 100, new List<string>(){"structure", "apt"}));//4
+        goals.Add(1, new Goal(1, 100, new List<string>(){"worm", "drain", "firewall"}));//1 - image 2
+        goals.Add(2, new Goal(2, 100, new List<string>(){"recon", "rootkit", "encryption"}));//2 - image 3
+        goals.Add(3, new Goal(3, 100, new List<string>(){"adware", "phishing"}));//3 - image 4
+        goals.Add(4, new Goal(4, 100, new List<string>(){"structure", "apt"}));//image 5
 
-        goals.Add(5, new Goal(5, 200, new List<string>(){"polymorphism", "email-filter"}));//5
-        goals.Add(6, new Goal(6, 200, new List<string>(){"zero-day", "backdoor"}));//6
-        goals.Add(7, new Goal(7, 200, new List<string>(){"scan", "patch"}));//7
+        goals.Add(5, new Goal(5, 200, new List<string>(){"polymorphism", "email-filter"}));//5 - notification window icon
+        goals.Add(6, new Goal(6, 200, new List<string>(){"zero-day", "backdoor"}));//6 - image 6
+        goals.Add(7, new Goal(7, 200, new List<string>(){"scan", "patch"}));//7 - image 7
 
-        goals.Add(8, new Goal(8, 300, new List<string>(){"trojan"}));//8
-        goals.Add(9, new Goal(9, 300, new List<string>(){"ids"}));//9
-        goals.Add(10, new Goal(10, 300, new List<string>(){"sabotage", "dlp"}));//10
+        goals.Add(8, new Goal(8, 300, new List<string>(){"trojan"}));//8 - trojan icon
+        goals.Add(9, new Goal(9, 300, new List<string>(){"ids"}));//9 - image 8
+        goals.Add(10, new Goal(10, 300, new List<string>(){"sabotage", "dlp"}));//10------------------------------------------------
 
-        goals.Add(11, new Goal(11, 400, new List<string>(){"cuckoo-egg"}));//11
-        goals.Add(12, new Goal(12, 400, new List<string>(){"obfuscation"}));//12
+        goals.Add(11, new Goal(11, 400, new List<string>(){"cuckoo-egg"}));//11 - image 10
+        goals.Add(12, new Goal(12, 400, new List<string>(){"obfuscation"}));//12 -- image 11
 
-        goals.Add(13, new Goal(13, 500, new List<string>(){"botnet"}));//13
-        goals.Add(14, new Goal(14, 500, new List<string>(){"steganography"}));//14
-        goals.Add(15, new Goal(15, 500, new List<string>(){"disable"}));//15
+        goals.Add(13, new Goal(13, 500, new List<string>(){"botnet"}));//13 - botnet icon
+        goals.Add(14, new Goal(14, 500, new List<string>(){"steganography"}));//14------------------------------------------------
+        goals.Add(15, new Goal(15, 500, new List<string>(){"disable"}));//15------------------------------------------------
         goals.Add(16, new Goal(16, 500, new List<string>(){"ips"}));//16
 
         goals.Add(17, new Goal(17, 600, new List<string>(){"ransomware"}));//17
