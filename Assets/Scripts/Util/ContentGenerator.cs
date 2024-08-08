@@ -33,48 +33,48 @@ public class ContentGenerator
 
     private string[][] names = new string[][]{
         new string[]{
-            "James",
-            "Michael",
-            "Robert",
-            "John",
-            "David",
-            "William",
-            "Richard",
-            "Joseph",
-            "Charles",
-            "Alan",
-            "Mary",
-            "Patricia",
-            "Jennifer",
-            "Linda",
-            "Elizabeth",
-            "Barbara",
-            "Susan",
-            "Jessica",
-            "Karen",
-            "Ada"
+            "james",
+            "michael",
+            "robert",
+            "john",
+            "david",
+            "william",
+            "richard",
+            "joseph",
+            "charles",
+            "alan",
+            "mary",
+            "patricia",
+            "jennifer",
+            "linda",
+            "elizabeth",
+            "barbara",
+            "susan",
+            "jessica",
+            "karen",
+            "ada"
         },
         new string[]{
-            "Smith",
-            "Johnson",
-            "Williams",
-            "Jones",
-            "Brown",
-            "Davis",
-            "Miller",
-            "Wilson",
-            "Moore",
-            "Taylor",
-            "Anderson",
-            "Thomas",
-            "Jackson",
-            "White",
-            "Harris",
-            "Martin",
-            "Thompson",
-            "Turing",
-            "Babbage",
-            "Lovelace"
+            "smith",
+            "johnson",
+            "williams",
+            "jones",
+            "brown",
+            "davis",
+            "miller",
+            "wilson",
+            "moore",
+            "taylor",
+            "anderson",
+            "thomas",
+            "jackson",
+            "white",
+            "harris",
+            "martin",
+            "thompson",
+            "turing",
+            "babbage",
+            "lovelace"
         }
     };
 
@@ -138,7 +138,6 @@ public class ContentGenerator
     /// </returns>
     public string[] GeneratePhish(string companyName, int stealth) {
         int rand = UnityEngine.Random.Range(0,5);
-
         string[] email = GenerateEmail(companyName);
 
         switch(rand) {
@@ -242,14 +241,13 @@ public class ContentGenerator
         char[] domain = address.Split("@", 2)[1].Split(".", 3)[1].ToCharArray();
         int limit = stealth / 25 + 1;
 
-        domain
-            .ToList()
-            .TakeWhile((c, i) => {
-                if (swapDictionary.ContainsKey(c)) {
-                    domain[i] = swapDictionary[c];
-                }
-                return --limit > 0;
-            });
+        int i = 0;
+        for (int l = stealth / 25 + 1; l > 0; i++) {
+            if (swapDictionary.ContainsKey(domain[i])) {
+                domain[i] = swapDictionary[domain[i]];
+                    l--;
+            }
+        }
 
         //      johnsmith                   @       support                                     .       g0ogle                  .com
         return  address.Split("@", 2)[0] +  "@" +   address.Split("@", 2)[1].Split(".", 3)[0] + "." +   new string(domain) +    ".com";
@@ -265,9 +263,8 @@ public class ContentGenerator
         string domain = "." + address.Split("@", 2)[1].Split(".", 3)[1];
         string original = domain;
 
-        for (int i = 0; i < stealth / 25 + 1 && domain != original; i++) {
+        for (int i = 0; i < stealth / 25 + 1 || domain == original; i++) {
             int idx = UnityEngine.Random.Range(0, domain.Length-2);
-
             char[] chars = domain.ToCharArray();
             (chars[idx], chars[idx+1]) = (chars[idx+1], chars[idx]);
             domain = new string(chars);
@@ -285,11 +282,10 @@ public class ContentGenerator
     private string AddSuffix(string address, int stealth) {
         int idx = (UnityEngine.Random.Range(0, 10) + stealth / 10) / 2;
         string suffix = this.suffix[idx];
-
         if (suffix[0] == '@') {
-            return address.Split("@", 2)[1].Split(".", 3)[1] + suffix + ".com";
+            return address.Split("@", 2)[1].Split(".", 3)[0] + "." + address.Split("@", 2)[1].Split(".", 3)[1] + suffix + ".com";
         } else {
-            return address.Split(".", 3)[0] + address.Split(".", 3)[1] + suffix + ".com";
+            return address.Split(".", 4)[0] + address.Split(".", 4)[1] + "." + address.Split(".", 4)[2] + suffix + ".com";
         }
     }
 
