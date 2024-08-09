@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,50 @@ public class ContentGenerator
         ".co"
     };
 
+    //tags:
+    // - 1: system
+    // - 2: date
+    // - 3: issue
+    // - 4: percentage [0, 100]
+    private string[] emailBody = new string[] {
+        "Please be informed that 1 maintenance will be conducted on 2.",
+        "The update for 1 has been successfully completed. Please review the attached document for details.",
+        "A 3 was detected in the 1 on 2. Immediate action was taken to resolve the issue. Please see the attached report for further information.",
+        "The backup for 1 completed on 2. No errors were reported. A detailed backup log is attached.",
+        "The 3 affecting 1 has been resolved as of 2. All services are now running normally. Please find the incident report attached.",
+        "A capacity review of 1 was conducted on 2. Current usage stands at 4%. No immediate action is required. The full report is attached.",
+        "A 3 was detected by our monitoring systems on 2. Please review the attached log for more details.",
+        "The firewall rules were updated on 2 to improve security. No user action is needed. Attached is the updated ruleset.",
+        "The power redundancy test conducted on 2 was successful. Backup systems are fully operational. The test report is attached.",
+        "The uptime report for the 1 for this month is attached. The system achieved 4% uptime."
+    };
+
+    private string[] systems = new string[] {
+        "primary server",
+        "application server",
+        "email server",
+        "storage system",
+        "load balancer",
+        "backup server",
+        "VM cluster",
+        "DNS server",
+        "API gateway",
+        "proxy server"
+    };
+
+    private string[] issues = new string[] {
+        "CPU Overload",
+        "disk Space Shortage",
+        "memory Leak",
+        "unauthorized access attempt",
+        "hardware failure",
+        "software bug",
+        "power failure",
+        "cooling system failure",
+        "security breach",
+        "high error rate"
+    };
+
     //not included letters: qrypdghkxcb
     private Dictionary<char, char> swapDictionary = new Dictionary<char, char>{
         {'a', '4'},
@@ -125,6 +170,8 @@ public class ContentGenerator
         {'z', 's'},
         {'n', 'u'}
     };
+
+    private string traffic = "Source IP: [IPAR] - Destination IP: [IPAR] - Protocol: [PROT] - Source Port: [PORT] - Destination Port: [PORT] - User-Agent: [AGEN] - Packet Length: [LENG] bytes - Flags: [FLAG] - Timestamp: [TIME]";
 
     /// <summary>
     /// Generates the text values for a phish email.
@@ -198,7 +245,46 @@ public class ContentGenerator
     /// </summary>
     /// <returns>String holding the text to the body of an email.</returns>
     private string GenerateEmailBody() {
-        return null;
+        int idx = UnityEngine.Random.Range(0, 10);
+        List<char> body = emailBody[idx].ToCharArray().ToList();
+        List<int> index = new List<int>();
+        
+        int i = 0;
+        while(i < body.Count) {
+            if (Char.IsNumber(body[i])) {
+                int val = body[i] - '0';
+                body.RemoveAt(i);
+                switch(val) {
+                    case 1:
+                        string system = systems[UnityEngine.Random.Range(0, 10)];
+                        body.InsertRange(i, system.ToCharArray().ToList());
+                        i += system.Length;
+                        break;
+                    case 2:
+                        DateTime dt = new DateTime(2024, 1, 1);
+                        dt = dt.AddDays(UnityEngine.Random.Range(0, 365));
+                        body.InsertRange(i, dt.ToString("yyyy-MM-dd").ToCharArray().ToList());
+                        i += dt.ToString("yyyy-MM-dd").Length;
+                        break;
+                    case 3:
+                        string issue = issues[UnityEngine.Random.Range(0, 10)];
+                        body.InsertRange(i, issue.ToCharArray().ToList());
+                        i += issue.Length;
+                        break;
+                    case 4:
+                        int percentage = UnityEngine.Random.Range(0, 100);
+                        body.InsertRange(i, percentage.ToString().ToCharArray().ToList());
+                        i += percentage.ToString().Length;
+                        break;
+                    default:
+                        i++;
+                        break;
+                }
+            }
+            i++;
+        }
+
+        return new string(body.ToArray());
     }
 
     /// <summary>
@@ -242,7 +328,7 @@ public class ContentGenerator
         int limit = stealth / 25 + 1;
 
         int i = 0;
-        for (int l = stealth / 25 + 1; l > 0; i++) {
+        for (int l = stealth / 25 + 1; l > 0 && i < domain.Length; i++) {
             if (swapDictionary.ContainsKey(domain[i])) {
                 domain[i] = swapDictionary[domain[i]];
                     l--;
@@ -298,5 +384,59 @@ public class ContentGenerator
     private string ChangeTLD(string address, int stealth) {
         int idx = (stealth * 6 / 100) + UnityEngine.Random.Range(0, 12) / 2;
         return address.Remove(address.Length-5) + TLD[idx];
+    }
+
+    public string GenerateTraffic(bool isMalicious) {
+        string body = traffic;
+        int i = 0;
+        while(i < body.Length) {
+            if (body[i] == '[') {
+                string tag = body.Substring(i+1, 4);
+                body = body.Remove(i, 6);
+                string value = "";
+
+                switch(tag) {
+                    case "IPAR":
+                        value = UnityEngine.Random.Range(0, 256).ToString() + "." + 
+                                UnityEngine.Random.Range(0, 256).ToString() + "." +
+                                UnityEngine.Random.Range(0, 256).ToString() + "." +
+                                UnityEngine.Random.Range(0, 256).ToString();
+                        break;
+                    case "PROT":
+                        value = ((char) UnityEngine.Random.Range(65, 91)).ToString() + 
+                                ((char) UnityEngine.Random.Range(65, 91)).ToString() + 
+                                ((char) UnityEngine.Random.Range(65, 91)).ToString() + 
+                                ((char) UnityEngine.Random.Range(65, 91)).ToString();
+                        break;
+                    case "PORT":
+                        value = UnityEngine.Random.Range(11, 10000).ToString();
+                        break;
+                    case "AGEN":
+                        value = isMalicious ? "Python-urllib/2.7" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64)";
+                        break;
+                    case "LENG":
+                        value = isMalicious ? ((UnityEngine.Random.Range(0, 2) == 0) ? UnityEngine.Random.Range(10, 60).ToString() : UnityEngine.Random.Range(50000, 80000).ToString()) : UnityEngine.Random.Range(1000, 3000).ToString();
+                        break;
+                    case "FLAG":
+                        string[] flags = new string[] {"SYN", "ACK", "FIN", "RST", "PSH", "URG", "CWR"};
+                        for(int j = 0; j < flags.Length; j++)
+                            value += (UnityEngine.Random.Range(0, 4) == 0) ? flags[j] + " ": "";
+                        break;
+                    case "TIME":
+                        DateTime dt = new DateTime(2024, 1, 1);
+                        dt = dt.AddDays(UnityEngine.Random.Range(0, 365));
+                        dt = dt.AddSeconds(UnityEngine.Random.Range(0, 86400));
+                        value = dt.ToString("yyyy-MM-dd hh:mm:ss");
+                        break;
+                }
+
+                body = body.Insert(i, value);
+                i += value.Length;
+            } else {
+                i++;
+            }
+        }
+        Debug.Log("Traffic body: " + body);
+        return body;
     }
 }

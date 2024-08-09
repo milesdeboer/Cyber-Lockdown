@@ -337,7 +337,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
     /// <summary>
     /// Checks target dataCenter for adware and creates Ads
     /// </summary>
-    public void AdCheck() {;
+    public void AdCheck() {
         dataCenters[currentDataCenter]
             .GetAttacks()
             .Where(a => a < 1000)
@@ -345,7 +345,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
             .Where(a => malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware")
             .ToList()
             .ForEach(a => {
-                CreateAds(4);
+                CreateAds((malwareManager.GetMalware(a.GetMalware()).GetIntrusion() * 9) / 10 + 10);
             });
     }
 
@@ -357,8 +357,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
         System.Random random = new System.Random();
         Vector2 location = new Vector2(0f, 0f);
         for(int i = 0; i < N; i++) {
-            location.x = (float) random.Next(-584, 584);
-            location.y = (float) random.Next(-75, 296);
+            location.x = (float) random.Next(-690, 690);
+            location.y = (float) random.Next(-240, 330);
 
             GameObject adObject = Instantiate(ad, location, Quaternion.identity);
             adObject.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Button>().onClick.AddListener(delegate {
@@ -546,11 +546,14 @@ public class DataCenterManager : MonoBehaviour, ISavable
             Instantiate(traffic, Vector2.zero, Quaternion.identity),
             Instantiate(traffic, Vector2.zero, Quaternion.identity)
         };
-        Debug.Log("order " + order);
+
+        ContentGenerator contentGenerator = new ContentGenerator();
+
         // Orient each traffic obejct to correct position
         for (int j = 0; j < trafficObjects.Length; j++) {
             trafficObjects[j].transform.SetParent(trafficSubWindow.transform, false);
             trafficObjects[j].GetComponent<RectTransform>().anchoredPosition = coords[j];
+            trafficObjects[j].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(contentGenerator.GenerateTraffic(false));
         }
 
         //TODO !!! - add chance of undetected malware
@@ -579,6 +582,7 @@ public class DataCenterManager : MonoBehaviour, ISavable
             .ToList()
             .ForEach(a => {
                 trafficObjects[i].name  = a.ToString();
+                trafficObjects[i].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(contentGenerator.GenerateTraffic(true));
                 i++;
             });
             
