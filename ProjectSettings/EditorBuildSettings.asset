@@ -9,12 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/TitleScene.unity
     guid: f0a1f30128d2c3845aee4d76687d221c
   - enabled: 1
-    path: Assets/Scenes/PlayerScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/NewGameScene.unity
+    guid: 1a97d5196f3c4084a979003032423165
   - enabled: 1
     path: Assets/Scenes/BetweenScene.unity
     guid: c67b19e06534aec44991b3824ed51d37
   - enabled: 1
-    path: Assets/Scenes/NewGameScene.unity
-    guid: 1a97d5196f3c4084a979003032423165
+    path: Assets/Scenes/PlayerScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/SearchLobbies.unity
+    guid: 33e99f40533cdd24d8cbdf95b635e9a7
+  - enabled: 1
+    path: Assets/Scenes/ViewLobby.unity
+    guid: db998889569d1c545b2e5d93bfcdc5ea
+  - enabled: 1
+    path: Assets/Scenes/EndGameScene.unity
+    guid: aba95b79be73d624a81048435e66da9f
   m_configObjects: {}
