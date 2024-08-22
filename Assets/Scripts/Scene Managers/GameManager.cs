@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour, ISavable
     public static int MALWARE_PER_PLAYER = 8;
     public static int ATTACKS_PER_PLAYER = 8;
 
-    public static bool READABLE_SAVE = true;
+    public static bool READABLE_SAVE = false;
     public static Vector2 SCREEN_DIMENSION = new Vector2(1920, 1080);
 
     private static int numPlayers = 2;
@@ -43,10 +43,26 @@ public class GameManager : MonoBehaviour, ISavable
     [SerializeField]
     private GameObject playerNameObject;
 
+    private static bool usingLobby = false;
+
+    private bool loadLimiter = false;
+
     public Color selectionColor;
 
 
     public void Start() {
+        // Download from Lobby
+        LoadAll();
+        turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
+        playerNameObject.GetComponent<TextMeshProUGUI>().SetText(PlayerManager.GetPlayer(turnPlayer).GetName());
+    }
+
+    public void LoadAll() {
+        if (usingLobby) {
+            LobbyViewer.PullLobbyUpdate();
+            LobbyViewer.InitGameManager();
+        }
+
         Load();
         if (turnNumber > 1) playerManager.Load();
         else playerManager.UpdateDisplay();
@@ -57,9 +73,9 @@ public class GameManager : MonoBehaviour, ISavable
         malwareManager.Load();
         attackManager.Load();
         notificationManager.Load();
-        turnNumberObject.GetComponent<TextMeshProUGUI>().SetText("Turn: " + turnNumber.ToString());
-        playerNameObject.GetComponent<TextMeshProUGUI>().SetText(PlayerManager.GetPlayer(turnPlayer).GetName());
     }
+
+
 
     /**
      *  Returns the number of players in the game.
@@ -123,12 +139,17 @@ public class GameManager : MonoBehaviour, ISavable
         }
         
         if (WinCheck()) return;
+
         Save();
         playerManager.Save();
         dataCenterManager.Save();
         malwareManager.Save();
         attackManager.Save();
         notificationManager.Save();
+
+        // Lobby Upload
+        if (usingLobby) LobbyViewer.PushLobbyUpdate();
+
         StartCoroutine(LoadSceneDelay("BetweenScene"));
     }
 
@@ -169,5 +190,12 @@ public class GameManager : MonoBehaviour, ISavable
     IEnumerator ExitDelay() {
         yield return new WaitForSeconds(1f);
         Application.Quit();
+    }
+
+    public static void UseLobby(bool useLobby) {
+        usingLobby = useLobby;
+    }
+    public static bool IsUsingLobby() {
+        return usingLobby;
     }
 }

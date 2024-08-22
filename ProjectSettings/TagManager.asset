@@ -16,6 +16,9 @@ TagManager:
   - ObjectiveButton
   - MalwareButton
   - scanpatch
+  - PlayerEntry
+  - Console
+  - loading
   layers:
   - Default
   - TransparentFX

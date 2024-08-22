@@ -5,43 +5,43 @@ using UnityEngine;
 [System.Serializable]
 public class AttackWrapper
 {
-    public int aid;
-    public int owner;
-    public int target;
-    public int malware;
-    public string objective;
-    public string delivery;
-    public int exploit;
+    public int i;//i
+    public int o;//o
+    public int t;//t
+    public int m;//m
+    public string obj;//obj
+    public string del;//del
+    public int exp;//exp
 
-    public int currentResources = 0;
-    public int requiredResources = 100;
-    public int resourceRate = 0;
+    public int cur = 0;//cur
+    public int req = 100;//req
+    public int rat = 0;//rat
 
     public AttackWrapper(Attack attack) {
-        aid = attack.GetId();
-        owner = attack.GetOwner();
-        target = attack.GetTarget();
-        malware = attack.GetMalware();
-        objective = attack.GetObjective();
-        delivery = attack.GetDelivery();
-        exploit = attack.GetExploit();
-        currentResources = attack.GetWorkResources();
-        requiredResources = attack.GetWorkRequirement();
-        resourceRate = attack.GetWorkRate();
+        i = attack.GetId();
+        o = attack.GetOwner();
+        t = attack.GetTarget();
+        m = attack.GetMalware();
+        obj = attack.GetObjective();
+        del = attack.GetDelivery();
+        exp = attack.GetExploit();
+        cur = attack.GetWorkResources();
+        req = attack.GetWorkRequirement();
+        rat = attack.GetWorkRate();
     }
 
     public Attack Unwrap() {
-        Attack attack = new Attack(aid);
+        Attack attack = new Attack(i);
 
-        attack.SetOwner(owner);
-        attack.SetTarget(target);
-        attack.SetMalware(malware);
-        attack.SetObjective(objective);
-        attack.SetDelivery(delivery);
-        attack.SetExploit(exploit);
-        attack.SetWorkResources(currentResources);
-        attack.SetWorkRequirement(requiredResources);
-        attack.SetWorkRate(resourceRate);
+        attack.SetOwner(o);
+        attack.SetTarget(t);
+        attack.SetMalware(m);
+        attack.SetObjective(obj);
+        attack.SetDelivery(del);
+        attack.SetExploit(exp);
+        attack.SetWorkResources(cur);
+        attack.SetWorkRequirement(req);
+        attack.SetWorkRate(rat);
 
         return attack;
     }

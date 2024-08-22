@@ -20,8 +20,6 @@
 ## Introduction
 Welcome to Cyber Lockdown, an immersive and interactive game developed using Unity 2022.3.21f1. In this multiplayer game, players can create and defend against cyber threats.
 
-## User Guide
-
 ## Developer Guide
 ### UI
 #### Title Scene

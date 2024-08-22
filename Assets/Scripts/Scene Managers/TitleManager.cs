@@ -21,6 +21,10 @@ public class TitleManager : MonoBehaviour
         StartCoroutine(LoadSceneDelay("BetweenScene"));
     }
 
+    public void LobbyPlay() {
+        StartCoroutine(LoadSceneDelay("SearchLobbies"));
+    }
+
     public void Exit() {
         StartCoroutine(ExitDelay());
     }

@@ -7,109 +7,109 @@ using UnityEngine;
 [System.Serializable]
 public class DataCenterWrapper
 {
-    public int did;
-    public int owner;
-    public int emailFilter;
-    public int dlp;
-    public int structure;
-    public int encryption;
-    public int ids;
-    public int ips;
-    public double firewall;
+    public int i;//i
+    public int o;//o
+    public int ef;//email filter
+    public int d;//dlp
+    public int s;//structure
+    public int en;//en encryption
+    public int id;//ids
+    public int ip;//ips
+    public double f;//firewall
 
-    public int[] attacks;
-    public int[] phishes;
+    public int[] a;//attacks
+    public int[] p;//phishes
 
-    public int active;
-    public int money;
-    public int resources;
-    public List<int> exploits = new List<int>();
-    public List<string> record = new List<string>();
+    public int act;//act - active
+    public int mon;//mon - money
+    public int r;//r - resources
+    public List<int> exp = new List<int>();//exp - exploits
+    public List<string> rec = new List<string>();//rec - record
 
-    public bool scanning = false;
-    public bool patching = false;
-    public int[] patches;
+    public bool sc = false;//sc - scanning
+    public bool pa = false;//pa - patching
+    public int[] pq;//pq - patches
 
-    public string target;
-    public int workResources;
-    public int workRequirement;
-    public int workRate;
+    public string t;//t - target
+    public int cur;//cur - current resources
+    public int req;//req - required resources
+    public int rat;//rat - resource rate
 
     public DataCenterWrapper(DataCenter dataCenter) {
-        did = dataCenter.GetId();
-        owner = dataCenter.GetOwner();
+        i = dataCenter.GetId();
+        o = dataCenter.GetOwner();
 
-        emailFilter = dataCenter.GetEmailFilter();
-        dlp = dataCenter.GetDLP();
-        structure = dataCenter.GetHiddenStructure();
-        encryption = dataCenter.GetEncryption();
-        ids = dataCenter.GetIDS();
-        ips = dataCenter.GetIPS();
+        ef = dataCenter.GetEmailFilter();
+        d = dataCenter.GetDLP();
+        s = dataCenter.GetHiddenStructure();
+        en = dataCenter.GetEncryption();
+        id = dataCenter.GetIDS();
+        ip = dataCenter.GetIPS();
 
-        firewall = dataCenter.GetFirewall();
+        f = dataCenter.GetFirewall();
 
-        attacks = new int[dataCenter.GetAttacks().Count];
-        dataCenter.GetAttacks().CopyTo(attacks);
-        phishes = new int[dataCenter.GetPhishes().Count];
-        dataCenter.GetPhishes().CopyTo(phishes);
+        a = new int[dataCenter.GetAttacks().Count];
+        dataCenter.GetAttacks().CopyTo(a);
+        p = new int[dataCenter.GetPhishes().Count];
+        dataCenter.GetPhishes().CopyTo(p);
 
-        active = dataCenter.GetActive();
-        money = dataCenter.GetMoney();
-        resources = dataCenter.GetResources();
+        act = dataCenter.GetActive();
+        mon = dataCenter.GetMoney();
+        r = dataCenter.GetResources();
 
         foreach(KeyValuePair<int, int> pair in dataCenter.GetExploits()) {
-            exploits.Add(pair.Key);
-            exploits.Add(pair.Value);
+            exp.Add(pair.Key);
+            exp.Add(pair.Value);
         }
         foreach(DateTime time in dataCenter.GetRecord())
-            record.Add(time.ToString());
+            rec.Add(time.ToString());
 
-        target = dataCenter.GetWorkTarget();
-        workResources = dataCenter.GetWorkResources();
-        workRequirement = dataCenter.GetWorkRequirement();
-        workRate = dataCenter.GetWorkRate();
+        t = dataCenter.GetWorkTarget();
+        cur = dataCenter.GetWorkResources();
+        req = dataCenter.GetWorkRequirement();
+        rat = dataCenter.GetWorkRate();
 
-        scanning = dataCenter.IsScanning();
-        patching = dataCenter.IsPatching();
-        patches = dataCenter.GetPatchQueue().ToArray();
+        sc = dataCenter.IsScanning();
+        pa = dataCenter.IsPatching();
+        pq = dataCenter.GetPatchQueue().ToArray();
     }   
 
     public DataCenter Unwrap() {
-        DataCenter output = new DataCenter(did);
+        DataCenter output = new DataCenter(i);
 
-        output.SetOwner(owner);
-        output.SetEmailFilter(emailFilter);
-        output.SetDLP(dlp);
-        output.SetHiddenStructure(structure);
-        output.SetEncryption(encryption);
-        output.SetIDS(ids);
-        output.SetIPS(ips);
-        output.SetFirewall(firewall);
-        output.SetAttacks(new HashSet<int>(attacks.ToList()));
-        output.SetPhishes(new HashSet<int>(phishes.ToList()));
+        output.SetOwner(o);
+        output.SetEmailFilter(ef);
+        output.SetDLP(d);
+        output.SetHiddenStructure(s);
+        output.SetEncryption(en);
+        output.SetIDS(id);
+        output.SetIPS(ip);
+        output.SetFirewall(f);
+        output.SetAttacks(new HashSet<int>(a.ToList()));
+        output.SetPhishes(new HashSet<int>(p.ToList()));
 
-        output.SetActive(active);
-        output.SetMoney(money);
-        output.SetResources(resources);
+        output.SetActive(act);
+        output.SetMoney(mon);
+        output.SetResources(r);
 
         Dictionary<int, int> exploits_ = new Dictionary<int, int>();
-        for (int i = 0; i < exploits.Count; i+=2)
-            exploits_.Add(exploits[i], exploits[i+1]);
+        for (int i = 0; i < exp.Count; i+=2)
+            exploits_.Add(exp[i], exp[i+1]);
         output.SetExploits(exploits_);
 
         HashSet<DateTime> record_ = new HashSet<DateTime>();
-        foreach(string time in record)
+        foreach(string time in rec)
             record_.Add(DateTime.Parse(time));
         output.SetRecord(record_);
 
-        output.SetWorkTarget(target);
-        output.SetWorkResources(workResources);
-        output.SetWorkRequirement(workRequirement);
-        output.SetWorkRate(workRate);
+        output.SetWorkTarget(t);
+        output.SetWorkResources(cur);
+        output.SetWorkRequirement(req);
+        output.SetWorkRate(rat);
 
-        output.EnableScan(scanning);
-        output.EnablePatch(patching);
-        output.SetPatchQueue(new Queue<int>(patches.ToList()));
+        output.EnableScan(sc);
+        output.EnablePatch(pa);
+        output.SetPatchQueue(new Queue<int>(pq.ToList()));
 
         return output;
     }

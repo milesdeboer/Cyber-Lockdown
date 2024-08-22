@@ -25,9 +25,11 @@ public class LobbyManager : MonoBehaviour
 
     private Lobby hostLobby;
     private float heartbeatTimer;
-    private string playerName;
-    private string companyName;
-    private string lobbyCode;
+    private static string playerName;
+    private static string companyName;
+    private string lobbyId;
+
+    private static int playerId;
 
     private async void Start()
     {   
@@ -76,7 +78,7 @@ public class LobbyManager : MonoBehaviour
                 Vector3 position = new Vector3(0f, 360f - (float) i * 180f, 0f);
                 GameObject entry = Instantiate(lobbyEntry, position, Quaternion.identity);
                 entry.GetComponent<Button>().onClick.AddListener(delegate {
-                    SelectLobby(lobby.LobbyCode);
+                    SelectLobby(lobby.Id);
                 });
                 entry.transform.SetParent(lobbyEntryContainer, false);
                 entry.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText(lobby.Players.Count + "/" + lobby.MaxPlayers);
@@ -89,26 +91,50 @@ public class LobbyManager : MonoBehaviour
         }
     }
 
-    public void SelectLobby(string code) {
-        lobbyCode = code;
+    public void SelectLobby(string id) {
+        Debug.Log("Changing selected lobby to " + id);
+        lobbyId = id;
     }
 
     /// <summary>
     /// Joins a Lobby by the code in the lobby code text box.
     /// </summary>
     public async void JoinLobbyByCode() {
-        await Task.Run(() => JoinLobby(lobbyCodeTextBox.text));
+        try {
+            JoinLobbyByCodeOptions joinLobbyByCodeOptions = new JoinLobbyByCodeOptions {
+                Player = GetPlayer()
+            };
+
+            Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByCodeAsync(lobbyCodeTextBox.text, joinLobbyByCodeOptions);
+
+            if (joinedLobby != null)
+                SceneManager.LoadScene("ViewLobby");
+        } catch (LobbyServiceException e) {
+            Debug.Log(e);
+        }
     }
 
     /// <summary>
     /// Joins a Lobby by the selected lobby button in the list of lobby entries.
     /// </summary>
     public async void JoinLobbyBySelect() {
-        await Task.Run(() => JoinLobby(lobbyCode));
+        try {
+            JoinLobbyByIdOptions joinLobbyByIdOptions = new JoinLobbyByIdOptions {
+                Player = GetPlayer()
+            };
+
+            Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByIdAsync(lobbyId, joinLobbyByIdOptions);
+            LobbyViewer.SetLobby(joinedLobby);
+
+            if (joinedLobby != null)
+                SceneManager.LoadScene("ViewLobby");
+        } catch (LobbyServiceException e) {
+            Debug.Log(e);
+        }
     }
 
     /// <summary>
-    /// Joins a lobby
+    /// Joins a lobby and switches to view lobby scene
     /// </summary>
     /// <param name="code">the code of the lobby joined</param>
     private async void JoinLobby(string code) {
@@ -118,13 +144,37 @@ public class LobbyManager : MonoBehaviour
             };
 
             Lobby joinedLobby = await Lobbies.Instance.JoinLobbyByCodeAsync(code, joinLobbyByCodeOptions);
-
+            Debug.Log("right after");
+            if (joinedLobby != null) {
+                playerId = joinedLobby.Players.Count;
+                LobbyViewer.SetPlayerId(joinedLobby.Players.Count);
+                Debug.Log("Player Count: " + joinedLobby.Players.Count + ", " + LobbyViewer.GetPlayerId());
+                SceneManager.LoadScene("ViewLobby");
+            }
         } catch (LobbyServiceException e) {
             Debug.Log(e);
         }
     }
 
-    private Unity.Services.Lobbies.Models.Player GetPlayer() {
-        return null;
+    public static Unity.Services.Lobbies.Models.Player GetPlayer() {
+        return new Unity.Services.Lobbies.Models.Player {
+            Data = new Dictionary<string, PlayerDataObject>() {
+                {"PlayerName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, playerName)},
+                {"CompanyName", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, companyName)},
+                {"Save", new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member, "")}
+            }
+        };
+    }
+
+    public static string GetPlayerName() {
+        return playerName;
+    }
+
+    public static int GetPlayerId() {
+        return playerId;
+    }
+
+    public static void SetPlayerId(int id) {
+        playerId = id;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Unlockable : MonoBehaviour
 {
-    public static bool bypass = true;
+    public static bool bypass = false;
 
     [SerializeField]
     private GoalManager goalManager;
