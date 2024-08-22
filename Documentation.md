@@ -10,7 +10,8 @@
     3.1. [Malware](#Malware) \
     3.2. [Attacks](#Attacks) \
     3.3. [DataCenters](#DataCenters) \
-    3.4. [Notifications](#Notifications)
+    3.4. [Notifications](#Notifications) \
+    3.5. [Lobbies](#Lobbies)
 
 4. [Data Storage](#Data-Storage)
 
@@ -172,6 +173,18 @@ In the game, most features are blocked from access using the **Unlockable** comp
 Research is managed in the GoalManager where goals can be completed and looked at.
 
 ---
+### Lobbies
+This game implements Unity Lobby to allow players to play online. Lobbies are managed between two scenes, the SearchLobbyScene and the ViewLobbyScene. 
+
+In the SearchLobbyScene, the user is able to view some of the public lobbies available. To join one of them, they simply need to click on the lobby they want to join and press "join lobby". Alternatively, a player can also choose to join a private lobby by entering the lobby code in the input space and press enter to join the private lobby.
+
+![Research Window](/Screenshots/search-lobby-scene.png)
+
+In the ViewLobbyScene, the user is able to view the lobby they have joined. If a player has created the lobby, they are given the option to customize the game options. Each non host player can only change their name. To start the game, the host of the lobby needs to press the "start game" button.
+
+![Research Window](/Screenshots/view-lobby-scene.png)
+
+---
 
 ## Data Storage
 ### Wrappers
@@ -226,6 +239,8 @@ Loading
 MalwareDAO dao = new MalwareDAO();
 bool success = dao.Load(this);
 ```
+### Lobby Storage
+At the end of a players turn, they push each save file to the lobby under an appropriate name (e.g. MalwareSave) in the data field of the lobby. Each save file cannot exceed 2KB in storage space or it will fail to upload the data. Turn number is stored both inside and outside this data as it needs to be readable so the system can know when to pull the rest of the information.
 
 ## Bug Report
 ### Mouse Over Tool Bug 

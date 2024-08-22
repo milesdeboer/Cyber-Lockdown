@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DataCenter : Workable
@@ -279,14 +280,14 @@ public class DataCenter : Workable
 
     public int GetSize() {
         return 
-            emailFilter +
+            (emailFilter +
             dlp +
             hiddenStructure +
             encryption +
             ids +
             ips +
             (int) firewall * 50 +
-            money / 10;
+            money / 10);
     }
 
     public bool IsScanning() {

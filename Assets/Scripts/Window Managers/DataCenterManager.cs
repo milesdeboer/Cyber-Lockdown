@@ -59,20 +59,13 @@ public class DataCenterManager : MonoBehaviour, ISavable
     private List<DataCenter> dataCenters;
     private List<GameObject> dataCenterButtons;
 
-    private Queue<int> patchQueue;
-    private bool patching;
-    private bool scanning;
-
 
     private int currentDataCenter = 0;
 
     private int ransomId = -1;
 
     public void Start_() {
-        //InitButtons();
         InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
-        //InitSelectionListeners();
-        //InitTraffic();
     }
 
     /// <summary>
@@ -85,67 +78,6 @@ public class DataCenterManager : MonoBehaviour, ISavable
             if (i % GameManager.DATA_CENTERS_PER_PLAYER == 0) dataCenters[i].SetOwner(i / GameManager.DATA_CENTERS_PER_PLAYER);
         }
     }
-
-    /// <summary>
-    /// Instantiates the data center selection buttons.
-    /// </summary>
-    public void InitButtons() {
-        GameObject.FindGameObjectsWithTag("DataCenterButton").ToList().ForEach(dc => Destroy(dc));
-        // Initialize the list of data center buttons
-        dataCenterButtons = new List<GameObject>();
-
-        // Frame dimensions
-        float xMin = 6.5f;
-        float xMax = 100.5f;
-        float yMin = 36f;
-        float yMax = 126f;
-
-        // Center of Frame
-        float cx = (xMax - xMin) / 2f + xMin;
-        float cy = (yMax - yMin) / 2f + yMin;
-
-        // Radius of Circle
-        float rx = 0.4f * (xMax - xMin);
-        float ry = 0.4f * (yMax - yMin);
-
-        // Angle Offset
-        float angleOffset = (float) Math.PI / 4f;
-
-        // Iterate through the number of data centers there should be based on number of players and data centers per player.
-        for (int i = 0; i < GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers(); i++) {
-            // Calculate coordinates for the current button on the circle.
-            Vector2 coords = new Vector2();
-            double theta = (-2f * Math.PI * i / (GameManager.DATA_CENTERS_PER_PLAYER * GameManager.GetNumPlayers())) + angleOffset;
-            coords.x = rx * (float) Math.Cos(theta) + cx;
-            coords.y = ry * (float) Math.Sin(theta) + cy;
-
-            // Instantiate GameObject.
-            GameObject dataCenter = Instantiate(dataCenterButton, coords, Quaternion.identity);
-            dataCenter.name = dataCenters[i].GetId().ToString();
-            dataCenter.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().SetText((dataCenters[i].GetOwner()+1).ToString());
-
-            // Set orientation and size of the button.
-            dataCenter.transform.SetParent(selectionWindow.transform, false);
-            dataCenter.GetComponent<RectTransform>().localPosition.Set(coords.x, coords.y, 0);
-            dataCenter.GetComponent<RectTransform>().sizeDelta = new Vector2(15f, 20f);
-
-            // Set Color of button based on owner
-            dataCenter.GetComponent<Image>().color = (dataCenters[i].GetOwner() == -1) ? new Color(1.0f, 1.0f, 1.0f) : (gameManager.GetColors()[dataCenters[i].GetOwner()]);
-            dataCenter.transform.GetChild(1).gameObject.SetActive(false);
-            if (dataCenters[i].GetOwner() == -1) {
-                var x = i;
-                dataCenter.transform.GetChild(1).gameObject.SetActive(true);
-                dataCenter.GetComponent<Button>().onClick.AddListener(delegate {
-                    Purchase(x);
-                });
-            }
-
-            // Add to list of buttons.
-            dataCenterButtons.Add(dataCenter);
-        }
-        InitMap(GameManager.DATA_CENTERS_PER_PLAYER, GameManager.GetNumPlayers());
-    }
-
     /// <summary>
     /// 
     /// </summary>
@@ -556,7 +488,6 @@ public class DataCenterManager : MonoBehaviour, ISavable
             trafficObjects[j].transform.GetChild(1).GetComponent<TextMeshProUGUI>().SetText(contentGenerator.GenerateTraffic(false));
         }
 
-        //TODO !!! - add chance of undetected malware
         int i = 0;
 
         Shuffle<int>(
@@ -566,7 +497,8 @@ public class DataCenterManager : MonoBehaviour, ISavable
                 .Select(a => attackManager.GetAttack(a))
                 .Where(a =>
                     (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "adware") ||
-                    (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "botnet"))
+                    (malwareManager.GetMalware(a.GetMalware()).GetMalwareType() == "botnet") ||
+                    (malwareManager.GetMalware(a.GetMalware()).HasFeature(MalwareFeature.Drain)))
                 .Where(a => !malwareManager.GetMalware(a.GetMalware()).HasFeature(MalwareFeature.Steganography))
                 .Select(a => a.GetId())
                 .ToList()
@@ -718,12 +650,23 @@ public class DataCenterManager : MonoBehaviour, ISavable
                     }
                     player.SetMoney(player.GetMoney() + d.GetMoney());
                 }
+                // Inflict for Adware
                 d.GetAttacks()
                     .Where(a => a < 1000)
                     .Select(a => malwareManager.GetMalware(attackManager.GetAttack(a).GetMalware()))
                     .Where(m => m.GetMalwareType() == "adware")
                     .ToList()
                     .ForEach(m => PlayerManager.GetPlayer(m.GetOwner()).AddMoney(9*m.GetIntrusion() + 100));
+                // Inflict for Drain Malware
+                d.GetAttacks()
+                    .Where(a => a < 1000)
+                    .Select(a => malwareManager.GetMalware(attackManager.GetAttack(a).GetMalware()))
+                    .Where(m => m.HasFeature(MalwareFeature.Drain))
+                    .ToList()
+                    .ForEach(m => {
+                        PlayerManager.GetPlayer(d.GetOwner()).AddMoney(-4*m.GetIntrusion() - 50);
+                        PlayerManager.GetPlayer(m.GetOwner()).AddMoney(4*m.GetIntrusion() + 50);
+                    });
                 d.SetActive(Math.Max(d.GetActive()-1, 0));
             });
     }
@@ -738,7 +681,9 @@ public class DataCenterManager : MonoBehaviour, ISavable
     /// <param name="dcid">The id of the target data center.</param>
     public void Scan(int dcid) {
         DataCenter dc = dataCenters[dcid];
-        int scanCost = dc.GetSize();
+        int scanCost = dc.GetSize() * (dc.GetAttacks()
+            .Select(a => malwareManager.GetMalware(attackManager.GetAttack(a).GetMalware()))
+            .Where(m => m.HasFeature(MalwareFeature.Obfuscation)).ToList().Count + 1);
         if (dc.GetWorkResources() - scanCost > 0) {
             dc.SetWorkResources(dc.GetWorkResources() - scanCost);
             int count = 0;

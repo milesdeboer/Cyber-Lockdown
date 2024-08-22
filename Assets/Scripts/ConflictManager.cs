@@ -116,7 +116,7 @@ public class ConflictManager : MonoBehaviour
             offenceScore = (100*offenceScore + 2*((float) exploit)) / (100f + 2*((float) exploit));
         if (dc.GetRecord().Contains(m.GetTime())) 
             offenceScore /= 2f;
-        if (!(m.GetMalwareType() == "trojan")) 
+        if (!(m.GetMalwareType() == "trojan" || m.HasFeature(MalwareFeature.Obfuscation))) 
             offenceScore /= (float) dc.GetFirewall() * 3f + 1f;
 
         dc.AddRecord(m.GetTime());
@@ -141,9 +141,9 @@ public class ConflictManager : MonoBehaviour
             title2 = "", 
             body2 = "";
         bool notify = false;
-        if (m.GetMalwareType() == "botnet" || m.GetMalwareType() == "adware" || m.GetMalwareType() == "ransomware") {
+        if (m.GetMalwareType() == "botnet" || m.GetMalwareType() == "adware" || m.GetMalwareType() == "ransomware" || m.HasFeature(MalwareFeature.Drain)) {
             dc.AddAttack(a.GetId());
-            return;
+            if (!m.HasFeature(MalwareFeature.Drain)) return;
         }
 
         if (m.HasFeature(MalwareFeature.CuckooEgg)) {
